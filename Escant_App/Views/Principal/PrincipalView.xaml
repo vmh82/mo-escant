@@ -1,0 +1,88 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Escant_App.Views.Principal.PrincipalView"
+             xmlns:converters="clr-namespace:Escant_App.Converters;assembly=Escant_App"
+             xmlns:texts="clr-namespace:ManijodaServicios.Resources.Texts;assembly=ManijodaServicios"
+             xmlns:viewModelBase="clr-namespace:Escant_App.ViewModels.Base;assembly=Escant_App"
+             xmlns:ffimageloading="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+             xmlns:viewmodels="clr-namespace:DataModel.DTO.Iteraccion;assembly=DataModel"
+             xmlns:transformations="clr-namespace:FFImageLoading.Transformations;assembly=FFImageLoading.Transformations" 
+             xmlns:control="clr-namespace:Escant_App.UserControls"
+             Title="{texts:Translate PrincipalPrincipalTitle}"
+    viewModelBase:ViewModelLocator.AutoWireViewModel="true">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <converters:ImageConverter x:Key="ByteArrayToImage"/>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Name="MenuItem1" Order="Primary" IconImageSource="notificacion.png" Text="Item 1" Priority="0" />
+    </ContentPage.ToolbarItems>
+    <ContentPage.Content>
+        <Grid HorizontalOptions="FillAndExpand" VerticalOptions="Start"
+              RowDefinitions="Auto,Auto,Auto,Auto" ColumnDefinitions="*,Auto">
+            <DatePicker x:Name="dt" IsVisible="false" DateSelected="dt_DateSelected"></DatePicker>
+
+            <Frame Grid.Row="0" VerticalOptions="End" BackgroundColor="#002AFF" Grid.ColumnSpan="2" HasShadow="True" 
+                   Padding="0" Margin="0,-20,0,40" CornerRadius="20" HeightRequest="280" >
+                <StackLayout HorizontalOptions="FillAndExpand" Margin="20,60,0,0" VerticalOptions="FillAndExpand">
+                    <Label Text="{texts:Translate BienvenidoLabel}" FontAttributes="Bold" FontSize="20" TextColor="white"></Label>
+                </StackLayout>
+
+            </Frame>
+            <ffimageloading:CachedImage
+                                x:Name="clienteImage"
+                                Grid.Row="0"
+                                Grid.Column="0"
+                                Margin="20,90,0,0"
+                                Aspect="Fill"
+                                CacheType="All"
+                                DownsampleToViewSize="true"
+                                ErrorPlaceholder="picture_icon.png"
+                                HeightRequest="150"
+                                HorizontalOptions="Start"
+                                LoadingPlaceholder="picture_icon.png"
+                                Source="{Binding ImagenUsuario, Converter={StaticResource ByteArrayToImage},ConverterParameter=String}"
+                                TransformPlaceholders="True"
+                                WidthRequest="140">
+                <ffimageloading:CachedImage.Transformations>
+                    <transformations:CircleTransformation
+                                        BorderHexColor="#000000"
+                                        BorderSize="5"/>
+                </ffimageloading:CachedImage.Transformations>
+                <ffimageloading:CachedImage.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding ViewUsuario}" />
+                </ffimageloading:CachedImage.GestureRecognizers>
+            </ffimageloading:CachedImage>
+            <StackLayout Spacing="0" Grid.Row="0" Grid.Column="1" VerticalOptions="EndAndExpand" HorizontalOptions="Center" Margin="0,0,30,60">
+                <Label Text="{Binding NombreUsuario}" TextColor="white" FontAttributes="Bold" FontSize="20"></Label>
+                <Label Text="{Binding PerfilUsuario}" TextColor="white"></Label>
+            </StackLayout>
+            <Label Grid.Row="1" Grid.Column="0" Margin="20,0,0,0" x:Name="lblDate" VerticalOptions="Center" HorizontalOptions="Start" Text="{Binding FechaActual}" TextColor="#202020">
+            </Label>
+            <!--<ScrollView Grid.Row="2" Grid.ColumnSpan="2">
+                <Grid HorizontalOptions="FillAndExpand"  Padding="20,0"  VerticalOptions="Start"
+              RowDefinitions="Auto" ColumnDefinitions="*">
+
+                    <ListView x:Name="listView" Grid.Row="0" Grid.ColumnSpan="2" HasUnevenRows="True" SeparatorVisibility="None" ItemSelected="listView_ItemSelected" HorizontalOptions="FillAndExpand" VerticalOptions="Start">
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <ViewCell>
+                                    <control:FrameView></control:FrameView>
+                                </ViewCell>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+                </Grid>
+            </ScrollView>-->
+            <!--Espacio para ícono de procesamiento de información-->
+            <control:LoadingIndicator
+                Grid.Row="3"
+                Grid.ColumnSpan="2"
+                HorizontalOptions="Fill"
+                IsRunning="{Binding IsBusy, Mode=TwoWay}"
+                VerticalOptions="Fill" />
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

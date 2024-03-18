@@ -1,0 +1,217 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<pages:PopupPage
+    x:Class="Escant_App.Views.Reportes.PopupSelectDateRangeView"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:animations="clr-namespace:Rg.Plugins.Popup.Animations;assembly=Rg.Plugins.Popup"
+    xmlns:button="clr-namespace:Syncfusion.XForms.Buttons;assembly=Syncfusion.Buttons.XForms"
+    xmlns:inputKit="clr-namespace:Plugin.InputKit.Shared.Controls;assembly=Plugin.InputKit"
+    xmlns:pages="clr-namespace:Rg.Plugins.Popup.Pages;assembly=Rg.Plugins.Popup"
+    xmlns:sync="clr-namespace:Syncfusion.XForms.Buttons;assembly=Syncfusion.Buttons.XForms"
+    xmlns:texts="clr-namespace:ManijodaServicios.Resources.Texts;assembly=ManijodaServicios"
+    xmlns:viewModelBase="clr-namespace:Escant_App.ViewModels.Base;assembly=Escant_App"
+    viewModelBase:ViewModelLocator.AutoWireViewModel="true">
+    <pages:PopupPage.Resources>
+        <ResourceDictionary>
+            <Style x:Key="PopupItemHeaderStyle" TargetType="{x:Type Label}">
+                <Setter Property="FontFamily" Value="{StaticResource NunitoBold}" />
+                <Setter Property="FontSize" Value="{StaticResource LargeSize}" />
+                <Setter Property="TextColor" Value="{StaticResource BlackColor}" />
+                <Setter Property="HorizontalTextAlignment" Value="Start" />
+                <Setter Property="VerticalTextAlignment" Value="Center" />
+                <Setter Property="Margin" Value="0,0,0,0" />
+            </Style>
+
+            <Style x:Key="PopupLabelStyle" TargetType="{x:Type Label}">
+                <Setter Property="FontFamily" Value="{StaticResource NunitoRegular}" />
+                <Setter Property="FontSize" Value="{StaticResource MidMediumSize}" />
+                <Setter Property="TextColor" Value="Black" />
+                <Setter Property="HorizontalOptions" Value="Center" />
+                <Setter Property="VerticalTextAlignment" Value="Center" />
+                <Setter Property="Margin" Value="0,0,0,0" />
+            </Style>
+
+            <!--<Style x:Key="EntryStyle" TargetType="Entry">
+                <Setter Property="PlaceholderColor" Value="#9cdaf1"/>
+                <Setter Property="TextColor" Value="#7dbbe6"/>
+            </Style>-->
+        </ResourceDictionary>
+    </pages:PopupPage.Resources>
+    <pages:PopupPage.Animation>
+        <animations:ScaleAnimation
+            DurationIn="700"
+            EasingIn="SpringOut"
+            PositionIn="Bottom"
+            PositionOut="Center"
+            ScaleIn="1"
+            ScaleOut="0.7" />
+    </pages:PopupPage.Animation>
+
+    <StackLayout HorizontalOptions="Center" VerticalOptions="Center">
+        <Frame
+            x:Name="FrameContainer"
+            Margin="15"
+            Padding="8,10,8,15"
+            BackgroundColor="White"
+            CornerRadius="6"
+            HorizontalOptions="Center">
+            <StackLayout
+                Padding="0"
+                IsClippedToBounds="True"
+                Spacing="3">
+                <Grid RowSpacing="0">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="60" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="60" />
+                        <RowDefinition Height="50" />
+                    </Grid.RowDefinitions>
+
+                    <Grid
+                        Grid.Row="0"
+                        ColumnSpacing="8"
+                        RowSpacing="0">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="55" />
+                            <RowDefinition Height="1" />
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="0.2*" />
+                            <ColumnDefinition Width="0.8*" />
+                        </Grid.ColumnDefinitions>
+                        <!--<Label Grid.Row="0" Grid.Column="1" Text="{Binding ProductName}" Style="{StaticResource PopupItemHeaderStyle}" HorizontalOptions="Start" VerticalOptions="Center"/>-->
+                        <Image
+                            Grid.Row="0"
+                            Grid.Column="0"
+                            HeightRequest="44"
+                            HorizontalOptions="CenterAndExpand"
+                            Source="calendar_icon.png"
+                            VerticalOptions="End"
+                            WidthRequest="40" />
+                        <Label
+                            Grid.Row="0"
+                            Grid.Column="1"
+                            Style="{StaticResource PopupItemHeaderStyle}"
+                            Text="{texts:Translate SelectDateRange}" />
+                        <BoxView
+                            Grid.Row="1"
+                            Grid.Column="1"
+                            BackgroundColor="Black"
+                            HeightRequest="1"
+                            VerticalOptions="StartAndExpand" />
+                    </Grid>
+
+                    <sync:SfRadioGroup
+                        x:Name="groupDateRange"
+                        Grid.Row="1"
+                        Margin="15,0,0,0"
+                        Orientation="Vertical">
+                        <sync:SfRadioButton
+                            x:Name="today"
+                            FontFamily="{StaticResource NunitoRegular}"
+                            FontSize="{StaticResource MediumSize}"
+                            StateChanged="DateRange_SelectedItemChanged"
+                            Text="{texts:Translate Today}"
+                            TextColor="Black" />
+                        <sync:SfRadioButton
+                            x:Name="yesterday"
+                            FontFamily="{StaticResource NunitoRegular}"
+                            FontSize="{StaticResource MediumSize}"
+                            StateChanged="DateRange_SelectedItemChanged"
+                            Text="{texts:Translate Yesterday}"
+                            TextColor="Black" />
+                        <sync:SfRadioButton
+                            x:Name="lastweek"
+                            FontFamily="{StaticResource NunitoRegular}"
+                            FontSize="{StaticResource MediumSize}"
+                            StateChanged="DateRange_SelectedItemChanged"
+                            Text="{texts:Translate Lastweek}"
+                            TextColor="Black" />
+                        <sync:SfRadioButton
+                            x:Name="thismonth"
+                            FontFamily="{StaticResource NunitoRegular}"
+                            FontSize="{StaticResource MediumSize}"
+                            StateChanged="DateRange_SelectedItemChanged"
+                            Text="{texts:Translate Thismonth}"
+                            TextColor="Black" />
+                        <sync:SfRadioButton
+                            x:Name="lastmonth"
+                            FontFamily="{StaticResource NunitoRegular}"
+                            FontSize="{StaticResource MediumSize}"
+                            StateChanged="DateRange_SelectedItemChanged"
+                            Text="{texts:Translate Lastmonth}"
+                            TextColor="Black" />
+                        <sync:SfRadioButton
+                            x:Name="optional"
+                            FontFamily="{StaticResource NunitoRegular}"
+                            FontSize="{StaticResource MediumSize}"
+                            StateChanged="DateRange_SelectedItemChanged"
+                            Text="{texts:Translate Custom}"
+                            TextColor="Black" />
+                    </sync:SfRadioGroup>
+
+                    <Grid Grid.Row="2" ColumnSpacing="0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="0.45*" />
+                            <ColumnDefinition Width="0.1*" />
+                            <ColumnDefinition Width="0.45*" />
+                        </Grid.ColumnDefinitions>
+
+                        <DatePicker
+                            x:Name="startDatePicker"
+                            Grid.Column="0"
+                            Margin="0,0,0,0"
+                            Date="{Binding StartDate}"
+                            Format="dd/MM/yyyy"
+                            IsEnabled="{Binding IsEnableDateTimePicker}"
+                            VerticalOptions="CenterAndExpand" />
+                        <Label
+                            Grid.Column="1"
+                            Style="{StaticResource PopupLabelStyle}"
+                            Text="{texts:Translate To}" />
+                        <DatePicker
+                            x:Name="endDatePicker"
+                            Grid.Column="2"
+                            Margin="0,0,0,0"
+                            Date="{Binding EndDate}"
+                            Format="dd/MM/yyyy"
+                            IsEnabled="{Binding IsEnableDateTimePicker}"
+                            MinimumDate="{Binding Source={x:Reference startDatePicker}, Path=Date}"
+                            VerticalOptions="CenterAndExpand" />
+                    </Grid>
+
+                    <Grid Grid.Row="3" ColumnSpacing="10">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="0.5*" />
+                            <ColumnDefinition Width="0.5*" />
+                        </Grid.ColumnDefinitions>
+                        <sync:SfButton
+                            Grid.Column="0"
+                            BackgroundColor="Green"
+                            BorderColor="{DynamicResource colPrim}"
+                            BorderWidth="2"
+                            Command="{Binding OkCommand}"
+                            CornerRadius="4"
+                            FontFamily="{StaticResource NunitoRegular}"
+                            HorizontalOptions="FillAndExpand"
+                            Text="OK"
+                            TextColor="White"
+                            VerticalOptions="Center" />
+                        <sync:SfButton
+                            Grid.Column="1"
+                            BackgroundColor="Red"
+                            BorderColor="{DynamicResource colPrim}"
+                            BorderWidth="2"
+                            Command="{Binding CancelCommand}"
+                            CornerRadius="4"
+                            FontFamily="{StaticResource NunitoRegular}"
+                            HorizontalOptions="FillAndExpand"
+                            Text="{texts:Translate Cancel}"
+                            TextColor="White"
+                            VerticalOptions="Center" />
+                    </Grid>
+                </Grid>
+            </StackLayout>
+        </Frame>
+    </StackLayout>
+</pages:PopupPage>

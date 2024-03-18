@@ -1,0 +1,129 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<ContentPage
+    x:Class="Escant_App.Views.MasterView"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:converters="clr-namespace:Escant_App.Converters"
+    xmlns:ffimageloading="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+    xmlns:gradient="clr-namespace:Syncfusion.XForms.Graphics;assembly=Syncfusion.Core.XForms"
+    xmlns:sync="clr-namespace:Syncfusion.ListView.XForms;assembly=Syncfusion.SfListView.XForms"
+    xmlns:texts="clr-namespace:ManijodaServicios.Resources.Texts;assembly=ManijodaServicios"
+    xmlns:transformations="clr-namespace:FFImageLoading.Transformations;assembly=FFImageLoading.Transformations"
+    xmlns:viewModelBase="clr-namespace:Escant_App.ViewModels.Base;assembly=Escant_App"
+    xmlns:views="clr-namespace:Escant_App.Views;assembly=Escant_App"
+    xmlns:yummy="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView"
+    xmlns:dataSource="clr-namespace:Syncfusion.DataSource;assembly=Syncfusion.DataSource.Portable"
+    Title=" "
+    Padding="{OnPlatform Android='0',
+                         iOS='0,10,0,0'}"
+    viewModelBase:ViewModelLocator.AutoWireViewModel="true"
+    Icon="menu.png">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+
+            <Style x:Key="MainMenuTitleStyle" TargetType="{x:Type Label}">
+                <Setter Property="FontFamily" Value="{StaticResource NunitoRegular}" />
+                <Setter Property="FontSize" Value="{StaticResource LargeSize}" />
+                <Setter Property="HorizontalOptions" Value="Start" />
+                <Setter Property="VerticalOptions" Value="Center" />
+                <Setter Property="Margin" Value="12, 0" />
+                <Setter Property="TextColor" Value="{StaticResource BlackTextColor}" />
+            </Style>
+            <Style x:Key="MainHeaderLabelStyle" TargetType="{x:Type Label}">
+                <Setter Property="FontFamily" Value="{StaticResource NunitoRegular}" />
+                <Setter Property="FontSize" Value="{StaticResource MediumSize}" />
+                <Setter Property="TextColor" Value="{StaticResource WhiteColor}" />
+                <Setter Property="HorizontalOptions" Value="Start" />
+                <Setter Property="Margin" Value="20,0" />
+            </Style>
+            <converters:StoreMobileNumberConverter x:Key="storeMobileNumberConverter" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <ContentPage.Content>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="150" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+
+            <yummy:PancakeView
+                BackgroundGradientAngle="90"
+                BackgroundGradientEndColor="{DynamicResource GradientEndColor}"
+                BackgroundGradientStartColor="{DynamicResource GradientStartColor}"
+                BorderThickness="1"
+                HorizontalOptions="FillAndExpand"
+                VerticalOptions="FillAndExpand" />
+            <Grid Padding="{OnPlatform Android='0', iOS='0,30,0,0'}">
+
+                <StackLayout HorizontalOptions="StartAndExpand" VerticalOptions="CenterAndExpand">
+                    <ffimageloading:CachedImage
+                        Margin="5,0,0,0"
+                        CacheType="None"
+                        DownsampleToViewSize="true"
+                        ErrorPlaceholder="picture_icon.png"
+                        HeightRequest="60"
+                        HorizontalOptions="Start"
+                        LoadingPlaceholder="picture_icon.png"
+                        Source="{Binding StoreImageSource}"
+                        TransformPlaceholders="True"
+                        WidthRequest="90">
+                        <ffimageloading:CachedImage.Transformations>
+                            <transformations:CircleTransformation BorderHexColor="#FFFFFF" BorderSize="10" />
+                        </ffimageloading:CachedImage.Transformations>
+                    </ffimageloading:CachedImage>
+
+                    <Label Style="{StaticResource MainHeaderLabelStyle}" Text="{Binding StoreName}" />
+                    <Label Style="{StaticResource MainHeaderLabelStyle}" Text="{Binding Path=StorePhoneNumer, Converter={StaticResource storeMobileNumberConverter}}" />
+
+                </StackLayout>
+            </Grid>
+            <StackLayout Grid.Row="1" Spacing="15">
+                <sync:SfListView
+                    x:Name="navigationDrawerList"
+                    BackgroundColor="{DynamicResource MainWrapperBackgroundColor}"
+                    SelectionBackgroundColor="#FFFFFF"
+                    SelectionChanged="Handle_SelectionChanged"
+                    SelectionMode="Single">
+                    <sync:SfListView.ItemSize>
+                        <OnIdiom
+                            x:TypeArguments="x:Double"
+                            Desktop="110"
+                            Phone="56"
+                            Tablet="100" />
+                    </sync:SfListView.ItemSize>
+                    <sync:SfListView.ItemTemplate>
+                        <DataTemplate>
+                            <ViewCell>
+                                <ViewCell.View>
+                                    <StackLayout>
+                                        <StackLayout
+                                            Padding="20,10,0,10"
+                                            Orientation="Horizontal"
+                                            Spacing="20"
+                                            VerticalOptions="FillAndExpand">
+                                            <Image
+                                                HeightRequest="30"                                                
+                                                VerticalOptions="Center"
+                                                WidthRequest="30" >
+                                                <Image.Source>
+                                                    <FontImageSource
+                                                                        FontFamily="{DynamicResource FuenteImagen}"                                                                        
+                                                                        Glyph="{Binding IconoMenu.CodigoIcono}"
+                                                                        Size="35"
+                                                                        Color="{DynamicResource ColorImagen}"/>
+                                                </Image.Source>
+                                            </Image>
+                                            <Label Style="{StaticResource MainMenuTitleStyle}" Text="{Binding Title}" />
+                                        </StackLayout>
+                                        <BoxView BackgroundColor="Gray" HeightRequest="1" />
+                                    </StackLayout>
+                                </ViewCell.View>
+                            </ViewCell>
+                        </DataTemplate>
+                    </sync:SfListView.ItemTemplate>
+                </sync:SfListView>
+            </StackLayout>
+        </Grid>
+    </ContentPage.Content>
+    <!--="{Binding Icon}"-->
+</ContentPage>

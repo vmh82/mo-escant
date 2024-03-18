@@ -1,0 +1,492 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="Escant_App.Views.Configuracion.ReceiptPrinterView"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:ListCollection="clr-namespace:System.Collections.Generic;assembly=netstandard"
+    xmlns:button="clr-namespace:Syncfusion.XForms.Buttons;assembly=Syncfusion.Buttons.XForms"
+    xmlns:combobox="clr-namespace:Syncfusion.XForms.ComboBox;assembly=Syncfusion.SfComboBox.XForms"
+    xmlns:customViews="clr-namespace:Escant_App.UserControls;assembly=Escant_App"
+    xmlns:inputLayout="clr-namespace:Syncfusion.XForms.TextInputLayout;assembly=Syncfusion.Core.XForms"
+    xmlns:local="clr-namespace:Escant_App.UserControls;assembly=Escant_App"
+    xmlns:sync="clr-namespace:Syncfusion.XForms.Buttons;assembly=Syncfusion.Buttons.XForms"
+    xmlns:texts="clr-namespace:ManijodaServicios.Resources.Texts;assembly=ManijodaServicios"
+    xmlns:viewModelBase="clr-namespace:Escant_App.ViewModels.Base;assembly=Escant_App"
+    xmlns:views="clr-namespace:Escant_App.Views;assembly=Escant_App"
+    Title="{texts:Translate ReceiptPrinterSettingTitle}"
+    viewModelBase:ViewModelLocator.AutoWireViewModel="true"
+    BackgroundColor="{DynamicResource MainWrapperBackgroundColor}">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Style x:Key="ReceiptPrinterHeaderLabelStyle" TargetType="{x:Type Label}">
+                <Setter Property="FontFamily" Value="{StaticResource NunitoBold}" />
+                <Setter Property="FontSize" Value="{StaticResource LargeSize}" />
+                <Setter Property="HorizontalOptions" Value="Start" />
+                <Setter Property="VerticalOptions" Value="Center" />
+                <Setter Property="Margin" Value="5, 0" />
+                <Setter Property="TextColor" Value="{StaticResource colPrim}" />
+            </Style>
+
+            <Style x:Key="ReceiptPrinterLabelStyle" TargetType="{x:Type Label}">
+                <Setter Property="FontFamily" Value="{StaticResource NunitoRegular}" />
+                <Setter Property="FontSize" Value="{StaticResource MediumSize}" />
+                <Setter Property="HorizontalOptions" Value="Start" />
+                <Setter Property="VerticalOptions" Value="Center" />
+                <Setter Property="Margin" Value="6, 0" />
+                <Setter Property="TextColor" Value="{StaticResource Gray-900}" />
+            </Style>
+
+            <Style x:Key="ReceiptPrinterDescriptionStyle" TargetType="{x:Type Label}">
+                <Setter Property="FontFamily" Value="{StaticResource SpectralRegular}" />
+                <Setter Property="FontSize" Value="{StaticResource MidMediumSize}" />
+                <Setter Property="HorizontalOptions" Value="Start" />
+                <Setter Property="VerticalOptions" Value="Center" />
+                <Setter Property="Margin" Value="6, 0" />
+                <Setter Property="TextColor" Value="{DynamicResource Gray-900}" />
+            </Style>
+
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <ContentPage.ToolbarItems>
+        <ToolbarItem
+            Command="{Binding DiscardCommand}"
+            Order="Primary"
+            Priority="0"
+            Text="{texts:Translate Cancel}">
+            <ToolbarItem.Icon>
+                <OnPlatform x:TypeArguments="FileImageSource">
+                    <On Platform="Android" Value="cross_512.png" />
+                </OnPlatform>
+            </ToolbarItem.Icon>
+        </ToolbarItem>
+        <ToolbarItem
+            Command="{Binding SavePrinterSettingCommand}"
+            Order="Primary"
+            Priority="1"
+            Text="{texts:Translate Save}">
+            <ToolbarItem.Icon>
+                <OnPlatform x:TypeArguments="FileImageSource">
+                    <On Platform="Android" Value="save.png" />
+                </OnPlatform>
+            </ToolbarItem.Icon>
+        </ToolbarItem>
+    </ContentPage.ToolbarItems>
+    <ContentPage.Content>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <ScrollView Grid.Row="0">
+                <StackLayout Padding="10,15,10,15">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <StackLayout Orientation="Vertical">
+                            <Label Style="{StaticResource ReceiptPrinterLabelStyle}" Text="{texts:Translate EnablePrinter}" />
+                            <Label Style="{StaticResource ReceiptPrinterDescriptionStyle}" Text="{texts:Translate EnablePrinterDescriptions}" />
+                        </StackLayout>
+                        <!--<Switch
+                            HorizontalOptions="End"
+                            IsToggled="{Binding IsEnableConnectToPrinter}"
+                            Toggled="Handle_Toggled"
+                            VerticalOptions="Center" />-->
+                        <sync:SfSwitch
+                            Grid.Column="1"
+                            Margin="0"
+                            AllowIndeterminateState="False"
+                            HeightRequest="28"
+                            HorizontalOptions="EndAndExpand"
+                            IsOn="{Binding IsEnableConnectToPrinter}"
+                            StateChanged="SfSwitch_StateChanged"
+                            VisualType="Cupertino">
+                            <VisualStateManager.VisualStateGroups>
+                                <VisualStateGroup x:Name="CommonStates">
+                                    <VisualState x:Name="On">
+                                        <VisualState.Setters>
+                                            <Setter Property="SwitchSettings">
+                                                <Setter.Value>
+                                                    <sync:CupertinoSwitchSettings
+                                                        x:TypeArguments="button:OnState"
+                                                        ThumbBorderColor="{DynamicResource Gray-500}"
+                                                        ThumbColor="{DynamicResource Gray-White}"
+                                                        TrackBorderColor="{DynamicResource Gray-200}"
+                                                        TrackColor="{DynamicResource RedColor}" />
+                                                </Setter.Value>
+                                            </Setter>
+                                        </VisualState.Setters>
+                                    </VisualState>
+                                    <VisualState x:Name="Off">
+                                        <VisualState.Setters>
+                                            <Setter Property="SwitchSettings">
+                                                <Setter.Value>
+                                                    <sync:CupertinoSwitchSettings
+                                                        x:TypeArguments="button:OffState"
+                                                        ThumbBorderColor="{DynamicResource Gray-200}"
+                                                        ThumbColor="{DynamicResource Gray-White}"
+                                                        TrackBorderColor="{DynamicResource Gray-200}"
+                                                        TrackColor="{DynamicResource Gray-500}" />
+                                                </Setter.Value>
+                                            </Setter>
+                                        </VisualState.Setters>
+                                    </VisualState>
+                                </VisualStateGroup>
+                            </VisualStateManager.VisualStateGroups>
+                        </sync:SfSwitch>
+                    </Grid>
+
+                    <BoxView BackgroundColor="Gray" HeightRequest="1" />
+
+                    <!--  Printer setting session  -->
+                    <Label Style="{StaticResource ReceiptPrinterHeaderLabelStyle}" Text="{texts:Translate PrinterConfig}" />
+
+                    <sync:SfRadioGroup
+                        x:Name="radioGroup1"
+                        Margin="5,0,0,0"
+                        IsEnabled="{Binding IsEnableConnectToPrinter}"
+                        Orientation="Horizontal">
+                        <Label
+                            x:Name="connectionType"
+                            Style="{StaticResource ReceiptPrinterLabelStyle}"
+                            Text="{texts:Translate ConnectType}" />
+                        <sync:SfRadioButton
+                            x:Name="bluetooth"
+                            FontSize="{StaticResource MediumSize}"
+                            IsChecked="{Binding IsBluetoothChecked}"
+                            IsThreeState="False"
+                            StateChanged="Bluetooth_StateChanged"
+                            Text="Bluetooth"
+                            TextColor="Black" />
+                        <sync:SfRadioButton
+                            x:Name="wifi"
+                            Margin="10,0,0,0"
+                            FontSize="{StaticResource MediumSize}"
+                            IsChecked="{Binding IsWifiChecked}"
+                            IsEnabled="False"
+                            IsThreeState="False"
+                            StateChanged="Wifi_StateChanged"
+                            Text="Wifi"
+                            TextColor="Black" />
+                        <!--<sync:SfRadioButton x:Name="usb"  Margin="10,0,0,0" Text="Usb" FontSize="{StaticResource MediumSize}" TextColor="LightSteelBlue" IsThreeState="False" IsChecked="{Binding IsUsbChecked}" StateChanged="Usb_StateChanged" ></sync:SfRadioButton>-->
+                    </sync:SfRadioGroup>
+
+                    <sync:SfRadioGroup
+                        x:Name="radioGroup2"
+                        Margin="5,0,0,0"
+                        IsEnabled="{Binding IsEnableConnectToPrinter}"
+                        Orientation="Horizontal">
+                        <Label
+                            x:Name="paperType"
+                            Style="{StaticResource ReceiptPrinterLabelStyle}"
+                            Text="{texts:Translate PaperSize}" />
+                        <sync:SfRadioButton
+                            x:Name="sizeA"
+                            FontSize="{StaticResource MediumSize}"
+                            IsChecked="{Binding IsSizeAChecked}"
+                            IsThreeState="False"
+                            StateChanged="SizeA_StateChanged"
+                            Text="58mm."
+                            TextColor="Black" />
+                        <sync:SfRadioButton
+                            x:Name="sizeB"
+                            Margin="10,0,0,0"
+                            FontSize="{StaticResource MediumSize}"
+                            IsChecked="{Binding IsSizeBChecked}"
+                            IsThreeState="False"
+                            StateChanged="SizeB_StateChanged"
+                            Text="80mm."
+                            TextColor="Black" />
+                    </sync:SfRadioGroup>
+
+                    <!--  Device selection  -->
+                    <inputLayout:SfTextInputLayout
+                        Margin="5,0,0,10"
+                        Padding="0,5"
+                        ContainerBackgroundColor="Transparent"
+                        ContainerType="Outlined"
+                        FocusedColor="{DynamicResource colPrim}"
+                        Hint="{texts:Translate SelectDevice}"
+                        HorizontalOptions="Fill"
+                        LeadingViewPosition="Inside">
+                        <combobox:SfComboBox
+                            x:Name="devicesCombobox"
+                            DataSource="{Binding DeviceList}"
+                            DisplayMemberPath="Name"
+                            IsEnabled="{Binding IsEnableConnectToPrinter}"
+                            SelectionChanged="OnDevice_SelectionChanged"
+                            ShowBorder="false"
+                            TextSize="14">
+                            <combobox:SfComboBox.HeightRequest>
+                                <OnPlatform x:TypeArguments="x:Double">
+                                    <On Platform="iOS">18</On>
+                                    <On Platform="Android">50</On>
+                                </OnPlatform>
+                            </combobox:SfComboBox.HeightRequest>
+                        </combobox:SfComboBox>
+
+                        <inputLayout:SfTextInputLayout.LeadingView>
+                            <Label
+                                FontSize="18"
+                                Text="&#xf02f;"
+                                TextColor="{DynamicResource colPrim}"
+                                VerticalTextAlignment="Center">
+                                <Label.FontFamily>
+                                    <OnPlatform
+                                        x:TypeArguments="x:String"
+                                        Android="fa-solid-900.ttf#Font Awesome 5 Free Solid"
+                                        iOS="Font Awesome 5 Free" />
+                                </Label.FontFamily>
+                            </Label>
+                        </inputLayout:SfTextInputLayout.LeadingView>
+                    </inputLayout:SfTextInputLayout>
+
+                    <BoxView
+                        Margin="10,0,10,0"
+                        BackgroundColor="Gray"
+                        HeightRequest="1" />
+
+                    <StackLayout
+                        Margin="6,0,0,10"
+                        IsEnabled="{Binding IsEnableConnectToPrinter}"
+                        Orientation="Horizontal">
+                        <!--  Ask before print option  -->
+                        <Label
+                            IsEnabled="{Binding IsEnableConnectToPrinter}"
+                            Style="{StaticResource ReceiptPrinterLabelStyle}"
+                            Text="{texts:Translate AskForPrinting}" />
+                        <!--<Switch
+                            HorizontalOptions="EndAndExpand"
+                            IsEnabled="{Binding IsEnableConnectToPrinter}"
+                            IsToggled="{Binding IsEnableConfirmBeforePrint}"
+                            VerticalOptions="Center" />-->
+                        <sync:SfSwitch
+                            Margin="0"
+                            AllowIndeterminateState="False"
+                            HeightRequest="28"
+                            HorizontalOptions="EndAndExpand"
+                            IsEnabled="{Binding IsEnableConnectToPrinter}"
+                            IsOn="{Binding IsEnableConfirmBeforePrint}"
+                            VisualType="Cupertino">
+                            <VisualStateManager.VisualStateGroups>
+                                <VisualStateGroup x:Name="CommonStates">
+                                    <VisualState x:Name="On">
+                                        <VisualState.Setters>
+                                            <Setter Property="SwitchSettings">
+                                                <Setter.Value>
+                                                    <sync:CupertinoSwitchSettings
+                                                        x:TypeArguments="button:OnState"
+                                                        ThumbBorderColor="{DynamicResource Gray-500}"
+                                                        ThumbColor="{DynamicResource Gray-White}"
+                                                        TrackBorderColor="{DynamicResource Gray-200}"
+                                                        TrackColor="{DynamicResource RedColor}" />
+                                                </Setter.Value>
+                                            </Setter>
+                                        </VisualState.Setters>
+                                    </VisualState>
+                                    <VisualState x:Name="Off">
+                                        <VisualState.Setters>
+                                            <Setter Property="SwitchSettings">
+                                                <Setter.Value>
+                                                    <sync:CupertinoSwitchSettings
+                                                        x:TypeArguments="button:OffState"
+                                                        ThumbBorderColor="{DynamicResource Gray-200}"
+                                                        ThumbColor="{DynamicResource Gray-White}"
+                                                        TrackBorderColor="{DynamicResource Gray-200}"
+                                                        TrackColor="{DynamicResource Gray-500}" />
+                                                </Setter.Value>
+                                            </Setter>
+                                        </VisualState.Setters>
+                                    </VisualState>
+                                </VisualStateGroup>
+                            </VisualStateManager.VisualStateGroups>
+                        </sync:SfSwitch>
+                    </StackLayout>
+
+                    <!--  Print additional copy option  -->
+                    <!--<StackLayout Orientation="Horizontal" Margin="6,0,0,10" IsEnabled="{Binding IsEnableConnectToPrinter}">
+                        <Label Text="{texts:Translate CopyPrint}" Style="{StaticResource ReceiptPrinterLabelStyle}" IsEnabled="{Binding IsEnableConnectToPrinter}"/>
+                        <Switch IsToggled="{Binding IsEnablePrintCopy}" VerticalOptions="Center" HorizontalOptions="EndAndExpand" IsEnabled="{Binding IsEnableConnectToPrinter}"/>
+                    </StackLayout>-->
+
+                    <!--  Auto cut paper option  -->
+                    <!--<StackLayout Orientation="Horizontal" Margin="6,0,0,10" IsEnabled="{Binding IsEnableConnectToPrinter}">
+                        <Label Text="Tự động cắt giấy" Style="{StaticResource ReceiptPrinterLabelStyle}" IsEnabled="{Binding IsEnableConnectToPrinter}"/>
+                        <Switch IsToggled="{Binding IsEnableAutoCutPaper}" VerticalOptions="Center" HorizontalOptions="EndAndExpand" IsEnabled="{Binding IsEnableConnectToPrinter}"/>
+                    </StackLayout>-->
+
+                    <BoxView BackgroundColor="Gray" HeightRequest="1" />
+
+                    <Label Style="{StaticResource ReceiptPrinterHeaderLabelStyle}" Text="{texts:Translate SaleReceipt}" />
+                    <StackLayout Orientation="Horizontal">
+                        <StackLayout.Margin>
+                            <OnPlatform Android="10,0,0,0" iOS="10,10,0,0" />
+                        </StackLayout.Margin>
+                        <Label Style="{StaticResource ReceiptPrinterLabelStyle}" Text="Header:" />
+                        <local:ExtendedEntry
+                            FontFamily="{StaticResource NunitoRegular}"
+                            FontSize="{StaticResource MediumSize}"
+                            HorizontalOptions="FillAndExpand"
+                            Placeholder="{texts:Translate SaleReceiptHeader}"
+                            Text="{Binding SaleOrderHeader}" />
+                    </StackLayout>
+                    <StackLayout Orientation="Horizontal">
+                        <StackLayout.Margin>
+                            <OnPlatform Android="10,0,0,0" iOS="10,15,0,10" />
+                        </StackLayout.Margin>
+                        <Label Style="{StaticResource ReceiptPrinterLabelStyle}" Text="Footer:" />
+                        <local:ExtendedEntry
+                            FontFamily="{StaticResource NunitoRegular}"
+                            FontSize="{StaticResource MediumSize}"
+                            HorizontalOptions="FillAndExpand"
+                            Placeholder="{texts:Translate SaleReceiptFooter}"
+                            Text="{Binding SaleOrderFooter}" />
+                    </StackLayout>
+
+                    <Label Style="{StaticResource ReceiptPrinterHeaderLabelStyle}" Text="{texts:Translate PurchaseReceipt}" />
+                    <StackLayout Margin="10,0,0,10" Orientation="Horizontal">
+                        <StackLayout.Margin>
+                            <OnPlatform Android="10,0,0,10" iOS="10,10,0,10" />
+                        </StackLayout.Margin>
+                        <Label Style="{StaticResource ReceiptPrinterLabelStyle}" Text="Header:" />
+                        <local:ExtendedEntry
+                            FontFamily="{StaticResource NunitoRegular}"
+                            FontSize="{StaticResource MediumSize}"
+                            HorizontalOptions="FillAndExpand"
+                            Placeholder="{texts:Translate PurchaseReceiptHeader}"
+                            Text="{Binding PurchaseOrderHeader}" />
+                    </StackLayout>
+
+                    <!--  Misc setting  -->
+                    <Label Style="{StaticResource ReceiptPrinterHeaderLabelStyle}" Text="{texts:Translate MiscSetting}" />
+                    <!--<StackLayout Orientation="Horizontal" Margin="10,0,0,10">
+                        <Label Text="Hiện giá bán Sỉ" Style="{StaticResource ReceiptPrinterLabelStyle}"/>
+                        <Switch IsToggled="{Binding IsShownCostPrice}" VerticalOptions="Center" HorizontalOptions="EndAndExpand"/>
+                    </StackLayout>-->
+
+                    <StackLayout Margin="10,0,0,10" Orientation="Horizontal">
+                        <!--  Show store address  -->
+                        <Label Style="{StaticResource ReceiptPrinterLabelStyle}" Text="{texts:Translate ShowAddress}" />
+                        <!--<Switch
+                            HorizontalOptions="EndAndExpand"
+                            IsToggled="{Binding IsShownAddress}"
+                            VerticalOptions="Center" />-->
+                        <sync:SfSwitch
+                            Margin="0"
+                            AllowIndeterminateState="False"
+                            HeightRequest="28"
+                            HorizontalOptions="EndAndExpand"
+                            IsOn="{Binding IsShownAddress}"
+                            VisualType="Cupertino">
+                            <VisualStateManager.VisualStateGroups>
+                                <VisualStateGroup x:Name="CommonStates">
+                                    <VisualState x:Name="On">
+                                        <VisualState.Setters>
+                                            <Setter Property="SwitchSettings">
+                                                <Setter.Value>
+                                                    <sync:CupertinoSwitchSettings
+                                                        x:TypeArguments="button:OnState"
+                                                        ThumbBorderColor="{DynamicResource Gray-500}"
+                                                        ThumbColor="{DynamicResource Gray-White}"
+                                                        TrackBorderColor="{DynamicResource Gray-200}"
+                                                        TrackColor="{DynamicResource RedColor}" />
+                                                </Setter.Value>
+                                            </Setter>
+                                        </VisualState.Setters>
+                                    </VisualState>
+                                    <VisualState x:Name="Off">
+                                        <VisualState.Setters>
+                                            <Setter Property="SwitchSettings">
+                                                <Setter.Value>
+                                                    <sync:CupertinoSwitchSettings
+                                                        x:TypeArguments="button:OffState"
+                                                        ThumbBorderColor="{DynamicResource Gray-200}"
+                                                        ThumbColor="{DynamicResource Gray-White}"
+                                                        TrackBorderColor="{DynamicResource Gray-200}"
+                                                        TrackColor="{DynamicResource Gray-500}" />
+                                                </Setter.Value>
+                                            </Setter>
+                                        </VisualState.Setters>
+                                    </VisualState>
+                                </VisualStateGroup>
+                            </VisualStateManager.VisualStateGroups>
+                        </sync:SfSwitch>
+                    </StackLayout>
+
+                    <StackLayout Margin="10,0,0,10" Orientation="Horizontal">
+                        <!--  Show store phone number  -->
+                        <Label Style="{StaticResource ReceiptPrinterLabelStyle}" Text="{texts:Translate ShowPhoneNumber}" />
+                        <!--<Switch
+                            HorizontalOptions="EndAndExpand"
+                            IsToggled="{Binding IsShownPhoneNumber}"
+                            VerticalOptions="Center" />-->
+                        <sync:SfSwitch
+                            Margin="0"
+                            AllowIndeterminateState="False"
+                            HeightRequest="28"
+                            HorizontalOptions="EndAndExpand"
+                            IsOn="{Binding IsShownPhoneNumber}"
+                            VisualType="Cupertino">
+                            <VisualStateManager.VisualStateGroups>
+                                <VisualStateGroup x:Name="CommonStates">
+                                    <VisualState x:Name="On">
+                                        <VisualState.Setters>
+                                            <Setter Property="SwitchSettings">
+                                                <Setter.Value>
+                                                    <sync:CupertinoSwitchSettings
+                                                        x:TypeArguments="button:OnState"
+                                                        ThumbBorderColor="{DynamicResource Gray-500}"
+                                                        ThumbColor="{DynamicResource Gray-White}"
+                                                        TrackBorderColor="{DynamicResource Gray-200}"
+                                                        TrackColor="{DynamicResource RedColor}" />
+                                                </Setter.Value>
+                                            </Setter>
+                                        </VisualState.Setters>
+                                    </VisualState>
+                                    <VisualState x:Name="Off">
+                                        <VisualState.Setters>
+                                            <Setter Property="SwitchSettings">
+                                                <Setter.Value>
+                                                    <sync:CupertinoSwitchSettings
+                                                        x:TypeArguments="button:OffState"
+                                                        ThumbBorderColor="{DynamicResource Gray-200}"
+                                                        ThumbColor="{DynamicResource Gray-White}"
+                                                        TrackBorderColor="{DynamicResource Gray-200}"
+                                                        TrackColor="{DynamicResource Gray-500}" />
+                                                </Setter.Value>
+                                            </Setter>
+                                        </VisualState.Setters>
+                                    </VisualState>
+                                </VisualStateGroup>
+                            </VisualStateManager.VisualStateGroups>
+                        </sync:SfSwitch>
+                    </StackLayout>
+
+                    <!--<StackLayout Orientation="Horizontal" Margin="10,0,0,10">
+                        <Label Text="{texts:Translate ShowReceiptBarcode}" Style="{StaticResource ReceiptPrinterLabelStyle}"/>
+                        <Switch IsToggled="{Binding IsShownBarcode}" VerticalOptions="Center" HorizontalOptions="EndAndExpand"/>
+                    </StackLayout>
+
+                    <StackLayout Orientation="Horizontal" Margin="10,0,0,10">
+                        <Label Text="{texts:Translate ShowDate}" Style="{StaticResource ReceiptPrinterLabelStyle}"/>
+                        <Switch IsToggled="{Binding IsShownPrintDate}" VerticalOptions="Center" HorizontalOptions="EndAndExpand"/>
+                    </StackLayout>-->
+
+                </StackLayout>
+            </ScrollView>
+            <StackLayout
+                Grid.Row="1"
+                Padding="0"
+                BackgroundColor="{DynamicResource Gray-900}">
+                <!--<local:AdBanner Size="Standardbanner" VerticalOptions="EndAndExpand" />-->
+                <local:AdmobControl BackgroundColor="Transparent" />
+            </StackLayout>
+            <local:LoadingIndicator
+                Grid.RowSpan="2"
+                HorizontalOptions="Fill"
+                IsRunning="{Binding IsBusy, Mode=TwoWay}"
+                VerticalOptions="Fill" />
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

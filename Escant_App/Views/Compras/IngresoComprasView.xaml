@@ -1,0 +1,775 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage x:Class="Escant_App.Views.Compras.IngresoComprasView"
+            xmlns="http://xamarin.com/schemas/2014/forms"
+            xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+            xmlns:animations="clr-namespace:Escant_App.Animations;assembly=Escant_App"
+            xmlns:behaviors="clr-namespace:Escant_App.Behaviors;assembly=Escant_App"
+            xmlns:converters="clr-namespace:Escant_App.Converters;assembly=Escant_App"
+            xmlns:customViews="clr-namespace:Escant_App.UserControls;assembly=Escant_App"
+            xmlns:ffimageloading="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+            xmlns:local="clr-namespace:Escant_App.UserControls;assembly=Escant_App"            
+            xmlns:pulltoRefresh="clr-namespace:Syncfusion.SfPullToRefresh.XForms;assembly=Syncfusion.SfPullToRefresh.XForms"
+            xmlns:sync="clr-namespace:Syncfusion.ListView.XForms;assembly=Syncfusion.SfListView.XForms"
+            xmlns:texts="clr-namespace:ManijodaServicios.Resources.Texts;assembly=ManijodaServicios"
+            xmlns:truly="clr-namespace:DataModel.Base;assembly=DataModel"
+            xmlns:transformations="clr-namespace:FFImageLoading.Transformations;assembly=FFImageLoading.Transformations"
+            xmlns:triggers="clr-namespace:Escant_App.Triggers;assembly=Escant_App"
+            xmlns:viewModelBase="clr-namespace:Escant_App.ViewModels.Base;assembly=Escant_App"
+            xmlns:views="clr-namespace:Escant_App.Views;assembly=Escant_App"
+            xmlns:yummy="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView" xmlns:progressBar="clr-namespace:Syncfusion.XForms.ProgressBar;assembly=Syncfusion.SfProgressBar.XForms" xmlns:buttons="clr-namespace:Syncfusion.XForms.Buttons;assembly=Syncfusion.Buttons.XForms"
+             xmlns:admob="clr-namespace:MarcTron.Plugin.Controls;assembly=Plugin.MtAdmob"
+             Title="{Binding PageTitle}"
+            viewModelBase:ViewModelLocator.AutoWireViewModel="true">
+    <!--#region 0. Recursos-->
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Style TargetType="Span" x:Key="TitleSpan">
+                <Setter Property="Text" Value="{Binding Title}"/>
+                <Setter Property="FontSize" Value="13"/>
+                <Setter Property="FontAttributes" Value="Bold"/>
+            </Style>
+            <Style TargetType="Span" x:Key="TitleStatusSpan">
+                <Setter Property="Text" Value="{Binding TitleStatus}"/>
+                <Setter Property="FontSize" Value="12"/>
+            </Style>
+            <Style TargetType="Span" x:Key="DateSpan">
+                <Setter Property="Text" Value="{Binding Date}"/>
+                <Setter Property="FontSize" Value="12"/>
+            </Style>
+            <Style TargetType="Span" x:Key="SpaceSpan">
+                <Setter Property="Text" Value="&#10;"/>
+                <Setter Property="FontSize" Value="12"/>
+                <Setter Property="TextColor" Value="Transparent"/>
+            </Style>
+            <Style x:Key="ProductNameTitleStyle" TargetType="{x:Type Label}">
+                <Setter Property="FontFamily" Value="{StaticResource NunitoRegular}" />
+                <Setter Property="FontSize" Value="{StaticResource LargeSize}" />
+                <Setter Property="HorizontalOptions" Value="Start" />
+                <Setter Property="VerticalOptions" Value="Center" />
+                <Setter Property="Margin" Value="0, 0" />
+                <Setter Property="TextColor" Value="{DynamicResource BlackColor}" />
+            </Style>
+
+            <Style x:Key="ProductUnitStyle" TargetType="{x:Type Label}">
+                <Setter Property="FontFamily" Value="{StaticResource OpenSansRegular}" />
+                <Setter Property="FontSize" Value="{StaticResource MediumSize}" />
+                <Setter Property="HorizontalOptions" Value="Start" />
+                <Setter Property="VerticalOptions" Value="Start" />
+                <Setter Property="Margin" Value="0, 0" />
+                <Setter Property="TextColor" Value="{DynamicResource BlackTextColor}" />
+            </Style>
+
+            <Style x:Key="ProductPriceStyle" TargetType="{x:Type Label}">
+                <Setter Property="FontFamily" Value="{StaticResource PoppinsSemiBold}" />
+                <Setter Property="FontSize" Value="{StaticResource LittleSize}" />
+                <Setter Property="HorizontalOptions" Value="Start" />
+                <Setter Property="VerticalOptions" Value="Start" />
+                <Setter Property="Margin" Value="10, 5, 10, 0" />
+                <Setter Property="TextColor" Value="{DynamicResource Accent}" />
+            </Style>
+
+            <Style x:Key="NoProductInPurchaseOrdersButtonStyle" TargetType="{x:Type Button}">
+                <Setter Property="FontFamily" Value="{StaticResource PoppinsMedium}" />
+                <Setter Property="FontSize" Value="{StaticResource MediumSize}" />
+                <Setter Property="HorizontalOptions" Value="FillAndExpand" />
+                <Setter Property="VerticalOptions" Value="FillAndExpand" />
+                <Setter Property="Margin" Value="0, 0" />
+                <Setter Property="BackgroundColor" Value="Transparent" />
+                <Setter Property="TextColor" Value="{DynamicResource WhiteColor}" />
+            </Style>
+
+            <Style x:Key="HasProductInPurchaseOrdersButtonStyle" TargetType="{x:Type Button}">
+                <Setter Property="FontFamily" Value="{StaticResource PoppinsMedium}" />
+                <Setter Property="FontSize" Value="{StaticResource MediumSize}" />
+                <Setter Property="HorizontalOptions" Value="FillAndExpand" />
+                <Setter Property="VerticalOptions" Value="FillAndExpand" />
+                <Setter Property="Margin" Value="0, 0" />
+                <Setter Property="BorderColor" Value="{DynamicResource Gray-White}" />
+                <Setter Property="BackgroundColor" Value="{DynamicResource colPrim}" />
+                <Setter Property="TextColor" Value="{DynamicResource Gray-White}" />
+            </Style>
+            <Style x:Key="SaldoExistenteStyle" TargetType="{x:Type Label}">
+                <Setter Property="FontFamily" Value="{StaticResource PoppinsSemiBold}" />
+                <Setter Property="FontSize" Value="{StaticResource LittleSize}" />
+                <Setter Property="HorizontalOptions" Value="Start" />
+                <Setter Property="VerticalOptions" Value="Start" />
+                <Setter Property="Margin" Value="120, 5, 10, 0" />
+                <Setter Property="TextColor" Value="{DynamicResource Accent}" />
+            </Style>
+
+            <animations:StoryBoard x:Key="ProductsAnimation" Target="{x:Reference productList}">
+                <animations:FadeInAnimation
+                    Delay="250"
+                    Direction="Up"
+                    Duration="1500" />
+            </animations:StoryBoard>
+            <converters:ImageConverter x:Key="ByteArrayToImage" />
+            <converters:StatusConverter x:Key="StringToStatus"/>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <!--#endregion 0. Recursos-->
+    <!--  TOOLBAR ITEMS  -->
+    <ContentPage.ToolbarItems>
+        <ToolbarItem
+            Command="{Binding Cancel_Command}"
+            Order="Primary"
+            Priority="0"
+            Text="{texts:Translate Cancel}">
+            <ToolbarItem.Icon>
+                <OnPlatform x:TypeArguments="FileImageSource">
+                    <On Platform="Android" Value="cross_512.png" />
+                </OnPlatform>
+            </ToolbarItem.Icon>
+        </ToolbarItem>
+
+        <ToolbarItem            
+            Clicked="OpenOrdenEstado"
+            Order="Primary"
+            Priority="1"
+            Text="{texts:Translate Save}">
+            <ToolbarItem.Icon>
+                <OnPlatform x:TypeArguments="FileImageSource">
+                    <On Platform="Android" Value="save.png" />
+                </OnPlatform>
+            </ToolbarItem.Icon>
+        </ToolbarItem>
+    </ContentPage.ToolbarItems>
+    <!--  CONTENIDO  -->
+    <!--#region 1. Disparadores-->
+    <ContentPage.Triggers>
+        <EventTrigger Event="Appearing">
+            <triggers:BeginAnimation Animation="{StaticResource ProductsAnimation}" />
+        </EventTrigger>
+    </ContentPage.Triggers>
+    <!--#endregion 1. Disparadores-->
+    <!--#region 2. Contenido-->
+    <ContentPage.Content>
+        <!--#region 2.1 Grid Principal-->
+        <Grid>
+            <!--#region 2.1.1 Cuerpo de Presentación-->
+            <StackLayout Spacing="0" VerticalOptions="FillAndExpand">
+                <!--#region 2.1.1.1 Barra de Búsqueda-->
+                <Grid Padding="15,0,15,25" BackgroundColor="{DynamicResource colPrim}">
+                    <Frame
+                        Margin="0"
+                        Padding="10,0"
+                        BackgroundColor="{StaticResource Gray-White}"
+                        CornerRadius="{OnPlatform Android='23',
+                                                  iOS='28'}"
+                        HeightRequest="{OnPlatform Android='46',
+                                                   iOS='56'}">
+                        <Grid ColumnSpacing="0" HeightRequest="{OnPlatform Android='46', iOS='56'}">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+
+                            <Image
+                                Margin="8,8,0,8"
+                                Aspect="AspectFit"
+                                Source="barcode">
+                                <Image.GestureRecognizers>
+                                    <TapGestureRecognizer Tapped="ScanBarcode" />
+                                </Image.GestureRecognizers>
+                            </Image>
+
+                            <SearchBar
+                                x:Name="barraBusqueda"
+                                Grid.Column="1"
+                                Margin="5,5,10,5"
+                                FontFamily="{StaticResource NunitoItalic}"
+                                FontSize="14"
+                                HorizontalOptions="FillAndExpand"
+                                Placeholder="{texts:Translate ProductSearchPlaceHolder}"
+                                Text="{Binding ScannedText, Mode=TwoWay}"
+                                TextChanged="SearchBar_OnTextChanged"
+                                VerticalOptions="FillAndExpand">
+                                <SearchBar.PlaceholderColor>
+                                    <OnPlatform x:TypeArguments="Color" Android="DarkGray" />
+                                </SearchBar.PlaceholderColor>
+                                <SearchBar.BackgroundColor>
+                                    <OnPlatform
+                                        x:TypeArguments="Color"
+                                        Android="{StaticResource WhiteColor}"
+                                        iOS="Transparent" />
+                                </SearchBar.BackgroundColor>
+                                <SearchBar.TextColor>
+                                    <OnPlatform
+                                        x:TypeArguments="Color"
+                                        Android="{StaticResource BlackColor}"
+                                        iOS="{StaticResource BlackColor}" />
+                                </SearchBar.TextColor>
+                                <SearchBar.CancelButtonColor>
+                                    <OnPlatform
+                                        x:TypeArguments="Color"
+                                        Android="{StaticResource BlackColor}"
+                                        iOS="{StaticResource BlackColor}" />
+                                </SearchBar.CancelButtonColor>
+                            </SearchBar>
+                        </Grid>
+                    </Frame>
+                </Grid>
+                <!--#endregion 2.1.1.1 Barra de Búsqueda-->
+                <!--#region 2.1.1.2 Información-->
+                <yummy:PancakeView
+                    Margin="0,-15,0,0"
+                    Padding="5,10,5,0"
+                    BackgroundColor="{DynamicResource MainWrapperBackgroundColor}"
+                    CornerRadius="20,20,0,0"
+                    VerticalOptions="FillAndExpand">
+                    <StackLayout Spacing="0">
+                        <!--#region 2.1.1.2.1 Botones de Ordenamiento e Información para Edición-->
+                        <Grid
+                            Padding="0,0,0,5"
+                            HeightRequest="30"
+                            VerticalOptions="End">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <StackLayout Orientation="Horizontal" Spacing="0">
+                                <StackLayout.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding NameSortingCommand}" />
+                                </StackLayout.GestureRecognizers>
+                                <Label
+                                    x:Name="LabelSortDirection"
+                                    IsVisible="False"
+                                    Text="{Binding OrdenamientoPorNombre}" />
+                                <Label
+                                    Margin="10,0"
+                                    FontFamily="{StaticResource FontAwesome}"
+                                    FontSize="20"
+                                    HorizontalOptions="StartAndExpand"
+                                    Text="&#xf0dc;"
+                                    TextColor="{DynamicResource Gray-800}"
+                                    VerticalOptions="Center">
+                                    <Label.Triggers>
+                                        <DataTrigger
+                                            Binding="{Binding Source={x:Reference LabelSortDirection}, Path=Text}"
+                                            TargetType="Label"
+                                            Value="-1">
+                                            <Setter Property="Text" Value="&#xf0dc;" />
+                                        </DataTrigger>
+                                        <DataTrigger
+                                            Binding="{Binding Source={x:Reference LabelSortDirection}, Path=Text}"
+                                            TargetType="Label"
+                                            Value="0">
+                                            <Setter Property="Text" Value="&#xf15d;" />
+                                        </DataTrigger>
+                                        <DataTrigger
+                                            Binding="{Binding Source={x:Reference LabelSortDirection}, Path=Text}"
+                                            TargetType="Label"
+                                            Value="1">
+                                            <Setter Property="Text" Value="&#xf881;" />
+                                        </DataTrigger>
+                                    </Label.Triggers>
+                                </Label>
+                                <Label
+                                    FontFamily="{StaticResource PoppinsRegular}"
+                                    FontSize="10"
+                                    HorizontalOptions="StartAndExpand"
+                                    Text="{texts:Translate NameLabel}"
+                                    TextColor="{DynamicResource Gray-900}"
+                                    VerticalOptions="Center" />
+                            </StackLayout>
+                            <Label
+                                Grid.Column="1"
+                                Margin="10,0"
+                                FontFamily="{StaticResource PoppinsLight}"
+                                FontSize="10"
+                                HorizontalOptions="EndAndExpand"
+                                Text="{texts:Translate PresionarExtensamente}"
+                                TextColor="{DynamicResource Gray-800}"
+                                VerticalOptions="Center" />
+                        </Grid>
+                        <!--#endregion 2.1.1.2.1 Botones de Ordenamiento e Información para Edición-->                        
+                        <BoxView BackgroundColor="{DynamicResource Gray-500}" HeightRequest="0.5" />
+                        <!--#region 2.1.1.2.2 Área de Selección de Filtros-->
+                        <Frame
+                            Padding="10,0,10,0"
+                            BackgroundColor="{StaticResource GrayColor}"
+                            HasShadow="{OnPlatform Android='True',
+                                                   iOS='False'}"
+                            HeightRequest="{OnPlatform Android='50',
+                                                       iOS='60'}"
+                            OutlineColor="{OnPlatform Android='Transparent',
+                                                      iOS='Transparent'}">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="0.35*" />
+                                    <ColumnDefinition Width="1" />
+                                    <ColumnDefinition Width="0.3*" />
+                                    <ColumnDefinition Width="1" />
+                                    <ColumnDefinition Width="0.35*" />
+                                </Grid.ColumnDefinitions>
+                                <Grid Grid.Column="0">
+                                    <Grid.GestureRecognizers>
+                                        <TapGestureRecognizer Command="{Binding OpenCategoryCommand}" />
+                                    </Grid.GestureRecognizers>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="0.5*" />
+                                        <RowDefinition Height="0.5*" />
+                                    </Grid.RowDefinitions>
+                                    <Label
+                                        Grid.Row="0"
+                                        FontFamily="{StaticResource NunitoBold}"
+                                        FontSize="10"
+                                        HorizontalOptions="Start"
+                                        Text="{texts:Translate CategoryFilter}"
+                                        TextColor="{StaticResource colPrim}"
+                                        VerticalOptions="EndAndExpand" />
+                                    <StackLayout Grid.Row="1" Orientation="Horizontal">
+
+                                        <Label
+                                            FontFamily="{StaticResource NunitoRegular}"
+                                            FontSize="12"
+                                            HorizontalOptions="StartAndExpand"
+                                            LineBreakMode="TailTruncation"
+                                            Text="{Binding SelectedCategory.Name}"
+                                            VerticalOptions="Start" />
+                                        <Image
+                                            Margin="0,2,0,0"
+                                            HeightRequest="12"
+                                            HorizontalOptions="End"
+                                            Opacity="0.6"
+                                            Source="ic_drop_down"
+                                            VerticalOptions="Start"
+                                            WidthRequest="12" />
+                                    </StackLayout>
+                                </Grid>
+                                <BoxView
+                                    Grid.Column="1"
+                                    BackgroundColor="Gray"
+                                    HeightRequest="30"
+                                    VerticalOptions="Center"
+                                    WidthRequest="1" />
+                                <Grid Grid.Column="2">
+                                    <Grid.GestureRecognizers>
+                                        <TapGestureRecognizer Command="{Binding OpenSupplierCommand}" />
+                                    </Grid.GestureRecognizers>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="0.5*" />
+                                        <RowDefinition Height="0.5*" />
+                                    </Grid.RowDefinitions>
+                                    <Label
+                                        Grid.Row="0"
+                                        FontFamily="{StaticResource NunitoBold}"
+                                        FontSize="10"
+                                        HorizontalOptions="Start"
+                                        Text="{texts:Translate SupplierFilter}"
+                                        TextColor="{StaticResource colPrim}"
+                                        VerticalOptions="EndAndExpand" />
+                                    <StackLayout Grid.Row="1" Orientation="Horizontal">
+
+                                        <Label
+                                            FontFamily="{StaticResource NunitoRegular}"
+                                            FontSize="12"
+                                            HorizontalOptions="StartAndExpand"
+                                            LineBreakMode="TailTruncation"
+                                            Text="{Binding SelectedSupplier.Name}"
+                                            VerticalOptions="Start" />
+                                        <Image
+                                            Margin="0,2,0,0"
+                                            HeightRequest="12"
+                                            HorizontalOptions="End"
+                                            Opacity="0.6"
+                                            Source="ic_drop_down"
+                                            VerticalOptions="Start"
+                                            WidthRequest="12" />
+                                    </StackLayout>
+                                </Grid>
+                                <BoxView
+                                    Grid.Column="3"
+                                    BackgroundColor="Gray"
+                                    HeightRequest="30"
+                                    VerticalOptions="Center"
+                                    WidthRequest="1" />
+                                <!--#region 2.1.1.2.3.1 Área de Carrito-->
+                                <Grid Grid.Column="4" Margin="30,0" WidthRequest="80" HeightRequest="80" HorizontalOptions="End" VerticalOptions="Center">
+                                    <Grid BackgroundColor="#d1b1b0" WidthRequest="50" HeightRequest="50" HorizontalOptions="Center" VerticalOptions="Center">
+                                        <Grid.Clip>
+                                            <EllipseGeometry Center="25,25" RadiusX="25" RadiusY="25"/>
+                                        </Grid.Clip>
+                                        <Image Source="{Binding ImagenBotonOrden}" WidthRequest="25" HeightRequest="25" HorizontalOptions="Center" VerticalOptions="Center"/>
+                                    </Grid>
+                                    <Grid BackgroundColor="White" WidthRequest="30" HeightRequest="30" Margin="10" HorizontalOptions="End" VerticalOptions="Start">
+                                        <Grid.Clip>
+                                            <EllipseGeometry Center="15,15" RadiusX="15" RadiusY="15"/>
+                                        </Grid.Clip>
+                                        <Label Text="{Binding CantidadOrden}" TextColor="#a36767" FontAttributes="Bold" HorizontalOptions="Center" VerticalOptions="Center"/>
+                                    </Grid>
+                                    <Grid.GestureRecognizers>
+                                        <TapGestureRecognizer Tapped="OpenOrder" CommandParameter="1"/>
+                                    </Grid.GestureRecognizers>
+                                </Grid>
+                                <!--#endregion 2.1.1.2.3.1 Área de Carrito-->
+                            </Grid>
+                        </Frame>
+                        <!--#endregion 2.1.1.2.2 Área de Selección de Filtros-->
+                        <BoxView BackgroundColor="{DynamicResource Gray-500}" HeightRequest="1" />
+
+                        <!--#region 2.1.1.2.3 Área de Selección de Ítems-->
+                        <Grid
+                            Padding="0,5"
+                            RowSpacing="0"
+                            VerticalOptions="FillAndExpand">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="2" />
+                                <RowDefinition Height="*" />
+                                <RowDefinition Height="{OnPlatform Android='55', iOS='60'}" />
+                                <RowDefinition Height="Auto" />
+                            </Grid.RowDefinitions>
+                            <pulltoRefresh:SfPullToRefresh
+                                x:Name="pullToRefresh"
+                                Grid.Row="1"
+                                IsRefreshing="{Binding IsRefreshing}"
+                                PullingThreshold="150"
+                                RefreshContentHeight="50"
+                                RefreshContentWidth="50"
+                                Refreshing="Handle_Refreshing"
+                                TransitionMode="Push">
+                                <pulltoRefresh:SfPullToRefresh.ProgressStrokeWidth>
+                                    <OnPlatform x:TypeArguments="x:Double">
+                                        <On Platform="Android">
+                                            <OnIdiom
+                                                x:TypeArguments="x:Double"
+                                                Phone="6"
+                                                Tablet="3" />
+                                        </On>
+                                        <On Platform="UWP" Value="2" />
+                                        <On Platform="iOS,macOS" Value="2" />
+                                    </OnPlatform>
+                                </pulltoRefresh:SfPullToRefresh.ProgressStrokeWidth>
+                                <pulltoRefresh:SfPullToRefresh.PullableContent>
+                                    <sync:SfListView
+                                        x:Name="productList"
+                                        Margin="0,0,0,0"
+                                        AutomationId="productList"
+                                        IsStickyHeader="True"
+                                        ItemTapped="ProductList_ItemTapped"
+                                        ItemsSource="{Binding Registros}"
+                                        SelectionBackgroundColor="#ECECEC"
+                                        SelectionChanged="ProductList_SelectionChanged"
+                                        SelectionGesture="Hold"
+                                        SelectionMode="Single">
+                                        <sync:SfListView.ItemSize>
+                                            <OnIdiom
+                                                x:TypeArguments="x:Double"
+                                                Desktop="200"
+                                                Phone="140"
+                                                Tablet="170" />
+                                        </sync:SfListView.ItemSize>
+                                        <sync:SfListView.LayoutManager>
+                                            <sync:GridLayout SpanCount="3" />
+                                        </sync:SfListView.LayoutManager>
+                                        <sync:SfListView.ItemTemplate>
+                                            <DataTemplate>
+                                                <Grid Padding="2" HeightRequest="150">
+                                                    <Frame
+                                                        Padding="0"
+                                                        BackgroundColor="{DynamicResource Gray-White}"
+                                                        BorderColor="{DynamicResource Gray-300}"
+                                                        CornerRadius="6"
+                                                        HasShadow="False"
+                                                        IsClippedToBounds="True">
+                                                        <Grid>
+
+                                                            <Label Style="{StaticResource ProductPriceStyle}" Text="{Binding PrecioCompra}" />
+
+                                                            <ffimageloading:CachedImage
+                                                                Margin="30"
+                                                                Aspect="AspectFill"
+                                                                BackgroundColor="{DynamicResource Gray-200}"
+                                                                CacheType="Memory"
+                                                                DownsampleToViewSize="true"
+                                                                HeightRequest="110"
+                                                                HorizontalOptions="FillAndExpand"
+                                                                LoadingPlaceholder="picture_icon.png"
+                                                                Source="{Binding Imagen, Converter={StaticResource ByteArrayToImage},ConverterParameter=String}"
+                                                                TransformPlaceholders="True"
+                                                                VerticalOptions="FillAndExpand" />
+
+                                                            <BoxView
+                                                                BackgroundColor="{DynamicResource Gray-900}"
+                                                                HeightRequest="40"
+                                                                Opacity="0.6"
+                                                                VerticalOptions="End" />
+
+                                                            <Label
+                                                                Margin="5,0"
+                                                                FontFamily="{StaticResource PoppinsRegular}"
+                                                                FontSize="12"
+                                                                LineBreakMode="TailTruncation"
+                                                                LineHeight="{OnPlatform Android='0.8',
+                                                                                        iOS='1.0'}"
+                                                                MaxLines="2"
+                                                                Text="{Binding Nombre}"
+                                                                TextColor="{DynamicResource Gray-White}"
+                                                                VerticalOptions="EndAndExpand" />
+                                                            <Label Style="{StaticResource SaldoExistenteStyle}" 
+                                                                   Text="{Binding CantidadSaldoFinal,Mode=TwoWay}" 
+                                                                   HorizontalTextAlignment="End"
+                                                                   Margin="97,4,0,0"/>
+                                                        </Grid>
+                                                    </Frame>
+                                                </Grid>
+                                            </DataTemplate>
+                                        </sync:SfListView.ItemTemplate>
+                                    </sync:SfListView>
+                                </pulltoRefresh:SfPullToRefresh.PullableContent>
+                            </pulltoRefresh:SfPullToRefresh>
+
+                            <Grid
+                                Grid.Row="2"
+                                BackgroundColor="{DynamicResource MainWrapperBackgroundColor}"
+                                IsVisible="True">
+                                <StackLayout Padding="{OnPlatform Android='5,0,5,5', iOS='0'}" IsVisible="{Binding SinProductosOrdenDetalleCompra}">
+                                    <yummy:PancakeView
+                                        Margin="0,0"
+                                        BackgroundGradientAngle="90"
+                                        BackgroundGradientEndColor="{DynamicResource GradientEndColor}"
+                                        BackgroundGradientStartColor="{DynamicResource GradientStartColor}"
+                                        BorderThickness="1"
+                                        CornerRadius="5"
+                                        Elevation="3"
+                                        HeightRequest="50"
+                                        HorizontalOptions="FillAndExpand">
+                                        <Button
+                                            CornerRadius="{OnPlatform Android='6',
+                                                                      iOS='5'}"
+                                            HeightRequest="48"
+                                            Style="{StaticResource NoProductInPurchaseOrdersButtonStyle}"
+                                            Text="{texts:Translate NoItemAdded}" />
+                                    </yummy:PancakeView>
+
+                                </StackLayout>
+                                <StackLayout
+                                    Padding="{OnPlatform Android='8,0,8,5',
+                                                         iOS='0'}"
+                                    IsVisible="{Binding TieneItemsSeleccionados}"
+                                    Orientation="Horizontal">
+                                    <Button
+                                        BackgroundColor="{DynamicResource RedColor}"
+                                        Command="{Binding CancelOrderCommand}"
+                                        CornerRadius="{OnPlatform Android='6',
+                                                                  iOS='5'}"
+                                        FontFamily="{StaticResource PoppinsMedium}"
+                                        HeightRequest="48"
+                                        Text="{texts:Translate Discard}"
+                                        TextColor="White" />
+                                    <Button
+                                        Clicked="GotoPurchaseOrder"
+                                        CornerRadius="{OnPlatform Android='6',
+                                                                  iOS='5'}"
+                                        HeightRequest="48"
+                                        IsVisible="{Binding TieneItemsSeleccionados}"
+                                        Style="{StaticResource HasProductInPurchaseOrdersButtonStyle}"
+                                        Text="{Binding ResumenRegistrosOrdenCompra}" />
+                                </StackLayout>
+                            </Grid>
+                            <Grid x:Name="OrderView" Grid.RowSpan="3" RowDefinitions="*" TranslationX="170"
+                  BackgroundColor="#cfadad" WidthRequest="170" HorizontalOptions="End"
+                                  IsVisible="{Binding IsVisibleDetalleCarrito}">
+                                <!--<Grid BackgroundColor="#a36767" WidthRequest="60" HeightRequest="60" 
+                      HorizontalOptions="Center" VerticalOptions="Center">
+                                    <Grid.Clip>
+                                        <EllipseGeometry Center="30,30" RadiusX="30" RadiusY="30"/>
+                                    </Grid.Clip>
+                                    <Image Source="close.png" WidthRequest="35" HeightRequest="35" HorizontalOptions="Center" 
+                           VerticalOptions="Center"/>
+                                    <Grid.GestureRecognizers>
+                                        <TapGestureRecognizer Tapped="CloseOrder"/>
+                                    </Grid.GestureRecognizers>
+                                </Grid>-->
+                                <Grid Grid.Row="0" RowDefinitions="Auto, *, Auto">
+                                    <Label Margin="10" Text="{texts:Translate TuOrdenLabel}" TextColor="#a36767" FontSize="20" FontAttributes="Bold" HorizontalOptions="Center"/>
+                                    <!--<SearchBar TextChanged="SearchBar_TextChanged"/>-->
+                                    <CollectionView Grid.Row="1" 
+                                                    Margin="10" 
+                                                    SelectionMode="None" 
+                                                    ItemsSource="{Binding OrdenSeleccionado.OrdenDetalleCompras}">
+                                        <CollectionView.ItemsLayout>
+                                            <LinearItemsLayout Orientation="Vertical" ItemSpacing="10"/>
+                                        </CollectionView.ItemsLayout>
+                                        <CollectionView.EmptyView>
+                                            <Label Text="No order found." TextColor="Gray" HorizontalOptions="Center" VerticalOptions="Center"/>
+                                        </CollectionView.EmptyView>
+                                        <CollectionView.ItemTemplate>
+                                            <DataTemplate>
+                                                <Grid WidthRequest="120" HeightRequest="120" HorizontalOptions="Center">
+                                                    <Grid x:Name="{Binding Id}" Margin="5,0" WidthRequest="115" HeightRequest="115" HorizontalOptions="End" VerticalOptions="Center">
+                                                        <Grid BackgroundColor="#d1b1b0" WidthRequest="115" HeightRequest="115" HorizontalOptions="Center" VerticalOptions="Center">
+                                                            <!--<Grid.Clip>
+                                                                <EllipseGeometry Center="50,50" RadiusX="50" RadiusY="50"/>
+                                                            </Grid.Clip>
+                                                            <Image Source="bag.png" WidthRequest="25" HeightRequest="25" HorizontalOptions="Center" VerticalOptions="Center"/>-->
+
+                                                            <ffimageloading:CachedImage
+                                                                Margin="5"
+                                                                Aspect="AspectFill"
+                                                                BackgroundColor="{DynamicResource Gray-200}"
+                                                                CacheType="Memory"
+                                                                DownsampleToViewSize="true"
+                                                                HeightRequest="100"
+                                                                HorizontalOptions="Center"
+                                                                LoadingPlaceholder="picture_icon.png"
+                                                                Source="{Binding Imagen, Converter={StaticResource ByteArrayToImage},ConverterParameter=String}"
+                                                                TransformPlaceholders="True"                                                                    
+                                                                VerticalOptions="Center"/>
+                                                            <BoxView
+                                                                BackgroundColor="{DynamicResource Gray-900}"
+                                                                HeightRequest="40"
+                                                                Opacity="0.6"
+                                                                VerticalOptions="End" />
+
+                                                            <Label
+                                                                Margin="1,0"
+                                                                FontFamily="{StaticResource PoppinsRegular}"
+                                                                FontSize="12"
+                                                                LineBreakMode="TailTruncation"
+                                                                LineHeight="{OnPlatform Android='0.8',
+                                                                                        iOS='1.0'}"
+                                                                MaxLines="2"
+                                                                Text="{Binding NombreItem}"
+                                                                TextColor="{DynamicResource Gray-White}"
+                                                                VerticalOptions="EndAndExpand" />
+                                                        </Grid>
+                                                        <Grid BackgroundColor="White" WidthRequest="30" HeightRequest="30" Margin="10" HorizontalOptions="End" VerticalOptions="Start">
+                                                            <Grid.Clip>
+                                                                <EllipseGeometry Center="15,15" RadiusX="15" RadiusY="15"/>
+                                                            </Grid.Clip>
+                                                            <Label Text="{Binding Cantidad, Mode=TwoWay}" TextColor="#a36767" FontAttributes="Bold" HorizontalOptions="Center" VerticalOptions="Center"/>
+                                                        </Grid>
+                                                        <Grid.GestureRecognizers>
+                                                            <TapGestureRecognizer Tapped="OpenDetalleOrden" CommandParameter="{Binding .}"/>
+                                                        </Grid.GestureRecognizers>
+                                                    </Grid>
+                                                    <!--<Image Source="{Binding Image}" WidthRequest="100" HeightRequest="100" HorizontalOptions="Center" VerticalOptions="Center" />-->
+                                                </Grid>
+                                            </DataTemplate>
+                                        </CollectionView.ItemTemplate>
+                                    </CollectionView>
+                                    <StackLayout Grid.Row="2" Margin="10" HorizontalOptions="CenterAndExpand">
+                                        <Label Text="{Binding OrdenSeleccionado.Cantidad, StringFormat='{0} Items'}" TextColor="White" FontSize="18" FontAttributes="Bold" HorizontalOptions="Center"/>
+                                        <Label Text="{Binding OrdenSeleccionado.ValorTotal, StringFormat='Total ${0}'}" TextColor="White" FontSize="18" FontAttributes="Bold" HorizontalOptions="Center"/>
+                                    </StackLayout>
+                                </Grid>
+                            </Grid>
+                            <Grid x:Name="EstadoOrdenView" Grid.RowSpan="3" TranslationX="170"
+                  BackgroundColor="#cfadad" WidthRequest="170" HorizontalOptions="End"
+                                  IsVisible="{Binding IsVisibleEstadoOrden}">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="*"/>
+                                </Grid.RowDefinitions>
+                                <Label Text="{texts:Translate TrackOrden}" Margin="0,20,0,0" FontSize="15" HorizontalTextAlignment= "Center" Grid.Row="0"
+                                       TextColor="{StaticResource BlackTextColor}"
+                                       FontFamily="{StaticResource NunitoBold}"/>
+                                <Frame
+                                    Grid.Row="1"
+                            Padding="10,0,10,0"
+                                    Margin="3,0,3,0"
+                            BackgroundColor="{StaticResource  AccentColor}"
+                            HasShadow="{OnPlatform Android='True',
+                                                   iOS='False'}"
+                            HeightRequest="{OnPlatform Android='50',
+                                                       iOS='60'}"
+                            OutlineColor="{OnPlatform Android='Transparent',
+                                                      iOS='Transparent'}">
+                                    <Grid>
+                                        <Grid.GestureRecognizers>
+                                            <TapGestureRecognizer Command="{Binding OpenProveedorCompraCommand}" />
+                                        </Grid.GestureRecognizers>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="0.5*" />
+                                            <RowDefinition Height="0.5*" />
+                                        </Grid.RowDefinitions>
+
+                                        <Label
+                                        Grid.Row="0"
+                                        FontFamily="{StaticResource NunitoBold}"
+                                        FontSize="10"
+                                        HorizontalOptions="Start"
+                                        Text="{texts:Translate ProveedorLabel}"
+                                        TextColor="{StaticResource BlackTextColor}"
+                                        VerticalOptions="EndAndExpand" />
+                                        <StackLayout Grid.Row="1" Orientation="Horizontal">
+
+                                            <Label
+                                            FontFamily="{StaticResource NunitoRegular}"
+                                            FontSize="12"
+                                            HorizontalOptions="StartAndExpand"
+                                            LineBreakMode="TailTruncation"
+                                            Text="{Binding ProveedorCompra}"
+                                            VerticalOptions="Start" />
+                                            <Image
+                                            Margin="0,2,0,0"
+                                            HeightRequest="12"
+                                            HorizontalOptions="End"
+                                            Opacity="0.6"
+                                            Source="ic_drop_down"
+                                            VerticalOptions="Start"
+                                            WidthRequest="12" />
+                                        </StackLayout>
+                                    </Grid>
+                                </Frame>
+                                <ScrollView Grid.Row="2" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" >
+                                    <StackLayout>
+                                        <progressBar:SfStepProgressBar TitleAlignment="Start" BackgroundColor="Transparent" Orientation="Vertical" x:Name="stepProgress" Margin="16"
+                                                                       StepViewTappedCommand="{Binding TappedCommand}"
+                                                                       BindableLayout.ItemsSource="{Binding OrdenSeleccionado.OrdenEstado}"
+                                                                       >
+                                            <BindableLayout.ItemTemplate>
+                                                <DataTemplate>
+                                                    <progressBar:StepView x:Name="stepView" ProgressValue="{Binding Estado}" Status="{Binding StatusProgreso}">
+                                                        <progressBar:StepView.PrimaryFormattedText>
+                                                            <FormattedString>
+                                                                <Span x:Name="span1" ClassId="1" Text="{Binding Estado}" Style="{StaticResource TitleSpan}" TextColor="#6E6E6E" />
+                                                                <Span Style="{StaticResource SpaceSpan}"/>
+                                                                <Span Style="{StaticResource SpaceSpan}"/>
+                                                                <Span x:Name="span2" ClassId="2" Text="{Binding StatusProgreso}" Style="{StaticResource TitleStatusSpan}" TextColor="Transparent"/>
+                                                                <Span Style="{StaticResource SpaceSpan}"/>
+                                                                <Span x:Name="span3" ClassId="3" Text="{Binding FechaProcesoStr}" Style="{StaticResource DateSpan}" TextColor="Transparent"/>
+                                                                <Span Style="{StaticResource SpaceSpan}"/>
+                                                                <Span x:Name="span4" ClassId="4" Text="{Binding PoseeAdjunto}" Style="{StaticResource DateSpan}" TextColor="Transparent"/>
+                                                            </FormattedString>
+                                                        </progressBar:StepView.PrimaryFormattedText>
+                                                    </progressBar:StepView>
+                                                </DataTemplate>
+                                            </BindableLayout.ItemTemplate>
+                                        </progressBar:SfStepProgressBar>
+                                    </StackLayout>
+                                </ScrollView>
+                            </Grid>
+                            <StackLayout
+                                Grid.Row="3"
+                                Padding="0"
+                                BackgroundColor="{DynamicResource Gray-900}">
+                                <!--<local:AdBanner Size="Standardbanner" VerticalOptions="EndAndExpand" />-->
+                                <!--<local:AdmobControl BackgroundColor="Transparent" />-->
+                                <admob:MTAdView 
+                                    BackgroundColor="Transparent"
+                                    IsEnabled="True"
+                                    IsVisible="True"
+                                    AdsId="ca-app-pub-3940256099942544/6300978111" />
+                            </StackLayout>
+                        </Grid>
+                        <!--#endregion 2.1.1.2.3 Área de Selección de Ítems-->
+                    </StackLayout>
+                </yummy:PancakeView>
+                <!--#endregion 2.1.1.2 Información-->    
+            </StackLayout>
+            <!--#endregion 2.1.1 Cuerpo de Presentación-->
+            <!--#region 2.1.2 Indicador de Ejecución-->
+            <local:LoadingIndicator
+                Grid.Row="0"
+                HorizontalOptions="Fill"
+                IsRunning="{Binding IsBusy, Mode=TwoWay}"
+                VerticalOptions="Fill" />
+            <!--#endregion 2.1.2 Indicador de Ejecución-->
+        </Grid>
+        <!--#endregion 2.1 Grid Principal-->
+    </ContentPage.Content>
+    <!--#endregion 2. Contenido-->
+</ContentPage>

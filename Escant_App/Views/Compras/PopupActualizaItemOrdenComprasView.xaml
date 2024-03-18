@@ -1,0 +1,290 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<pages:PopupPage
+    x:Class="Escant_App.Views.Compras.PopupActualizaItemOrdenComprasView"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:animations="clr-namespace:Rg.Plugins.Popup.Animations;assembly=Rg.Plugins.Popup"
+    xmlns:button="clr-namespace:Syncfusion.XForms.Buttons;assembly=Syncfusion.Buttons.XForms"
+    xmlns:customViews="clr-namespace:Escant_App.UserControls;assembly=Escant_App"
+    xmlns:numeric="clr-namespace:Syncfusion.SfNumericUpDown.XForms;assembly=Syncfusion.SfNumericUpDown.XForms"
+    xmlns:converters="clr-namespace:Escant_App.Converters;assembly=Escant_App"
+    xmlns:numericTextEntry="clr-namespace:Syncfusion.SfNumericTextBox.XForms;assembly=Syncfusion.SfNumericTextBox.XForms"
+    xmlns:pages="clr-namespace:Rg.Plugins.Popup.Pages;assembly=Rg.Plugins.Popup"
+    xmlns:texts="clr-namespace:ManijodaServicios.Resources.Texts;assembly=ManijodaServicios"
+    xmlns:viewModelBase="clr-namespace:Escant_App.ViewModels.Base;assembly=Escant_App"
+    xmlns:ffimageloading="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"    
+    xmlns:transformations="clr-namespace:FFImageLoading.Transformations;assembly=FFImageLoading.Transformations"
+    viewModelBase:ViewModelLocator.AutoWireViewModel="true">
+    <!--#region 0. Recursos-->
+    <pages:PopupPage.Resources>
+        <ResourceDictionary>
+            <Style x:Key="PopupItemHeaderStyle" TargetType="{x:Type Label}">
+                <Setter Property="FontFamily" Value="{StaticResource NunitoBold}" />
+                <Setter Property="FontSize" Value="{StaticResource LargeSize}" />
+                <Setter Property="TextColor" Value="{StaticResource BlackColor}" />
+                <Setter Property="HorizontalTextAlignment" Value="Start" />
+                <Setter Property="VerticalTextAlignment" Value="Center" />
+                <Setter Property="Margin" Value="0,0,0,0" />
+            </Style>
+
+            <Style x:Key="PopupLabelStyle" TargetType="{x:Type Label}">
+                <Setter Property="FontFamily" Value="{StaticResource NunitoRegular}" />
+                <Setter Property="FontSize" Value="{StaticResource LargeSize}" />
+                <Setter Property="TextColor" Value="Black" />
+                <Setter Property="HorizontalOptions" Value="StartAndExpand" />
+                <Setter Property="VerticalOptions" Value="Center" />
+                <Setter Property="Margin" Value="10,0,0,0" />
+            </Style>
+            <converters:ImageConverter x:Key="ByteArrayToImage"/>
+        </ResourceDictionary>
+    </pages:PopupPage.Resources>
+    <!--#endregion 0. Recursos-->
+    <!--#region 1. Animación-->
+    <pages:PopupPage.Animation>
+        <animations:ScaleAnimation
+            DurationIn="700"
+            EasingIn="SpringOut"
+            PositionIn="Bottom"
+            PositionOut="Center"
+            ScaleIn="1"
+            ScaleOut="0.7" />
+    </pages:PopupPage.Animation>
+    <!--#endregion 1. Animación-->
+    <!--#region 2. Contenido-->
+    <StackLayout HorizontalOptions="Center" VerticalOptions="Center">
+        <Frame
+            x:Name="FrameContainer"
+            Margin="10"
+            BackgroundColor="White"
+            CornerRadius="10"
+            HorizontalOptions="Center">
+            <StackLayout
+                Padding="10,5"
+                IsClippedToBounds="True"
+                Spacing="3">
+                <Grid RowSpacing="0">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="60" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+
+                    <Grid Grid.Row="0" RowSpacing="0">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="55" />
+                            <RowDefinition Height="1" />
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="0.2*" />
+                            <ColumnDefinition Width="0.8*" />
+                        </Grid.ColumnDefinitions>
+                        <!--<Image
+                            Grid.Row="0"
+                            Grid.Column="0"
+                            HeightRequest="44"
+                            HorizontalOptions="Start"
+                            Source="calpad"
+                            VerticalOptions="End"
+                            WidthRequest="40" />-->
+                        <ffimageloading:CachedImage
+                                x:Name="clienteImage"                                                    
+                                Grid.Row="0"
+                                Grid.Column="0"
+                                Margin="0,2,0,2"
+                                Aspect="Fill"
+                                CacheType="All"
+                                DownsampleToViewSize="true"
+                                ErrorPlaceholder="picture_icon.png"
+                                HeightRequest="50"
+                                HorizontalOptions="Center"
+                                LoadingPlaceholder="picture_icon.png"
+                                Source="{Binding OrdenDetalleCompraSeleccionado.Imagen, Converter={StaticResource ByteArrayToImage},ConverterParameter=String}"
+                                TransformPlaceholders="True"
+                                WidthRequest="50">
+                            <ffimageloading:CachedImage.Transformations>
+                                <transformations:RoundedTransformation
+                                        BorderHexColor="#000000"
+                                        BorderSize="5"
+                                        Radius="20" />
+                            </ffimageloading:CachedImage.Transformations>
+                        </ffimageloading:CachedImage>
+                        <Label
+                            Grid.Row="0"
+                            Grid.Column="1"
+                            LineBreakMode="TailTruncation"
+                            Style="{StaticResource PopupItemHeaderStyle}"
+                            Text="{Binding OrdenDetalleCompraSeleccionado.NombreItem}" />
+                        <BoxView
+                            Grid.Row="1"
+                            Grid.Column="1"
+                            BackgroundColor="Black"
+                            HeightRequest="1" />
+                    </Grid>
+
+                    <Grid Grid.Row="1" ColumnSpacing="8">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="60" />
+                            <RowDefinition Height="60" />
+                            <RowDefinition Height="60" />
+                            <RowDefinition Height="60" />
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="0.5*" />
+                            <ColumnDefinition Width="0.5*" />
+                        </Grid.ColumnDefinitions>
+
+                        <Label
+                            Grid.Row="0"
+                            Grid.Column="0"
+                            HorizontalOptions="Fill"
+                            Style="{StaticResource PopupLabelStyle}"
+                            Text="{texts:Translate StockBalances}" />
+                        <customViews:CustomSfNumericTextBox
+                            x:Name="NumericTextBoxSaldo"
+                            Grid.Row="0"
+                            Grid.Column="1"
+                            IsReadOnly="True"
+                            BorderColor="Transparent"
+                            FontFamily="{StaticResource PoppinsSemiBold}"
+                            FormatString="n"
+                            HorizontalOptions="FillAndExpand"
+                            MaximumNumberDecimalDigits="0"
+                            TextAlignment="Center"
+                            TextColor="{DynamicResource Gray-Black}"
+                            VerticalOptions="Center"
+                            SelectAllOnFocus="True"
+                            Value="{Binding OrdenDetalleCompraSeleccionado.Cantidad, Mode=TwoWay}" />
+
+                        <Label
+                            Grid.Row="1"
+                            Grid.Column="0"
+                            Style="{StaticResource PopupLabelStyle}"
+                            Text="{texts:Translate Quantity}" />
+                        <!--<numeric:SfNumericUpDown
+                            x:Name="NumericUpDownQuantity"
+                            Grid.Row="1"
+                            Grid.Column="1"
+                            AllowNull="false"
+                            FontFamily="{StaticResource PoppinsSemiBold}"
+                            FormatString="n"
+                            HorizontalOptions="StartAndExpand"
+                            MaximumDecimalDigits="0"
+                            Minimum="1"
+                            SpinButtonAlignment="Both"
+                            TextAlignment="Center"
+                            TextColor="Black"
+                            UpDownButtonColor="{DynamicResource colPrim}"
+                            ValueChanged="Handle_ValueChanged"
+                            VerticalOptions="Center"
+                            Value="{Binding OrdenDetalleCompraSeleccionado.Cantidad}">
+                            <numeric:SfNumericUpDown.IncrementButtonSettings>
+                                <numeric:UpDownButtonSettings ButtonHeight="45" ButtonWidth="45">
+                                    <numeric:UpDownButtonSettings.ButtonView>
+                                        <Grid HeightRequest="40" WidthRequest="40">
+                                            <Label
+                                                Margin="0"
+                                                FontFamily="{StaticResource FontAwesome}"
+                                                FontSize="25"
+                                                HorizontalOptions="End"
+                                                Text="&#xf055;"
+                                                TextColor="{DynamicResource colPrim}"
+                                                VerticalOptions="Center" />
+                                        </Grid>
+                                    </numeric:UpDownButtonSettings.ButtonView>
+                                </numeric:UpDownButtonSettings>
+                            </numeric:SfNumericUpDown.IncrementButtonSettings>
+                            <numeric:SfNumericUpDown.DecrementButtonSettings>
+                                <numeric:UpDownButtonSettings ButtonHeight="45" ButtonWidth="45">
+                                    <numeric:UpDownButtonSettings.ButtonView>
+                                        <Grid HeightRequest="40" WidthRequest="40">
+                                            <Label
+                                                Margin="0"
+                                                FontFamily="{StaticResource FontAwesome}"
+                                                FontSize="25"
+                                                HorizontalOptions="Start"
+                                                Text="&#xf056;"
+                                                TextColor="{DynamicResource RedColor}"
+                                                VerticalOptions="Center" />
+                                        </Grid>
+                                    </numeric:UpDownButtonSettings.ButtonView>
+                                </numeric:UpDownButtonSettings>
+                            </numeric:SfNumericUpDown.DecrementButtonSettings>
+                        </numeric:SfNumericUpDown>-->
+                        <customViews:CustomSfNumericTextBox
+                            x:Name="NumericTextBoxCantidad"
+                            Grid.Row="1"
+                            Grid.Column="1"
+                            BorderColor="Transparent"
+                            FontFamily="{StaticResource PoppinsSemiBold}"
+                            FormatString="n"
+                            HorizontalOptions="FillAndExpand"
+                            MaximumNumberDecimalDigits="0"
+                            TextAlignment="Center"
+                            TextColor="{DynamicResource BlackColor}"
+                            VerticalOptions="Center"
+                            SelectAllOnFocus="True"
+                            Value="{Binding OrdenDetalleCompraSeleccionado.Cantidad, Mode=TwoWay}" />
+
+                        <Label
+                            Grid.Row="2"
+                            Grid.Column="0"
+                            Style="{StaticResource PopupLabelStyle}"
+                            Text="{texts:Translate ItemCost}" />
+                        <!--<customViews:CustomSfNumericTextBox
+                            x:Name="NumericTextBoxPrice"
+                            Grid.Row="2"
+                            Grid.Column="1"
+                            BorderColor="Transparent"
+                            FormatString="n"
+                            HorizontalOptions="FillAndExpand"
+                            MaximumNumberDecimalDigits="2"
+                            VerticalOptions="Center"
+                            Value="{Binding ProductInPurchaseOrder.PurchasePrice, Mode=TwoWay}" />-->
+                        <customViews:CustomSfNumericTextBox
+                            x:Name="NumericTextBoxPrice"
+                            Grid.Row="2"
+                            Grid.Column="1"
+                            IsReadOnly="True"
+                            BorderColor="Transparent"
+                            FontFamily="{StaticResource PoppinsSemiBold}"
+                            FormatString="n"
+                            HorizontalOptions="FillAndExpand"
+                            MaximumNumberDecimalDigits="2"
+                            TextAlignment="Center"
+                            TextColor="{DynamicResource Orange}"
+                            VerticalOptions="Center"
+                            Value="{Binding OrdenDetalleCompraSeleccionado.ValorCompra, Mode=TwoWay}" />
+
+
+                        <button:SfButton
+                            Grid.Row="3"
+                            Grid.Column="0"
+                            BackgroundColor="Green"
+                            BorderColor="{DynamicResource colPrim}"
+                            BorderWidth="2"
+                            Command="{Binding Ok_Command}"
+                            CornerRadius="4"
+                            FontFamily="{StaticResource NunitoRegular}"
+                            HorizontalOptions="FillAndExpand"
+                            Text="OK"
+                            TextColor="White"
+                            VerticalOptions="Center" />
+                        <button:SfButton
+                            Grid.Row="3"
+                            Grid.Column="1"
+                            BackgroundColor="Red"
+                            BorderColor="{DynamicResource colPrim}"
+                            BorderWidth="2"
+                            Command="{Binding Cancel_Command}"
+                            CornerRadius="4"
+                            FontFamily="{StaticResource NunitoRegular}"
+                            HorizontalOptions="FillAndExpand"
+                            Text="{texts:Translate Cancel}"
+                            TextColor="White"
+                            VerticalOptions="Center" />
+                    </Grid>
+                </Grid>
+            </StackLayout>
+        </Frame>
+    </StackLayout>
+    <!--#endregion 2. Contenido-->
+</pages:PopupPage>

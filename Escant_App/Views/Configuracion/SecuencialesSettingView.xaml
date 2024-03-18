@@ -1,0 +1,288 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage x:Class="Escant_App.Views.Configuracion.SecuencialesSettingView"
+             xmlns="http://xamarin.com/schemas/2014/forms"
+            xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:inputLayout="clr-namespace:Syncfusion.XForms.TextInputLayout;assembly=Syncfusion.Core.XForms"
+             xmlns:texts="clr-namespace:ManijodaServicios.Resources.Texts;assembly=ManijodaServicios"
+            xmlns:viewModelBase="clr-namespace:Escant_App.ViewModels.Base;assembly=Escant_App"
+            Title="{texts:Translate SecuencialesSettingTitulo}"
+            viewModelBase:ViewModelLocator.AutoWireViewModel="true"
+            BackgroundColor="{DynamicResource MainWrapperBackgroundColor}">
+    <!--#region 0. Recursos-->
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Style x:Key="AppSettingHeaderLabelStyle" TargetType="{x:Type Label}">
+                <Setter Property="FontFamily" Value="{StaticResource NunitoBold}" />
+                <Setter Property="FontSize" Value="{StaticResource LargeSize}" />
+                <Setter Property="HorizontalOptions" Value="Start" />
+                <Setter Property="VerticalOptions" Value="Center" />
+                <Setter Property="Margin" Value="0,0,0,10" />
+                <Setter Property="TextColor" Value="{DynamicResource colPrim}" />
+            </Style>
+
+            <Style x:Key="AppSettingCheckItemLabelStyle" TargetType="{x:Type Label}">
+                <Setter Property="FontFamily" Value="{StaticResource NunitoRegular}" />
+                <Setter Property="FontSize" Value="{StaticResource MediumSize}" />
+                <Setter Property="HorizontalOptions" Value="Start" />
+                <Setter Property="VerticalOptions" Value="Center" />
+                <Setter Property="Margin" Value="0, 0" />
+                <Setter Property="TextColor" Value="{StaticResource BlackTextColor}" />
+            </Style>
+            <Style
+                x:Key="TitleLabelStyle"
+                BasedOn="{StaticResource SpectralRegularLabelStyle}"
+                TargetType="Label">
+                <Setter Property="TextColor" Value="{StaticResource BlueColor}" />
+                <Setter Property="HorizontalOptions" Value="FillAndExpand" />
+                <Setter Property="FontSize" Value="{StaticResource LittleSize}" />
+                <Setter Property="Margin" Value="0,10,0,0" />
+            </Style>
+
+            <Style x:Key="StoreSettingHeaderStyle" TargetType="{x:Type Label}">
+                <Setter Property="FontFamily" Value="{StaticResource NunitoRegular}" />
+                <Setter Property="FontSize" Value="{StaticResource MidMediumSize}" />
+                <Setter Property="HorizontalOptions" Value="FillAndExpand" />
+                <Setter Property="Margin" Value="0,10,0,0" />
+            </Style>
+
+            <Style x:Key="StoreSettingLabelStyle" TargetType="{x:Type Label}">
+                <Setter Property="FontFamily" Value="{StaticResource NunitoRegular}" />
+                <Setter Property="FontSize" Value="{StaticResource LargeSize}" />
+                <Setter Property="TextColor" Value="{StaticResource BlackTextColor}" />
+                <Setter Property="HorizontalOptions" Value="FillAndExpand" />
+                <Setter Property="VerticalOptions" Value="Center" />
+                <Setter Property="Margin" Value="0,10,0,0" />
+            </Style>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <!--#endregion 0.Recursos-->
+    <!--#region 1. TOOLBAR ITEMS  -->
+    <ContentPage.ToolbarItems>
+        <ToolbarItem
+            Command="{Binding DiscardCommand}"
+            Order="Primary"
+            Priority="0"
+            Text="{texts:Translate Cancel}">
+            <ToolbarItem.Icon>
+                <OnPlatform x:TypeArguments="FileImageSource">
+                    <On Platform="Android" Value="cross_512.png" />
+                </OnPlatform>
+            </ToolbarItem.Icon>
+        </ToolbarItem>
+        <ToolbarItem
+            Command="{Binding SaveSettingCommand}"
+            Order="Primary"
+            Priority="1"
+            Text="{texts:Translate Save}">
+            <ToolbarItem.Icon>
+                <OnPlatform x:TypeArguments="FileImageSource">
+                    <On Platform="Android" Value="save.png" />
+                </OnPlatform>
+            </ToolbarItem.Icon>
+        </ToolbarItem>
+    </ContentPage.ToolbarItems>
+    <!--#endregion 1. TOOLBAR ITEMS  -->
+    <!--#region 2.  CUERPO DE LA PANTALLA  -->
+    <ContentPage.Content>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+
+            <ScrollView Grid.Row="0">
+                <StackLayout>
+                    <Grid Margin="15,10,15,10">
+                        <Grid.RowSpacing>
+                            <OnPlatform
+                                x:TypeArguments="x:Double"
+                                Android="-5"
+                                iOS="10" />
+                        </Grid.RowSpacing>
+                        <!--  DEFINICIÓN DE FORMULARIO  -->
+                        <Grid.RowDefinitions>
+                            <!--0. SecuencialOrdenCompra-->
+                            <RowDefinition Height="Auto" />
+                            <!--1. SecuencialOrdenCompraPeriodo-->
+                            <RowDefinition Height="Auto" />
+                            <!--2. SecuencialOrdenVenta-->
+                            <RowDefinition Height="Auto" />
+                            <!--3. SecuencialOrdenVentaPeriodo-->
+                            <RowDefinition Height="Auto" />
+                            <!--4. SecuencialReciboPago-->
+                            <RowDefinition Height="Auto" />
+                            <!--5. SecuencialReciboPagoPeriodo-->
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+                        <!--
+                        Definición de los controles
+                        -->
+                        <!--#region 0. SecuencialOrdenCompra-->
+                        <inputLayout:SfTextInputLayout
+                            Grid.Row="0"
+                            ContainerBackgroundColor="Transparent"
+                            ContainerType="Outlined"
+                            FocusedColor="{DynamicResource colPrim}"
+                            HasError="{Binding IsSecuencialOrdenCompraValid}"
+                            Hint="{texts:Translate SecuencialOrdenCompraHint}"
+                            HorizontalOptions="Fill"
+                            LeadingViewPosition="Inside">
+                            <Entry MaxLength="80" Text="{Binding SecuencialOrdenCompra.Value}" />
+                            <inputLayout:SfTextInputLayout.LeadingView>
+                                <Label
+                                    FontSize="18"
+                                    Text="&#xf1ad;"
+                                    TextColor="{DynamicResource colPrim}"
+                                    VerticalTextAlignment="Center">
+                                    <Label.FontFamily>
+                                        <OnPlatform
+                                            x:TypeArguments="x:String"
+                                            Android="fa-solid-900.ttf#Font Awesome 5 Free Solid"
+                                            iOS="Font Awesome 5 Free" />
+                                    </Label.FontFamily>
+                                </Label>
+                            </inputLayout:SfTextInputLayout.LeadingView>
+                        </inputLayout:SfTextInputLayout>
+                        <!--#endregion 0. SecuencialOrdenCompra-->
+                        <!--#region 1. SecuencialOrdenCompraPeriodo-->
+                        <inputLayout:SfTextInputLayout
+                            Grid.Row="1"
+                            ContainerBackgroundColor="Transparent"
+                            ContainerType="Outlined"
+                            FocusedColor="{DynamicResource colPrim}"
+                            HasError="{Binding IsSecuencialOrdenCompraPeriodoValid}"
+                            Hint="{texts:Translate SecuencialOrdenCompraPeriodoHint}"
+                            HorizontalOptions="Fill"
+                            LeadingViewPosition="Inside">
+                            <Entry MaxLength="80" Text="{Binding SecuencialOrdenCompraPeriodo.Value}" />
+                            <inputLayout:SfTextInputLayout.LeadingView>
+                                <Label
+                                    FontSize="18"
+                                    Text="&#xf1ad;"
+                                    TextColor="{DynamicResource colPrim}"
+                                    VerticalTextAlignment="Center">
+                                    <Label.FontFamily>
+                                        <OnPlatform
+                                            x:TypeArguments="x:String"
+                                            Android="fa-solid-900.ttf#Font Awesome 5 Free Solid"
+                                            iOS="Font Awesome 5 Free" />
+                                    </Label.FontFamily>
+                                </Label>
+                            </inputLayout:SfTextInputLayout.LeadingView>
+                        </inputLayout:SfTextInputLayout>
+                        <!--#endregion 1. SecuencialOrdenCompraPeriodo-->
+                        <!--#region 2. SecuencialOrdenVenta-->
+                        <inputLayout:SfTextInputLayout
+                            Grid.Row="2"
+                            ContainerBackgroundColor="Transparent"
+                            ContainerType="Outlined"
+                            FocusedColor="{DynamicResource colPrim}"
+                            HasError="{Binding IsSecuencialOrdenVentaValid}"
+                            Hint="{texts:Translate SecuencialOrdenVentaHint}"
+                            HorizontalOptions="Fill"
+                            LeadingViewPosition="Inside">
+                            <Entry MaxLength="80" Text="{Binding SecuencialOrdenVenta.Value}" />
+                            <inputLayout:SfTextInputLayout.LeadingView>
+                                <Label
+                                    FontSize="18"
+                                    Text="&#xf1ad;"
+                                    TextColor="{DynamicResource colPrim}"
+                                    VerticalTextAlignment="Center">
+                                    <Label.FontFamily>
+                                        <OnPlatform
+                                            x:TypeArguments="x:String"
+                                            Android="fa-solid-900.ttf#Font Awesome 5 Free Solid"
+                                            iOS="Font Awesome 5 Free" />
+                                    </Label.FontFamily>
+                                </Label>
+                            </inputLayout:SfTextInputLayout.LeadingView>
+                        </inputLayout:SfTextInputLayout>
+                        <!--#endregion 2. SecuencialOrdenVenta-->
+                        <!--#region 3. SecuencialOrdenVentaPeriodo-->
+                        <inputLayout:SfTextInputLayout
+                            Grid.Row="3"
+                            ContainerBackgroundColor="Transparent"
+                            ContainerType="Outlined"
+                            FocusedColor="{DynamicResource colPrim}"
+                            HasError="{Binding IsSecuencialOrdenVentaPeriodoValid}"
+                            Hint="{texts:Translate SecuencialOrdenVentaPeriodoHint}"
+                            HorizontalOptions="Fill"
+                            LeadingViewPosition="Inside">
+                            <Entry MaxLength="80" Text="{Binding SecuencialOrdenVentaPeriodo.Value}" />
+                            <inputLayout:SfTextInputLayout.LeadingView>
+                                <Label
+                                    FontSize="18"
+                                    Text="&#xf1ad;"
+                                    TextColor="{DynamicResource colPrim}"
+                                    VerticalTextAlignment="Center">
+                                    <Label.FontFamily>
+                                        <OnPlatform
+                                            x:TypeArguments="x:String"
+                                            Android="fa-solid-900.ttf#Font Awesome 5 Free Solid"
+                                            iOS="Font Awesome 5 Free" />
+                                    </Label.FontFamily>
+                                </Label>
+                            </inputLayout:SfTextInputLayout.LeadingView>
+                        </inputLayout:SfTextInputLayout>
+                        <!--#endregion 3. SecuencialOrdenVentaPeriodo-->
+                        <!--#region 4. SecuencialReciboPago-->
+                        <inputLayout:SfTextInputLayout
+                            Grid.Row="4"
+                            ContainerBackgroundColor="Transparent"
+                            ContainerType="Outlined"
+                            FocusedColor="{DynamicResource colPrim}"
+                            HasError="{Binding IsSecuencialReciboPagoValid}"
+                            Hint="{texts:Translate SecuencialReciboPagoHint}"
+                            HorizontalOptions="Fill"
+                            LeadingViewPosition="Inside">
+                            <Entry MaxLength="80" Text="{Binding SecuencialReciboPago.Value}" />
+                            <inputLayout:SfTextInputLayout.LeadingView>
+                                <Label
+                                    FontSize="18"
+                                    Text="&#xf1ad;"
+                                    TextColor="{DynamicResource colPrim}"
+                                    VerticalTextAlignment="Center">
+                                    <Label.FontFamily>
+                                        <OnPlatform
+                                            x:TypeArguments="x:String"
+                                            Android="fa-solid-900.ttf#Font Awesome 5 Free Solid"
+                                            iOS="Font Awesome 5 Free" />
+                                    </Label.FontFamily>
+                                </Label>
+                            </inputLayout:SfTextInputLayout.LeadingView>
+                        </inputLayout:SfTextInputLayout>
+                        <!--#endregion 4. SecuencialReciboPago-->
+                        <!--#region 5. SecuencialReciboPagoPeriodo-->
+                        <inputLayout:SfTextInputLayout
+                            Grid.Row="5"
+                            ContainerBackgroundColor="Transparent"
+                            ContainerType="Outlined"
+                            FocusedColor="{DynamicResource colPrim}"
+                            HasError="{Binding IsSecuencialReciboPagoPeriodoValid}"
+                            Hint="{texts:Translate SecuencialReciboPagoPeriodoHint}"
+                            HorizontalOptions="Fill"
+                            LeadingViewPosition="Inside">
+                            <Entry MaxLength="80" Text="{Binding SecuencialReciboPagoPeriodo.Value}" />
+                            <inputLayout:SfTextInputLayout.LeadingView>
+                                <Label
+                                    FontSize="18"
+                                    Text="&#xf1ad;"
+                                    TextColor="{DynamicResource colPrim}"
+                                    VerticalTextAlignment="Center">
+                                    <Label.FontFamily>
+                                        <OnPlatform
+                                            x:TypeArguments="x:String"
+                                            Android="fa-solid-900.ttf#Font Awesome 5 Free Solid"
+                                            iOS="Font Awesome 5 Free" />
+                                    </Label.FontFamily>
+                                </Label>
+                            </inputLayout:SfTextInputLayout.LeadingView>
+                        </inputLayout:SfTextInputLayout>
+                        <!--#endregion 5. SecuencialReciboPagoPeriodo-->
+                    </Grid>
+                </StackLayout>
+            </ScrollView>
+        </Grid>
+    </ContentPage.Content>
+    <!--#endregion 2.  CUERPO DE LA PANTALLA  -->
+</ContentPage>

@@ -1,0 +1,1538 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage x:Class="Escant_App.Views.Productos.AddItemView"
+                xmlns="http://xamarin.com/schemas/2014/forms"
+                xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                xmlns:animations="clr-namespace:Escant_App.Animations;assembly=Escant_App"
+                xmlns:behaviors="clr-namespace:Escant_App.Behaviors;assembly=Escant_App"
+                xmlns:converters="clr-namespace:Escant_App.Converters;assembly=Escant_App"
+                xmlns:customViews="clr-namespace:Escant_App.UserControls;assembly=Escant_App"
+                xmlns:ffimageloading="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+                xmlns:button="clr-namespace:Syncfusion.XForms.Buttons;assembly=Syncfusion.Buttons.XForms"
+                xmlns:yummy="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView"   
+                xmlns:toolkit="http://xamarin.com/schemas/2020/toolkit"
+                xmlns:inputLayout="clr-namespace:Syncfusion.XForms.TextInputLayout;assembly=Syncfusion.Core.XForms"
+                xmlns:local="clr-namespace:Escant_App.UserControls"
+                xmlns:pancake="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView"
+                xmlns:pulltoRefresh="clr-namespace:Syncfusion.SfPullToRefresh.XForms;assembly=Syncfusion.SfPullToRefresh.XForms"
+                xmlns:syncListView="clr-namespace:Syncfusion.ListView.XForms;assembly=Syncfusion.SfListView.XForms"
+                xmlns:texts="clr-namespace:ManijodaServicios.Resources.Texts;assembly=ManijodaServicios"
+                xmlns:transformations="clr-namespace:FFImageLoading.Transformations;assembly=FFImageLoading.Transformations"
+                xmlns:triggers="clr-namespace:Escant_App.Triggers;assembly=Escant_App"
+                xmlns:viewModelBase="clr-namespace:Escant_App.ViewModels.Base;assembly=Escant_App"
+                Title="{texts:Translate AddItemTitulo}"
+                viewModelBase:ViewModelLocator.AutoWireViewModel="true">
+    <!--#region 1. ESTILOS PARA LA PANTALLA  -->
+    <ContentPage.Resources>
+        <ResourceDictionary>
+
+            <Style
+                x:Key="TitleLabelStyle"
+                BasedOn="{StaticResource SpectralRegularLabelStyle}"
+                TargetType="Label">
+                <Setter Property="TextColor" Value="{StaticResource BlueColor}" />
+                <Setter Property="HorizontalOptions" Value="FillAndExpand" />
+                <Setter Property="FontSize" Value="{StaticResource LittleSize}" />
+                <Setter Property="Margin" Value="0,10,0,0" />
+            </Style>
+
+            <Style x:Key="AddSupplierHeaderStyle" TargetType="{x:Type Label}">
+                <Setter Property="FontFamily" Value="{StaticResource NunitoRegular}" />
+                <Setter Property="FontSize" Value="{StaticResource MidMediumSize}" />
+                <!--<Setter Property="TextColor"
+                        Value="Gray" />-->
+                <Setter Property="HorizontalOptions" Value="FillAndExpand" />
+                <Setter Property="VerticalOptions" Value="End" />
+                <Setter Property="Margin" Value="0,0,0,0" />
+            </Style>
+
+            <Style x:Key="AddSupplierLabelStyle" TargetType="{x:Type Label}">
+                <Setter Property="FontFamily" Value="{StaticResource NunitoRegular}" />
+                <Setter Property="FontSize" Value="{StaticResource LargeSize}" />
+                <Setter Property="TextColor" Value="{StaticResource BlackTextColor}" />
+                <Setter Property="HorizontalOptions" Value="FillAndExpand" />
+                <Setter Property="VerticalOptions" Value="Center" />
+                <Setter Property="Margin" Value="0,10,0,0" />
+            </Style>
+            <Style x:Key="AppSettingCheckItemLabelStyle" TargetType="{x:Type Label}">
+                <Setter Property="FontFamily" Value="{StaticResource NunitoRegular}" />
+                <Setter Property="FontSize" Value="{StaticResource MediumSize}" />
+                <Setter Property="HorizontalOptions" Value="Start" />
+                <Setter Property="VerticalOptions" Value="Center" />
+                <Setter Property="Margin" Value="0, 0" />
+                <Setter Property="TextColor" Value="{StaticResource BlackTextColor}" />
+            </Style>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <!--#endregion 1. ESTILOS PARA LA PANTALLA  -->
+    <!--#region 2. TOOLBAR ITEMS  -->
+    <ContentPage.ToolbarItems>
+        <ToolbarItem
+            Command="{Binding Cancel_Command}"
+            Order="Primary"
+            Priority="0"
+            Text="{texts:Translate Cancel}">
+            <ToolbarItem.Icon>
+                <OnPlatform x:TypeArguments="FileImageSource">
+                    <On Platform="Android" Value="cross_512.png" />
+                </OnPlatform>
+            </ToolbarItem.Icon>
+        </ToolbarItem>
+
+        <ToolbarItem
+            Command="{Binding Ok_Command}"
+            Order="Primary"
+            Priority="1"
+            Text="{texts:Translate Save}">
+            <ToolbarItem.Icon>
+                <OnPlatform x:TypeArguments="FileImageSource">
+                    <On Platform="Android" Value="save.png" />
+                </OnPlatform>
+            </ToolbarItem.Icon>
+        </ToolbarItem>
+        <ToolbarItem
+            Command="{Binding Precio_Command}"
+            Order="Primary"
+            Priority="2"
+            IsEnabled="{Binding IsEnabledPrecio}"
+            Text="{texts:Translate Precio}">
+            <ToolbarItem.Icon>
+                <OnPlatform x:TypeArguments="FileImageSource">
+                    <On Platform="Android" Value="invoice.png" />
+                </OnPlatform>
+            </ToolbarItem.Icon>
+        </ToolbarItem>
+    </ContentPage.ToolbarItems>
+    <!--#endregion 2. TOOLBAR ITEMS  -->
+    <!--#region 3. CONTENIDO  -->
+    <ContentPage.Content>
+        <Grid>
+            <ScrollView Margin="0,0,0,0">
+                <Grid RowSpacing="0">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+                    <Grid
+                        Grid.Row="0"
+                        Padding="5,0,5,25"
+                        BackgroundColor="{StaticResource colPrim}"
+                        HeightRequest="{OnPlatform Android='5',
+                                                   iOS='5'}" />
+                    <yummy:PancakeView
+                        Grid.Row="1"
+                        Margin="0,-15,0,0"
+                        Padding="10,10"
+                        BackgroundColor="#F6F7F8"
+                        CornerRadius="20,20,0,0"
+                        VerticalOptions="FillAndExpand">
+                        <ScrollView VerticalScrollBarVisibility="Never">
+                            <Grid Margin="10,15,10,15">
+                                <Grid.RowSpacing>
+                                    <OnPlatform
+                                        x:TypeArguments="x:Double"
+                                        Android="-5"
+                                        iOS="10" />
+                                </Grid.RowSpacing>
+                                <Grid.RowDefinitions>
+                                    <!--0. Administración de la imagen-->
+                                    <RowDefinition Height="Auto" />
+                                    <!--#region Para Servicio-->
+                                    <!--1. Es Servicio-->
+                                    <RowDefinition Height="Auto" />
+                                    <!--2. Galeria Imagen-->
+                                    <RowDefinition Height="Auto" />
+                                    <!--3. Periodo Servicio-->
+                                    <RowDefinition Height="Auto" />
+                                    <!--#endregion Para Servicio-->
+                                    <!--4. Código-->
+                                    <RowDefinition Height="Auto" />
+                                    <!--5. Marca-->
+                                    <RowDefinition Height="Auto" />
+                                    <!--6. Categoria-->
+                                    <RowDefinition Height="Auto" />
+                                    <!--7. Nombre-->
+                                    <RowDefinition Height="Auto" />
+                                    <!--8. Unidad-->
+                                    <RowDefinition Height="Auto" />
+                                    <!--9. Valor Unidad Original-->
+                                    <RowDefinition Height="Auto" />
+                                    <!--10. Es Particionable-->
+                                    <RowDefinition Height="Auto" />
+                                    <!--11. Stock Mínimo-->
+                                    <RowDefinition Height="Auto" />
+                                    <!--12. Precio Base-->
+                                    <RowDefinition Height="Auto" />
+                                    <!--13. Porcentaje Impuesto-->
+                                    <RowDefinition Height="Auto" />
+                                    <!--14. Tipo Aplicación Impuesto-->
+                                    <RowDefinition Height="Auto" />
+                                    <!--15. Valor Impuesto-->
+                                    <RowDefinition Height="Auto" />
+                                    <!--16. Precio Venta-->
+                                    <RowDefinition Height="Auto" />
+                                    <!--17. Precio Venta Impuesto-->
+                                    <RowDefinition Height="Auto" />
+                                    <!--18. Porcentaje Rentabilidad-->
+                                    <RowDefinition Height="Auto" />
+                                    <!--19. Porcentaje Gasto Operativo-->
+                                    <RowDefinition Height="Auto" />
+                                    <!--20. Precio Compra-->
+                                    <RowDefinition Height="Auto" />
+                                    <!--21. Gasto Operativo-->
+                                    <RowDefinition Height="Auto" />
+                                    <!--22. Valor Rentabilidad-->
+                                    <RowDefinition Height="Auto" />
+                                    <!--23. Valor Utilidad-->
+                                    <RowDefinition Height="Auto" />
+                                    <!--24. Período de Incremento-->
+                                    <RowDefinition Height="Auto" />
+                                    <!--25. Valor de Incremento-->
+                                    <RowDefinition Height="Auto" />
+                                    <!--26. Posee Stock-->
+                                    <RowDefinition Height="Auto" />
+                                    <!--27. Descripción-->
+                                    <RowDefinition Height="Auto" />
+                                </Grid.RowDefinitions>
+
+                                <!--#region 0. Administración de la imagen-->
+                                <Grid Grid.Row="0">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="130" />
+                                        <ColumnDefinition Width="50" />
+                                        <ColumnDefinition Width="50" />
+                                        <ColumnDefinition Width="50" />
+                                    </Grid.ColumnDefinitions>
+
+                                    <!--0.1 Imagen-->
+                                    <ffimageloading:CachedImage
+                                x:Name="clienteImage"
+                                Grid.Column="0"
+                                Margin="0,8,0,15"
+                                Aspect="Fill"
+                                CacheType="All"
+                                DownsampleToViewSize="true"
+                                ErrorPlaceholder="picture_icon.png"
+                                HeightRequest="128"
+                                HorizontalOptions="Center"
+                                LoadingPlaceholder="picture_icon.png"
+                                Source="{Binding FuenteImagenRegistro}"
+                                TransformPlaceholders="True"
+                                WidthRequest="128">
+                                        <ffimageloading:CachedImage.Transformations>
+                                            <transformations:RoundedTransformation
+                                        BorderHexColor="#000000"
+                                        BorderSize="5"
+                                        Radius="20" />
+                                        </ffimageloading:CachedImage.Transformations>
+                                    </ffimageloading:CachedImage>
+                                    <!--0.2 Abrir Cámara-->
+                                    <button:SfButton
+                                Grid.Column="1"
+                                Padding="8"
+                                BackgroundColor="{StaticResource Gray-White}"
+                                BorderColor="{StaticResource colPrim}"
+                                BorderWidth="1"
+                                Command="{Binding OpenCameraCommand}"
+                                CornerRadius="20"
+                                HeightRequest="40"
+                                HorizontalOptions="Center"
+                                VerticalOptions="Center"
+                                WidthRequest="40">
+                                        <button:SfButton.Content>
+                                            <Image HeightRequest="15" Source="photo_camera.png">
+                                                <Image.GestureRecognizers>
+                                                    <TapGestureRecognizer Command="{Binding OpenCameraCommand}" />
+                                                </Image.GestureRecognizers>
+                                            </Image>
+                                        </button:SfButton.Content>
+                                    </button:SfButton>
+                                    <!--0.3 Abrir Galeria-->
+                                    <button:SfButton
+                                Grid.Column="2"
+                                Padding="8"
+                                BackgroundColor="{StaticResource Gray-White}"
+                                BorderColor="{StaticResource colPrim}"
+                                BorderWidth="1"
+                                Command="{Binding BrowseGalleryCommand}"
+                                CornerRadius="20"
+                                HeightRequest="40"
+                                HorizontalOptions="Center"
+                                VerticalOptions="Center"
+                                WidthRequest="40">
+                                        <button:SfButton.Content>
+                                            <Image
+                                        HeightRequest="32"
+                                        HorizontalOptions="Center"
+                                        Source="picture_black.png"
+                                        WidthRequest="32">
+                                                <Image.GestureRecognizers>
+                                                    <TapGestureRecognizer Command="{Binding BrowseGalleryCommand}" />
+                                                </Image.GestureRecognizers>
+                                            </Image>
+                                        </button:SfButton.Content>
+                                    </button:SfButton>
+                                    <!--0.4 Remover Imagen-->
+                                    <button:SfButton
+                                Grid.Column="3"
+                                Padding="8"
+                                BackgroundColor="{StaticResource Gray-White}"
+                                BorderColor="{StaticResource RedColor}"
+                                BorderWidth="1"
+                                Command="{Binding RemoveImageCommand}"
+                                CornerRadius="20"
+                                HeightRequest="40"
+                                HorizontalOptions="Center"
+                                VerticalOptions="Center"
+                                WidthRequest="40">
+                                        <button:SfButton.Content>
+                                            <Image
+                                        HeightRequest="32"
+                                        HorizontalOptions="Start"
+                                        Source="remove_512.png"
+                                        WidthRequest="32">
+                                                <Image.GestureRecognizers>
+                                                    <TapGestureRecognizer Command="{Binding RemoveImageCommand}" />
+                                                </Image.GestureRecognizers>
+                                            </Image>
+                                        </button:SfButton.Content>
+                                    </button:SfButton>
+
+                                </Grid>
+                                <!--#endregion 0. Administración de la imagen-->
+                                
+                                <!--#region 1. Es Servicio-->
+                                <StackLayout Margin="10,0,0,10" Orientation="Horizontal" Grid.Row="1" >
+                                    <Label Style="{StaticResource AppSettingCheckItemLabelStyle}" Text="{texts:Translate EsServicioHint}" />
+                                    <button:SfSwitch
+                                        Margin="8,0"
+                                        AllowIndeterminateState="True"
+                                        HeightRequest="28"
+                                        HorizontalOptions="EndAndExpand"
+                                        IsOn="{Binding EsServicio}"                            
+                                        VisualType="Cupertino">
+                                        <VisualStateManager.VisualStateGroups>
+                                            <VisualStateGroup x:Name="CommonStates">
+                                                <VisualState x:Name="On">
+                                                    <VisualState.Setters>
+                                                        <Setter Property="SwitchSettings">
+                                                            <Setter.Value>
+                                                                <button:CupertinoSwitchSettings
+                                                        x:TypeArguments="button:OnState"
+                                                        ThumbBorderColor="{DynamicResource Gray-500}"
+                                                        ThumbColor="{DynamicResource Gray-White}"
+                                                        TrackBorderColor="{DynamicResource Gray-200}"
+                                                        TrackColor="{DynamicResource RedColor}" />
+                                                            </Setter.Value>
+                                                        </Setter>
+                                                    </VisualState.Setters>
+                                                </VisualState>
+                                                <VisualState x:Name="Off">
+                                                    <VisualState.Setters>
+                                                        <Setter Property="SwitchSettings">
+                                                            <Setter.Value>
+                                                                <button:CupertinoSwitchSettings
+                                                        x:TypeArguments="button:OffState"
+                                                        ThumbBorderColor="{DynamicResource Gray-200}"
+                                                        ThumbColor="{DynamicResource Gray-White}"
+                                                        TrackBorderColor="{DynamicResource Gray-200}"
+                                                        TrackColor="{DynamicResource Gray-500}" />
+                                                            </Setter.Value>
+                                                        </Setter>
+                                                    </VisualState.Setters>
+                                                </VisualState>
+                                            </VisualStateGroup>
+                                        </VisualStateManager.VisualStateGroups>
+                                    </button:SfSwitch>
+                                </StackLayout>
+                                <!--#endregion 1. Es Servicio-->
+
+                                <!--#region 2. Administración de la Galeria-->
+                                <Grid Grid.Row="2" IsVisible="{Binding IsVisibleCondicionesServicio}">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="130" />
+                                        <ColumnDefinition Width="50" />
+                                        <ColumnDefinition Width="50" />
+                                        <ColumnDefinition Width="50" />
+                                    </Grid.ColumnDefinitions>
+
+                                    <!--2.1 Imagen-->
+                                    <ffimageloading:CachedImage
+                                x:Name="clienteImage1"
+                                Grid.Column="0"
+                                Margin="0,8,0,15"
+                                Aspect="Fill"
+                                CacheType="All"
+                                DownsampleToViewSize="true"
+                                ErrorPlaceholder="picture_icon.png"
+                                HeightRequest="128"
+                                HorizontalOptions="Center"
+                                LoadingPlaceholder="picture_icon.png"
+                                Source="{Binding FuenteImagenRegistro1}"
+                                TransformPlaceholders="True"
+                                WidthRequest="128">
+                                        <ffimageloading:CachedImage.Transformations>
+                                            <transformations:RoundedTransformation
+                                        BorderHexColor="#000000"
+                                        BorderSize="5"
+                                        Radius="20" />
+                                        </ffimageloading:CachedImage.Transformations>
+                                    </ffimageloading:CachedImage>
+                                    <!--2.2 Abrir Cámara-->
+                                    <button:SfButton
+                                Grid.Column="1"
+                                Padding="8"
+                                BackgroundColor="{StaticResource Gray-White}"
+                                BorderColor="{StaticResource colPrim}"
+                                BorderWidth="1"
+                                Command="{Binding OpenCameraCommand1}"
+                                CornerRadius="20"
+                                HeightRequest="40"
+                                HorizontalOptions="Center"
+                                VerticalOptions="Center"
+                                WidthRequest="40">
+                                        <button:SfButton.Content>
+                                            <Image HeightRequest="15" Source="photo_camera.png">
+                                                <Image.GestureRecognizers>
+                                                    <TapGestureRecognizer Command="{Binding OpenCameraCommand1}" />
+                                                </Image.GestureRecognizers>
+                                            </Image>
+                                        </button:SfButton.Content>
+                                    </button:SfButton>
+                                    <!--2.3 Abrir Galeria-->
+                                    <button:SfButton
+                                Grid.Column="2"
+                                Padding="8"
+                                BackgroundColor="{StaticResource Gray-White}"
+                                BorderColor="{StaticResource colPrim}"
+                                BorderWidth="1"
+                                Command="{Binding BrowseGalleryCommand1}"
+                                CornerRadius="20"
+                                HeightRequest="40"
+                                HorizontalOptions="Center"
+                                VerticalOptions="Center"
+                                WidthRequest="40">
+                                        <button:SfButton.Content>
+                                            <Image
+                                        HeightRequest="32"
+                                        HorizontalOptions="Center"
+                                        Source="picture_black.png"
+                                        WidthRequest="32">
+                                                <Image.GestureRecognizers>
+                                                    <TapGestureRecognizer Command="{Binding BrowseGalleryCommand1}" />
+                                                </Image.GestureRecognizers>
+                                            </Image>
+                                        </button:SfButton.Content>
+                                    </button:SfButton>
+                                    <!--2.4 Remover Imagen-->
+                                    <button:SfButton
+                                Grid.Column="3"
+                                Padding="8"
+                                BackgroundColor="{StaticResource Gray-White}"
+                                BorderColor="{StaticResource RedColor}"
+                                BorderWidth="1"
+                                Command="{Binding RemoveImageCommand1}"
+                                CornerRadius="20"
+                                HeightRequest="40"
+                                HorizontalOptions="Center"
+                                VerticalOptions="Center"
+                                WidthRequest="40">
+                                        <button:SfButton.Content>
+                                            <Image
+                                        HeightRequest="32"
+                                        HorizontalOptions="Start"
+                                        Source="remove_512.png"
+                                        WidthRequest="32">
+                                                <Image.GestureRecognizers>
+                                                    <TapGestureRecognizer Command="{Binding RemoveImageCommand1}" />
+                                                </Image.GestureRecognizers>
+                                            </Image>
+                                        </button:SfButton.Content>
+                                    </button:SfButton>
+
+                                </Grid>
+                                <!--#endregion 2. Administración de la Galeria-->
+
+                                <!--#region 3. PeriodoServicio-->
+                                <inputLayout:SfTextInputLayout
+                            Grid.Row="3"
+                            ContainerBackgroundColor="Transparent"
+                            ContainerType="Outlined"
+                            FocusedColor="{DynamicResource colPrim}"                                                                
+                            IsVisible="{Binding IsVisibleCondicionesServicio}"
+                            Hint="{texts:Translate PeriodoServicioHint}"
+                            HorizontalOptions="Fill"
+                            LeadingViewPosition="Inside"                            
+                            TrailingViewPosition="Inside"                                    
+                                    >
+                                    <inputLayout:SfTextInputLayout.GestureRecognizers>
+                                        <TapGestureRecognizer Command="{Binding OpenPeriodoServicioCommand}" />
+                                    </inputLayout:SfTextInputLayout.GestureRecognizers>
+                                    <!-- <Entry Focused="OnEmpresa_Focused" Text="{Binding PorcentajeDescuento.ValorNumerico}" />-->
+                                    <Entry IsReadOnly="True" Text="{Binding PeriodoServicio}" >
+                                        <Entry.Behaviors>
+                                            <toolkit:EventToCommandBehavior
+                                                EventName="Unfocused"
+                                                Command="{Binding MarcaUnfocused}" />
+                                        </Entry.Behaviors>
+                                    </Entry>
+                                    <inputLayout:SfTextInputLayout.LeadingView>
+                                        <Label
+                                    FontSize="18"
+                                    Text="&#xf0c8;"
+                                    TextColor="{DynamicResource colPrim}"
+                                    VerticalTextAlignment="Center">
+                                            <Label.FontFamily>
+                                                <OnPlatform
+                                            x:TypeArguments="x:String"
+                                            Android="fa-solid-900.ttf#Font Awesome 5 Free Solid"
+                                            iOS="Font Awesome 5 Free" />
+                                            </Label.FontFamily>
+                                        </Label>
+                                    </inputLayout:SfTextInputLayout.LeadingView>
+                                    <inputLayout:SfTextInputLayout.TrailingView>
+                                        <Label
+                                    FontSize="18"
+                                    Text="&#xf0dd;"
+                                    TextColor="{DynamicResource colPrim}"
+                                    VerticalTextAlignment="Center">
+                                            <Label.FontFamily>
+                                                <OnPlatform
+                                            x:TypeArguments="x:String"
+                                            Android="fa-solid-900.ttf#Font Awesome 5 Free Solid"
+                                            iOS="Font Awesome 5 Free" />
+                                            </Label.FontFamily>
+                                        </Label>
+                                    </inputLayout:SfTextInputLayout.TrailingView>
+                                </inputLayout:SfTextInputLayout>
+                                <!--#endregion 3. PeriodoServicio-->
+
+                                <!--#region 4. Código-->
+                                <inputLayout:SfTextInputLayout
+                                        Grid.Row="4"                                        
+                                        ContainerBackgroundColor="Transparent"
+                                        ContainerType="Outlined"
+                                        FocusedColor="{StaticResource colPrim}"
+                                        HasError="{Binding IsCodigoValid}"
+                                        Hint="{texts:Translate CodigoHint}"
+                                        IsEnabled="false"
+                                        HorizontalOptions="Fill"
+                                        LeadingViewPosition="Inside">
+                                    <Entry
+                                            FontFamily="{StaticResource PoppinsRegular}"
+                                            FontSize="14"
+                                            IsEnabled="{Binding AllowEdit}"
+                                            Text="{Binding Codigo}" />
+                                    <inputLayout:SfTextInputLayout.LeadingView>
+                                        <Label
+                                                FontSize="18"
+                                                Text="&#xf121;"
+                                                TextColor="{StaticResource colPrim}"
+                                                VerticalTextAlignment="Center">
+                                            <Label.FontFamily>
+                                                <OnPlatform
+                                                        x:TypeArguments="x:String"
+                                                        Android="fa-solid-900.ttf#Font Awesome 5 Free Solid"
+                                                        iOS="Font Awesome 5 Free" />
+                                            </Label.FontFamily>
+                                        </Label>
+                                    </inputLayout:SfTextInputLayout.LeadingView>
+                                </inputLayout:SfTextInputLayout>
+                                <!--#endregion 4. Código-->
+
+                                <!--#region 5. Marca-->
+                                <inputLayout:SfTextInputLayout
+                            Grid.Row="5"
+                            ContainerBackgroundColor="Transparent"
+                            ContainerType="Outlined"
+                            FocusedColor="{DynamicResource colPrim}"                                    
+                            HasError="{Binding IsMarcaValid}"
+                            IsVisible="{Binding IsVisibleMarca}"
+                            Hint="{texts:Translate MarcaHint}"
+                            HorizontalOptions="Fill"
+                            LeadingViewPosition="Inside"                            
+                            TrailingViewPosition="Inside">
+                                    <inputLayout:SfTextInputLayout.GestureRecognizers>
+                                        <TapGestureRecognizer Command="{Binding OpenMarcaCommand}" />
+                                    </inputLayout:SfTextInputLayout.GestureRecognizers>
+                                    <!-- <Entry Focused="OnEmpresa_Focused" Text="{Binding PorcentajeDescuento.ValorNumerico}" />-->
+                                    <Entry IsReadOnly="True" Text="{Binding Marca}" >
+                                        <Entry.Behaviors>
+                                            <toolkit:EventToCommandBehavior
+                                                EventName="Unfocused"
+                                                Command="{Binding MarcaUnfocused}" />
+                                        </Entry.Behaviors>
+                                    </Entry>
+                                    <inputLayout:SfTextInputLayout.LeadingView>
+                                        <Label
+                                    FontSize="18"
+                                    Text="&#xf0c8;"
+                                    TextColor="{DynamicResource colPrim}"
+                                    VerticalTextAlignment="Center">
+                                            <Label.FontFamily>
+                                                <OnPlatform
+                                            x:TypeArguments="x:String"
+                                            Android="fa-solid-900.ttf#Font Awesome 5 Free Solid"
+                                            iOS="Font Awesome 5 Free" />
+                                            </Label.FontFamily>
+                                        </Label>
+                                    </inputLayout:SfTextInputLayout.LeadingView>
+                                    <inputLayout:SfTextInputLayout.TrailingView>
+                                        <Label
+                                    FontSize="18"
+                                    Text="&#xf0dd;"
+                                    TextColor="{DynamicResource colPrim}"
+                                    VerticalTextAlignment="Center">
+                                            <Label.FontFamily>
+                                                <OnPlatform
+                                            x:TypeArguments="x:String"
+                                            Android="fa-solid-900.ttf#Font Awesome 5 Free Solid"
+                                            iOS="Font Awesome 5 Free" />
+                                            </Label.FontFamily>
+                                        </Label>
+                                    </inputLayout:SfTextInputLayout.TrailingView>
+                                </inputLayout:SfTextInputLayout>
+                                <!--#endregion 5. Marca-->
+                                
+                                <!--#region 6. Categoria-->
+                                <inputLayout:SfTextInputLayout
+                            Grid.Row="6"
+                            ContainerBackgroundColor="Transparent"
+                            ContainerType="Outlined"
+                            FocusedColor="{DynamicResource colPrim}"
+                            IsVisible="{Binding IsVisibleCategoria}"
+                            HasError="{Binding IsCategoriaValid}"
+                            Hint="{texts:Translate CategoriaHint}"
+                            HorizontalOptions="Fill"
+                            LeadingViewPosition="Inside"
+                            TrailingViewPosition="Inside">
+                                    <inputLayout:SfTextInputLayout.GestureRecognizers>
+                                        <TapGestureRecognizer Command="{Binding OpenCategoriaCommand}" />
+                                    </inputLayout:SfTextInputLayout.GestureRecognizers>
+                                    <!-- <Entry Focused="OnEmpresa_Focused" Text="{Binding PorcentajeDescuento.ValorNumerico}" />-->
+                                    <Entry IsReadOnly="True" Text="{Binding Categoria}" >
+                                        <Entry.Behaviors>
+                                            <toolkit:EventToCommandBehavior
+                                                EventName="Unfocused"
+                                                Command="{Binding CategoriaUnfocused}" />
+                                        </Entry.Behaviors>
+                                    </Entry>
+                                    <inputLayout:SfTextInputLayout.LeadingView>
+                                        <Label
+                                    FontSize="18"
+                                    Text="&#xf03a;"
+                                    TextColor="{DynamicResource colPrim}"
+                                    VerticalTextAlignment="Center">
+                                            <Label.FontFamily>
+                                                <OnPlatform
+                                            x:TypeArguments="x:String"
+                                            Android="fa-solid-900.ttf#Font Awesome 5 Free Solid"
+                                            iOS="Font Awesome 5 Free" />
+                                            </Label.FontFamily>
+                                        </Label>
+                                    </inputLayout:SfTextInputLayout.LeadingView>
+                                    <inputLayout:SfTextInputLayout.TrailingView>
+                                        <Label
+                                    FontSize="18"
+                                    Text="&#xf0dd;"
+                                    TextColor="{DynamicResource colPrim}"
+                                    VerticalTextAlignment="Center">
+                                            <Label.FontFamily>
+                                                <OnPlatform
+                                            x:TypeArguments="x:String"
+                                            Android="fa-solid-900.ttf#Font Awesome 5 Free Solid"
+                                            iOS="Font Awesome 5 Free" />
+                                            </Label.FontFamily>
+                                        </Label>
+                                    </inputLayout:SfTextInputLayout.TrailingView>
+                                </inputLayout:SfTextInputLayout>
+                                <!--#endregion 6. Categoria-->
+                                
+                                <!--#region 7. Nombre-->
+                                <inputLayout:SfTextInputLayout
+                                        Grid.Row="7"                                        
+                                        ContainerBackgroundColor="Transparent"
+                                        ContainerType="Outlined"
+                                        FocusedColor="{StaticResource colPrim}"
+                                        HasError="{Binding IsNombreValid}"
+                                        Hint="{texts:Translate NombreHint}"                                        
+                                        HorizontalOptions="Fill"
+                                        LeadingViewPosition="Inside">
+                                    <Entry
+                                            FontFamily="{StaticResource PoppinsRegular}"
+                                            FontSize="14"
+                                            IsEnabled="{Binding AllowEdit}"
+                                            Text="{Binding Nombre.Value}">
+                                        <Entry.Behaviors>
+                                            <toolkit:EventToCommandBehavior
+                                                EventName="Unfocused"
+                                                Command="{Binding NombreUnfocused}" />
+                                        </Entry.Behaviors>
+                                    </Entry>
+                                    <inputLayout:SfTextInputLayout.LeadingView>
+                                        <Label
+                                                FontSize="18"
+                                                Text="&#xf11c;"
+                                                TextColor="{StaticResource colPrim}"
+                                                VerticalTextAlignment="Center">
+                                            <Label.FontFamily>
+                                                <OnPlatform
+                                                        x:TypeArguments="x:String"
+                                                        Android="fa-solid-900.ttf#Font Awesome 5 Free Solid"
+                                                        iOS="Font Awesome 5 Free" />
+                                            </Label.FontFamily>
+                                        </Label>
+                                    </inputLayout:SfTextInputLayout.LeadingView>
+                                </inputLayout:SfTextInputLayout>
+                                <!--#endregion 7. Nombre-->
+                                
+                                <!--#region 8. Unidad-->
+                                <inputLayout:SfTextInputLayout
+                            Grid.Row="8"
+                            ContainerBackgroundColor="Transparent"
+                            ContainerType="Outlined"
+                            FocusedColor="{DynamicResource colPrim}"
+                            HasError="{Binding IsUnidadValid}"
+                            Hint="{texts:Translate UnidadHint}"                                    
+                            HorizontalOptions="Fill"
+                            LeadingViewPosition="Inside"
+                            TrailingViewPosition="Inside">
+                                    <inputLayout:SfTextInputLayout.GestureRecognizers>
+                                        <TapGestureRecognizer Command="{Binding OpenUnidadCommand}" />
+                                    </inputLayout:SfTextInputLayout.GestureRecognizers>
+                                    <!-- <Entry Focused="OnEmpresa_Focused" Text="{Binding PorcentajeDescuento.ValorNumerico}" />-->
+                                    <Entry IsReadOnly="True" Text="{Binding Unidad}" />
+                                    <inputLayout:SfTextInputLayout.LeadingView>
+                                        <Label
+                                    FontSize="18"
+                                    Text="&#xf472;"
+                                    TextColor="{DynamicResource colPrim}"
+                                    VerticalTextAlignment="Center">
+                                            <Label.FontFamily>
+                                                <OnPlatform
+                                            x:TypeArguments="x:String"
+                                            Android="fa-solid-900.ttf#Font Awesome 5 Free Solid"
+                                            iOS="Font Awesome 5 Free" />
+                                            </Label.FontFamily>
+                                        </Label>
+                                    </inputLayout:SfTextInputLayout.LeadingView>
+                                    <inputLayout:SfTextInputLayout.TrailingView>
+                                        <Label
+                                    FontSize="18"
+                                    Text="&#xf0dd;"
+                                    TextColor="{DynamicResource colPrim}"
+                                    VerticalTextAlignment="Center">
+                                            <Label.FontFamily>
+                                                <OnPlatform
+                                            x:TypeArguments="x:String"
+                                            Android="fa-solid-900.ttf#Font Awesome 5 Free Solid"
+                                            iOS="Font Awesome 5 Free" />
+                                            </Label.FontFamily>
+                                        </Label>
+                                    </inputLayout:SfTextInputLayout.TrailingView>
+                                </inputLayout:SfTextInputLayout>
+                                <!--#endregion 8. Unidad-->
+                                
+                                <!--#region 9. Valor Unidad Original-->
+                                <inputLayout:SfTextInputLayout
+                                        Grid.Row="9"                                        
+                                        ContainerBackgroundColor="Transparent"
+                                        ContainerType="Outlined"
+                                        FocusedColor="{StaticResource colPrim}"
+                                        HasError="{Binding IsValorUnidadOriginalValid}"
+                                        Hint="{texts:Translate ValorUnidadOriginalHint}"
+                                        IsEnabled="false"
+                                        HorizontalOptions="Fill"
+                                        LeadingViewPosition="Inside">
+                                    <Entry
+                                            FontFamily="{StaticResource PoppinsRegular}"
+                                            FontSize="14"
+                                            IsEnabled="{Binding AllowEdit}"
+                                            Text="{Binding ValorUnidadOriginal}" />
+                                    <inputLayout:SfTextInputLayout.LeadingView>
+                                        <Label
+                                                FontSize="18"
+                                                Text="&#xf52c;"
+                                                TextColor="{StaticResource colPrim}"
+                                                VerticalTextAlignment="Center">
+                                            <Label.FontFamily>
+                                                <OnPlatform
+                                                        x:TypeArguments="x:String"
+                                                        Android="fa-solid-900.ttf#Font Awesome 5 Free Solid"
+                                                        iOS="Font Awesome 5 Free" />
+                                            </Label.FontFamily>
+                                        </Label>
+                                    </inputLayout:SfTextInputLayout.LeadingView>
+                                </inputLayout:SfTextInputLayout>
+                                <!--#endregion 9. Valor Unidad Original-->
+                                
+                                <!--#region 10. Es Particionable-->
+                                <StackLayout Margin="10,0,0,10" Orientation="Horizontal" Grid.Row="10" 
+                                             IsVisible="{Binding IsVisibleEsParticionable}">
+                                    <Label Style="{StaticResource AppSettingCheckItemLabelStyle}" Text="{texts:Translate EsParticionableHint}" />
+                                    <button:SfSwitch
+                                        Margin="8,0"
+                                        AllowIndeterminateState="True"
+                                        HeightRequest="28"
+                                        HorizontalOptions="EndAndExpand"
+                                        IsOn="{Binding EsParticionable}"                            
+                                        VisualType="Cupertino">
+                                        <VisualStateManager.VisualStateGroups>
+                                            <VisualStateGroup x:Name="CommonStates">
+                                                <VisualState x:Name="On">
+                                                    <VisualState.Setters>
+                                                        <Setter Property="SwitchSettings">
+                                                            <Setter.Value>
+                                                                <button:CupertinoSwitchSettings
+                                                        x:TypeArguments="button:OnState"
+                                                        ThumbBorderColor="{DynamicResource Gray-500}"
+                                                        ThumbColor="{DynamicResource Gray-White}"
+                                                        TrackBorderColor="{DynamicResource Gray-200}"
+                                                        TrackColor="{DynamicResource RedColor}" />
+                                                            </Setter.Value>
+                                                        </Setter>
+                                                    </VisualState.Setters>
+                                                </VisualState>
+                                                <VisualState x:Name="Off">
+                                                    <VisualState.Setters>
+                                                        <Setter Property="SwitchSettings">
+                                                            <Setter.Value>
+                                                                <button:CupertinoSwitchSettings
+                                                        x:TypeArguments="button:OffState"
+                                                        ThumbBorderColor="{DynamicResource Gray-200}"
+                                                        ThumbColor="{DynamicResource Gray-White}"
+                                                        TrackBorderColor="{DynamicResource Gray-200}"
+                                                        TrackColor="{DynamicResource Gray-500}" />
+                                                            </Setter.Value>
+                                                        </Setter>
+                                                    </VisualState.Setters>
+                                                </VisualState>
+                                            </VisualStateGroup>
+                                        </VisualStateManager.VisualStateGroups>
+                                    </button:SfSwitch>
+                                </StackLayout>
+                                <!--#endregion 10. Es Particionable-->
+                                
+                                <!--#region 11. Stock Mínimo-->
+                                <inputLayout:SfTextInputLayout
+                            Grid.Row="11"
+                            ContainerBackgroundColor="Transparent"
+                            ContainerType="Outlined"
+                            FocusedColor="{DynamicResource colPrim}"
+                            IsVisible="{Binding IsVisibleStockMinimo}"
+                            HasError="{Binding IsStockMinimoValid}"
+                            Hint="{texts:Translate StockMinimoHint}"
+                            HorizontalOptions="Fill"
+                            LeadingViewPosition="Inside"
+                            TrailingViewPosition="Inside">
+                                    <!-- <Entry Focused="OnEmpresa_Focused" Text="{Binding PorcentajeDescuento.ValorNumerico}" />-->
+                                    <local:CustomSfNumericTextBox
+                                        Grid.Row="0"
+                                        Grid.Column="1"                    
+                                        BorderColor="Transparent"
+                                        FormatString="n"
+                                        MaximumNumberDecimalDigits="2"
+                                        SelectAllOnFocus="True"
+                                        TextAlignment="End"
+                                        Culture="{Binding Cultura}"
+                                        TextColor="{DynamicResource colSec}"
+                                        Value="{Binding StockMinimo}" 
+                                 />
+                                    <inputLayout:SfTextInputLayout.LeadingView>
+                                        <Label
+                                    FontSize="18"
+                                    Text="&#xf850;"
+                                    TextColor="{DynamicResource colPrim}"
+                                    VerticalTextAlignment="Center">
+                                            <Label.FontFamily>
+                                                <OnPlatform
+                                            x:TypeArguments="x:String"
+                                            Android="fa-solid-900.ttf#Font Awesome 5 Free Solid"
+                                            iOS="Font Awesome 5 Free" />
+                                            </Label.FontFamily>
+                                        </Label>
+                                    </inputLayout:SfTextInputLayout.LeadingView>
+                                 </inputLayout:SfTextInputLayout>
+                                <!--#endregion 11. Stock Mínimo-->
+
+                                <!--#region 12. Precio Base-->
+                                <inputLayout:SfTextInputLayout
+                            Grid.Row="12"
+                            ContainerBackgroundColor="Transparent"
+                            ContainerType="Outlined"                         
+                            HasError="{Binding IsPrecioBaseValid}"
+                            FocusedColor="{DynamicResource colPrim}"                            
+                            Hint="{texts:Translate PrecioBaseHint}"
+                            HorizontalOptions="Fill"
+                            LeadingViewPosition="Inside"
+                            TrailingViewPosition="Inside">
+                                    <!-- <Entry Focused="OnEmpresa_Focused" Text="{Binding PorcentajeDescuento.ValorNumerico}" />-->
+                                    <local:CustomSfNumericTextBox
+                                        Grid.Row="0"
+                                        Grid.Column="1"                    
+                                        BorderColor="Transparent"
+                                        FormatString="c"
+                                        MaximumNumberDecimalDigits="2"
+                                        SelectAllOnFocus="True"
+                                        TextAlignment="End"
+                                        Culture="{Binding Cultura}"
+                                        TextColor="{DynamicResource colSec}"
+                                        Unfocused="CustomSfNumericTextBox_Unfocused"
+                                        Value="{Binding PrecioBase.Value}" 
+                                 />
+                                    <inputLayout:SfTextInputLayout.LeadingView>
+                                        <Label
+                                    FontSize="18"
+                                    Text="&#xf0d6;"
+                                    TextColor="{DynamicResource colPrim}"
+                                    VerticalTextAlignment="Center">
+                                            <Label.FontFamily>
+                                                <OnPlatform
+                                            x:TypeArguments="x:String"
+                                            Android="fa-solid-900.ttf#Font Awesome 5 Free Solid"
+                                            iOS="Font Awesome 5 Free" />
+                                            </Label.FontFamily>
+                                        </Label>
+                                    </inputLayout:SfTextInputLayout.LeadingView>
+                                </inputLayout:SfTextInputLayout>
+                                <!--#endregion 12. Precio Base-->
+
+                                <!--#region 13. Porcentaje de Impuesto-->
+                                <inputLayout:SfTextInputLayout
+                            Grid.Row="13"
+                            ContainerBackgroundColor="Transparent"
+                            ContainerType="Outlined"
+                            FocusedColor="{DynamicResource colPrim}"                            
+                            Hint="{texts:Translate TipoImpuestoHint}"                                    
+                            HorizontalOptions="Fill"
+                            LeadingViewPosition="Inside"
+                            TrailingViewPosition="Inside">
+                                    <inputLayout:SfTextInputLayout.GestureRecognizers>
+                                        <TapGestureRecognizer Command="{Binding OpenTipoImpuestoCommand}" />
+                                    </inputLayout:SfTextInputLayout.GestureRecognizers>
+                                    <!-- <Entry Focused="OnEmpresa_Focused" Text="{Binding PorcentajeDescuento.ValorNumerico}" />-->
+                                    <Entry IsReadOnly="True" Text="{Binding TipoImpuesto}" />
+                                    <inputLayout:SfTextInputLayout.LeadingView>
+                                        <Label
+                                    FontSize="18"
+                                    Text="&#xf295;"
+                                    TextColor="{DynamicResource colPrim}"
+                                    VerticalTextAlignment="Center">
+                                            <Label.FontFamily>
+                                                <OnPlatform
+                                            x:TypeArguments="x:String"
+                                            Android="fa-solid-900.ttf#Font Awesome 5 Free Solid"
+                                            iOS="Font Awesome 5 Free" />
+                                            </Label.FontFamily>
+                                        </Label>
+                                    </inputLayout:SfTextInputLayout.LeadingView>
+                                    <inputLayout:SfTextInputLayout.TrailingView>
+                                        <Label
+                                    FontSize="18"
+                                    Text="&#xf0dd;"
+                                    TextColor="{DynamicResource colPrim}"
+                                    VerticalTextAlignment="Center">
+                                            <Label.FontFamily>
+                                                <OnPlatform
+                                            x:TypeArguments="x:String"
+                                            Android="fa-solid-900.ttf#Font Awesome 5 Free Solid"
+                                            iOS="Font Awesome 5 Free" />
+                                            </Label.FontFamily>
+                                        </Label>
+                                    </inputLayout:SfTextInputLayout.TrailingView>
+                                </inputLayout:SfTextInputLayout>
+                                <!--#endregion 13. Porcentaje de Impuesto-->
+
+                                <!--#region 14. Tipo de Aplicación de Impuesto-->
+                                <inputLayout:SfTextInputLayout
+                            Grid.Row="14"
+                            ContainerBackgroundColor="Transparent"
+                            ContainerType="Outlined"
+                            FocusedColor="{DynamicResource colPrim}"                            
+                            Hint="{texts:Translate TipoAplicacionImpuestoHint}"                                    
+                            HorizontalOptions="Fill"
+                            LeadingViewPosition="Inside"
+                            TrailingViewPosition="Inside">
+                                    <inputLayout:SfTextInputLayout.GestureRecognizers>
+                                        <TapGestureRecognizer Command="{Binding OpenTipoAplicacionImpuestoCommand}" />
+                                    </inputLayout:SfTextInputLayout.GestureRecognizers>
+                                    <!-- <Entry Focused="OnEmpresa_Focused" Text="{Binding PorcentajeDescuento.ValorNumerico}" />-->
+                                    <Entry IsReadOnly="True" Text="{Binding TipoAplicacionImpuesto}" />
+                                    <inputLayout:SfTextInputLayout.LeadingView>
+                                        <Label
+                                    FontSize="18"
+                                    Text="&#xf00c;"
+                                    TextColor="{DynamicResource colPrim}"
+                                    VerticalTextAlignment="Center">
+                                            <Label.FontFamily>
+                                                <OnPlatform
+                                            x:TypeArguments="x:String"
+                                            Android="fa-solid-900.ttf#Font Awesome 5 Free Solid"
+                                            iOS="Font Awesome 5 Free" />
+                                            </Label.FontFamily>
+                                        </Label>
+                                    </inputLayout:SfTextInputLayout.LeadingView>
+                                    <inputLayout:SfTextInputLayout.TrailingView>
+                                        <Label
+                                    FontSize="18"
+                                    Text="&#xf0dd;"
+                                    TextColor="{DynamicResource colPrim}"
+                                    VerticalTextAlignment="Center">
+                                            <Label.FontFamily>
+                                                <OnPlatform
+                                            x:TypeArguments="x:String"
+                                            Android="fa-solid-900.ttf#Font Awesome 5 Free Solid"
+                                            iOS="Font Awesome 5 Free" />
+                                            </Label.FontFamily>
+                                        </Label>
+                                    </inputLayout:SfTextInputLayout.TrailingView>
+                                </inputLayout:SfTextInputLayout>
+                                <!--#endregion 14. Porcentaje de Impuesto-->
+
+                                <!--#region 15. Valor Impuesto-->
+                                <inputLayout:SfTextInputLayout
+                            Grid.Row="15"
+                            ContainerBackgroundColor="Transparent"
+                            ContainerType="Outlined"
+                            IsEnabled="false"                            
+                            FocusedColor="{DynamicResource colPrim}"                            
+                            Hint="{texts:Translate ValorImpuestoHint}"
+                            HorizontalOptions="Fill"
+                            LeadingViewPosition="Inside"
+                            TrailingViewPosition="Inside">
+                                    <!-- <Entry Focused="OnEmpresa_Focused" Text="{Binding PorcentajeDescuento.ValorNumerico}" />-->
+                                    <local:CustomSfNumericTextBox
+                                        Grid.Row="0"
+                                        Grid.Column="1"                    
+                                        BorderColor="Transparent"
+                                        FormatString="c"
+                                        MaximumNumberDecimalDigits="2"
+                                        TextAlignment="End"
+                                        Culture="{Binding Cultura}"
+                                        TextColor="{DynamicResource colSec}"
+                                        Value="{Binding ValorImpuesto}" 
+                                 />
+                                    <inputLayout:SfTextInputLayout.LeadingView>
+                                        <Label
+                                    FontSize="18"
+                                    Text="&#xf53a;"
+                                    TextColor="{DynamicResource colPrim}"
+                                    VerticalTextAlignment="Center">
+                                            <Label.FontFamily>
+                                                <OnPlatform
+                                            x:TypeArguments="x:String"
+                                            Android="fa-solid-900.ttf#Font Awesome 5 Free Solid"
+                                            iOS="Font Awesome 5 Free" />
+                                            </Label.FontFamily>
+                                        </Label>
+                                    </inputLayout:SfTextInputLayout.LeadingView>
+                                </inputLayout:SfTextInputLayout>
+                                <!--#endregion 15. Valor Impuesto-->
+
+                                <!--#region 16. Precio Venta-->
+                                <inputLayout:SfTextInputLayout
+                            Grid.Row="16"
+                            ContainerBackgroundColor="Transparent"
+                            ContainerType="Outlined"
+                            IsVisible="{Binding IsVisiblePrecioVenta}"
+                            FocusedColor="{DynamicResource colPrim}"
+                            HasError="{Binding IsPrecioVentaValid}"
+                            Hint="{texts:Translate PrecioVentaHint}"
+                            HorizontalOptions="Fill"
+                            LeadingViewPosition="Inside"
+                            TrailingViewPosition="Inside">
+                                    <!-- <Entry Focused="OnEmpresa_Focused" Text="{Binding PorcentajeDescuento.ValorNumerico}" />-->
+                                    <local:CustomSfNumericTextBox
+                                        Grid.Row="0"
+                                        Grid.Column="1"                    
+                                        BorderColor="Transparent"
+                                        FormatString="c"
+                                        MaximumNumberDecimalDigits="2"
+                                        SelectAllOnFocus="True"
+                                        TextAlignment="End"
+                                        Culture="{Binding Cultura}"
+                                        TextColor="{DynamicResource colSec}"
+                                        IsReadOnly="True"
+                                        Value="{Binding PrecioVenta.Value}" 
+                                 />
+                                    <inputLayout:SfTextInputLayout.LeadingView>
+                                        <Label
+                                    FontSize="18"
+                                    Text="&#xf0d6;"
+                                    TextColor="{DynamicResource colPrim}"
+                                    VerticalTextAlignment="Center">
+                                            <Label.FontFamily>
+                                                <OnPlatform
+                                            x:TypeArguments="x:String"
+                                            Android="fa-solid-900.ttf#Font Awesome 5 Free Solid"
+                                            iOS="Font Awesome 5 Free" />
+                                            </Label.FontFamily>
+                                        </Label>
+                                    </inputLayout:SfTextInputLayout.LeadingView>
+                                </inputLayout:SfTextInputLayout>
+                                <!--#endregion 16. Precio Venta-->
+
+                                <!--#region 17. Precio Venta Impuesto-->
+                                <inputLayout:SfTextInputLayout
+                            Grid.Row="17"
+                            ContainerBackgroundColor="Transparent"
+                            ContainerType="Outlined"
+                            IsEnabled="false"                            
+                            FocusedColor="{DynamicResource colPrim}"                            
+                            Hint="{texts:Translate PrecioVentaImpuestoHint}"
+                            HorizontalOptions="Fill"
+                            LeadingViewPosition="Inside"
+                            TrailingViewPosition="Inside">
+                                    <!-- <Entry Focused="OnEmpresa_Focused" Text="{Binding PorcentajeDescuento.ValorNumerico}" />-->
+                                    <local:CustomSfNumericTextBox
+                                        Grid.Row="0"
+                                        Grid.Column="1"                    
+                                        BorderColor="Transparent"
+                                        FormatString="c"
+                                        MaximumNumberDecimalDigits="2"
+                                        TextAlignment="End"
+                                        Culture="{Binding Cultura}"
+                                        TextColor="{DynamicResource colSec}"
+                                        Value="{Binding PrecioVentaImpuesto}" 
+                                 />
+                                    <inputLayout:SfTextInputLayout.LeadingView>
+                                        <Label
+                                    FontSize="18"
+                                    Text="&#xf53a;"
+                                    TextColor="{DynamicResource colPrim}"
+                                    VerticalTextAlignment="Center">
+                                            <Label.FontFamily>
+                                                <OnPlatform
+                                            x:TypeArguments="x:String"
+                                            Android="fa-solid-900.ttf#Font Awesome 5 Free Solid"
+                                            iOS="Font Awesome 5 Free" />
+                                            </Label.FontFamily>
+                                        </Label>
+                                    </inputLayout:SfTextInputLayout.LeadingView>
+                                </inputLayout:SfTextInputLayout>
+                                <!--#endregion 17. Precio Venta Impuesto-->
+
+                                <!--#region 18. Porcentaje Rentabilidad-->
+                                <inputLayout:SfTextInputLayout
+                            Grid.Row="18"
+                            ContainerBackgroundColor="Transparent"
+                            ContainerType="Outlined"
+                            IsVisible="{Binding IsVisiblePorcentajeRentabilidad}"
+                            FocusedColor="{DynamicResource colPrim}"                            
+                            Hint="{texts:Translate PorcentajeRentabilidadHint}"
+                            HorizontalOptions="Fill"
+                            LeadingViewPosition="Inside"
+                            >
+                                    <!-- <Entry Focused="OnEmpresa_Focused" Text="{Binding PorcentajeDescuento.ValorNumerico}" />-->
+                                    <local:CustomSfNumericTextBox
+                                        Grid.Row="0"
+                                        Grid.Column="1"                    
+                                        BorderColor="Transparent"
+                                        FormatString="n"
+                                        MaximumNumberDecimalDigits="2"
+                                        SelectAllOnFocus="True"
+                                        TextAlignment="End"
+                                        Culture="{Binding Cultura}"
+                                        Unfocused="CustomSfNumericTextBox_Unfocused"
+                                        TextColor="{DynamicResource colSec}"
+                                        Value="{Binding PorcentajeRentabilidad.Value}" 
+                                 />
+                                    <inputLayout:SfTextInputLayout.LeadingView>
+                                        <Label
+                                    FontSize="18"
+                                    Text="&#xf295;"
+                                    TextColor="{DynamicResource colPrim}"
+                                    VerticalTextAlignment="Center">
+                                            <Label.FontFamily>
+                                                <OnPlatform
+                                            x:TypeArguments="x:String"
+                                            Android="fa-solid-900.ttf#Font Awesome 5 Free Solid"
+                                            iOS="Font Awesome 5 Free" />
+                                            </Label.FontFamily>
+                                        </Label>
+                                    </inputLayout:SfTextInputLayout.LeadingView>
+                                </inputLayout:SfTextInputLayout>
+                                <!--#endregion 18. Porcentaje Rentabilidad-->
+
+                                <!--#region 19. Porcentaje Gasto Operativo-->
+                                <inputLayout:SfTextInputLayout
+                            Grid.Row="19"
+                            ContainerBackgroundColor="Transparent"
+                            ContainerType="Outlined"
+                            IsVisible="{Binding IsVisiblePorcentajeGastoOperativo}"                            
+                            FocusedColor="{DynamicResource colPrim}"                            
+                            Hint="{texts:Translate PorcentajeGastoOperativoHint}"
+                            HorizontalOptions="Fill"
+                            LeadingViewPosition="Inside"
+                            >
+                                    <!-- <Entry Focused="OnEmpresa_Focused" Text="{Binding PorcentajeDescuento.ValorNumerico}" />-->
+                                    <local:CustomSfNumericTextBox
+                                        Grid.Row="0"
+                                        Grid.Column="1"                    
+                                        BorderColor="Transparent"
+                                        FormatString="n"
+                                        MaximumNumberDecimalDigits="2"
+                                        SelectAllOnFocus="True"
+                                        Culture="{Binding Cultura}"
+                                        TextAlignment="End"
+                                        TextColor="{DynamicResource colSec}"
+                                        Unfocused="CustomSfNumericTextBox_Unfocused"
+                                        Value="{Binding PorcentajeGastoOperativo.Value}" 
+                                 />
+                                    <inputLayout:SfTextInputLayout.LeadingView>
+                                        <Label
+                                    FontSize="18"
+                                    Text="&#xf295;"
+                                    TextColor="{DynamicResource colPrim}"
+                                    VerticalTextAlignment="Center">
+                                            <Label.FontFamily>
+                                                <OnPlatform
+                                            x:TypeArguments="x:String"
+                                            Android="fa-solid-900.ttf#Font Awesome 5 Free Solid"
+                                            iOS="Font Awesome 5 Free" />
+                                            </Label.FontFamily>
+                                        </Label>
+                                    </inputLayout:SfTextInputLayout.LeadingView>
+
+                                </inputLayout:SfTextInputLayout>
+                                <!--#endregion 19. Porcentaje Gasto Operativo-->
+
+                                <!--#region 20. Precio Compra-->
+                                <inputLayout:SfTextInputLayout
+                            Grid.Row="20"
+                            ContainerBackgroundColor="Transparent"
+                            ContainerType="Outlined"
+                            IsVisible="{Binding IsVisiblePrecioCompra}"
+                            FocusedColor="{DynamicResource colPrim}"
+                            HasError="{Binding IsPrecioCompraValid}"
+                            Hint="{texts:Translate PrecioCompraHint}"
+                            HorizontalOptions="Fill"
+                            LeadingViewPosition="Inside"
+                            TrailingViewPosition="Inside">
+                                    <!-- <Entry Focused="OnEmpresa_Focused" Text="{Binding PorcentajeDescuento.ValorNumerico}" />-->
+                                    <local:CustomSfNumericTextBox                                        
+                                        Grid.Row="0"
+                                        Grid.Column="1"                    
+                                        BorderColor="Transparent"
+                                        FormatString="c"
+                                        SelectAllOnFocus="True"
+                                        Culture="{Binding Cultura}"
+                                        MaximumNumberDecimalDigits="2"
+                                        TextAlignment="End"
+                                        TextColor="{DynamicResource colSec}"
+                                        Unfocused="CustomSfNumericTextBox_Unfocused_1"
+                                        Value="{Binding PrecioCompra.Value, Mode=TwoWay}" 
+                                 />
+                                    <inputLayout:SfTextInputLayout.LeadingView>
+                                        <Label
+                                    FontSize="18"
+                                    Text="&#xf291;"
+                                    TextColor="{DynamicResource colPrim}"
+                                    VerticalTextAlignment="Center">
+                                            <Label.FontFamily>
+                                                <OnPlatform
+                                            x:TypeArguments="x:String"
+                                            Android="fa-solid-900.ttf#Font Awesome 5 Free Solid"
+                                            iOS="Font Awesome 5 Free" />
+                                            </Label.FontFamily>
+                                        </Label>
+                                    </inputLayout:SfTextInputLayout.LeadingView>
+                                </inputLayout:SfTextInputLayout>
+                                <!--#endregion 20. Precio Compra-->
+
+                                <!--#region 21. Gasto Operativo-->
+                                <inputLayout:SfTextInputLayout
+                                        Grid.Row="21"                                        
+                                        ContainerBackgroundColor="Transparent"
+                                        ContainerType="Outlined"
+                                        FocusedColor="{StaticResource colPrim}"
+                                        IsVisible="{Binding IsVisibleValorGastoOperativo}"
+                                        Hint="{texts:Translate ValorGastoOperativoHint}"
+                                        IsEnabled="false"
+                                        HorizontalOptions="Fill"
+                                        LeadingViewPosition="Inside">
+                                    <!--<Entry
+                                            FontFamily="{StaticResource PoppinsRegular}"
+                                            FontSize="14"
+                                            TextColor="{DynamicResource colSec}"
+                                            IsEnabled="{Binding AllowEdit}"
+                                            HorizontalTextAlignment="End"                                        
+                                            Text="{Binding ValorGastoOperativoFormato}" />-->
+                                    <customViews:MyCustomEntry
+                                            FontFamily="{StaticResource PoppinsRegular}"
+                                            FontSize="14"
+                                            TextColor="{DynamicResource colSec}"
+                                            IsEnabled="{Binding AllowEdit}"
+                                            HorizontalTextAlignment="End"                                        
+                                            Text="{Binding ValorGastoOperativo}"/>
+                                    <inputLayout:SfTextInputLayout.LeadingView>
+                                        <Label
+                                                FontSize="18"
+                                                Text="&#xf121;"
+                                                TextColor="{StaticResource colPrim}"
+                                                VerticalTextAlignment="Center">
+                                            <Label.FontFamily>
+                                                <OnPlatform
+                                                        x:TypeArguments="x:String"
+                                                        Android="fa-solid-900.ttf#Font Awesome 5 Free Solid"
+                                                        iOS="Font Awesome 5 Free" />
+                                            </Label.FontFamily>
+                                        </Label>
+                                    </inputLayout:SfTextInputLayout.LeadingView>
+                                </inputLayout:SfTextInputLayout>
+                                <!--#endregion 21. Gasto Operativo-->
+
+                                <!--#region 22. Valor Rentabilidad-->
+                                <inputLayout:SfTextInputLayout
+                            Grid.Row="22"
+                            ContainerBackgroundColor="Transparent"
+                            ContainerType="Outlined"
+                            IsEnabled="false"
+                            IsVisible="{Binding IsVisibleValorRentabilidad}"
+                            FocusedColor="{DynamicResource colPrim}"                            
+                            Hint="{texts:Translate ValorRentabilidadHint}"
+                            HorizontalOptions="Fill"
+                            LeadingViewPosition="Inside"
+                            TrailingViewPosition="Inside">
+                                    <!-- <Entry Focused="OnEmpresa_Focused" Text="{Binding PorcentajeDescuento.ValorNumerico}" />-->
+                                    <local:CustomSfNumericTextBox
+                                        Grid.Row="0"
+                                        Grid.Column="1"                    
+                                        BorderColor="Transparent"
+                                        FormatString="c"
+                                        MaximumNumberDecimalDigits="2"
+                                        TextAlignment="End"
+                                        Culture="{Binding Cultura}"
+                                        TextColor="{DynamicResource colSec}"
+                                        Value="{Binding ValorRentabilidad}" 
+                                 />
+                                    <inputLayout:SfTextInputLayout.LeadingView>
+                                        <Label
+                                    FontSize="18"
+                                    Text="&#xf53d;"
+                                    TextColor="{DynamicResource colPrim}"
+                                    VerticalTextAlignment="Center">
+                                            <Label.FontFamily>
+                                                <OnPlatform
+                                            x:TypeArguments="x:String"
+                                            Android="fa-solid-900.ttf#Font Awesome 5 Free Solid"
+                                            iOS="Font Awesome 5 Free" />
+                                            </Label.FontFamily>
+                                        </Label>
+                                    </inputLayout:SfTextInputLayout.LeadingView>
+                                </inputLayout:SfTextInputLayout>
+                                <!--#endregion 22. Valor Rentabilidad-->
+                                                                
+                                <!--#region 23. Valor Utilidad-->
+                                <inputLayout:SfTextInputLayout
+                            Grid.Row="23"
+                            ContainerBackgroundColor="Transparent"
+                            ContainerType="Outlined"
+                            IsEnabled="false"
+                            IsVisible="{Binding IsVisibleValorUtilidad}"
+                            FocusedColor="{DynamicResource colPrim}"                            
+                            Hint="{texts:Translate ValorUtilidadHint}"
+                            HorizontalOptions="Fill"
+                            LeadingViewPosition="Inside"
+                            TrailingViewPosition="Inside">
+                                    <!-- <Entry Focused="OnEmpresa_Focused" Text="{Binding PorcentajeDescuento.ValorNumerico}" />-->
+                                    <local:CustomSfNumericTextBox
+                                        Grid.Row="0"
+                                        Grid.Column="1"                    
+                                        BorderColor="Transparent"
+                                        FormatString="c"
+                                        MaximumNumberDecimalDigits="2"
+                                        TextAlignment="End"
+                                        Culture="{Binding Cultura}"
+                                        TextColor="{DynamicResource colSec}"
+                                        Value="{Binding ValorUtilidad}" 
+                                 />
+                                    <inputLayout:SfTextInputLayout.LeadingView>
+                                        <Label
+                                    FontSize="18"
+                                    Text="&#xf53a;"
+                                    TextColor="{DynamicResource colPrim}"
+                                    VerticalTextAlignment="Center">
+                                            <Label.FontFamily>
+                                                <OnPlatform
+                                            x:TypeArguments="x:String"
+                                            Android="fa-solid-900.ttf#Font Awesome 5 Free Solid"
+                                            iOS="Font Awesome 5 Free" />
+                                            </Label.FontFamily>
+                                        </Label>
+                                    </inputLayout:SfTextInputLayout.LeadingView>
+                                </inputLayout:SfTextInputLayout>
+                                <!--#endregion 23. Valor Utilidad-->
+
+                                <!--#region 24. Período de Incremento de Valor-->
+                                <inputLayout:SfTextInputLayout
+                            Grid.Row="24"
+                            ContainerBackgroundColor="Transparent"
+                            ContainerType="Outlined"
+                            FocusedColor="{DynamicResource colPrim}"                            
+                            Hint="{texts:Translate PeriodoIncrementoPrecioHint}"                                    
+                            HorizontalOptions="Fill"
+                            LeadingViewPosition="Inside"
+                            TrailingViewPosition="Inside">
+                                    <inputLayout:SfTextInputLayout.GestureRecognizers>
+                                        <TapGestureRecognizer Command="{Binding OpenPeriodoIncrementoCommand}" />
+                                    </inputLayout:SfTextInputLayout.GestureRecognizers>
+                                    <!-- <Entry Focused="OnEmpresa_Focused" Text="{Binding PorcentajeDescuento.ValorNumerico}" />-->
+                                    <Entry IsReadOnly="True" Text="{Binding PeriodoIncremento}" />
+                                    <inputLayout:SfTextInputLayout.LeadingView>
+                                        <Label
+                                    FontSize="18"
+                                    Text="&#xf295;"
+                                    TextColor="{DynamicResource colPrim}"
+                                    VerticalTextAlignment="Center">
+                                            <Label.FontFamily>
+                                                <OnPlatform
+                                            x:TypeArguments="x:String"
+                                            Android="fa-solid-900.ttf#Font Awesome 5 Free Solid"
+                                            iOS="Font Awesome 5 Free" />
+                                            </Label.FontFamily>
+                                        </Label>
+                                    </inputLayout:SfTextInputLayout.LeadingView>
+                                    <inputLayout:SfTextInputLayout.TrailingView>
+                                        <Label
+                                    FontSize="18"
+                                    Text="&#xf0dd;"
+                                    TextColor="{DynamicResource colPrim}"
+                                    VerticalTextAlignment="Center">
+                                            <Label.FontFamily>
+                                                <OnPlatform
+                                            x:TypeArguments="x:String"
+                                            Android="fa-solid-900.ttf#Font Awesome 5 Free Solid"
+                                            iOS="Font Awesome 5 Free" />
+                                            </Label.FontFamily>
+                                        </Label>
+                                    </inputLayout:SfTextInputLayout.TrailingView>
+                                </inputLayout:SfTextInputLayout>
+                                <!--#endregion 24. Período de Incremento de Valor-->
+
+                                <!--#region 25. Valor Incremento-->
+                                <inputLayout:SfTextInputLayout
+                            Grid.Row="25"
+                            ContainerBackgroundColor="Transparent"
+                            ContainerType="Outlined"                            
+                            FocusedColor="{DynamicResource colPrim}"                            
+                            Hint="{texts:Translate ValorIncrementoHint}"
+                            HorizontalOptions="Fill"
+                            LeadingViewPosition="Inside"
+                            TrailingViewPosition="Inside">
+                                    <!-- <Entry Focused="OnEmpresa_Focused" Text="{Binding PorcentajeDescuento.ValorNumerico}" />-->
+                                    <local:CustomSfNumericTextBox
+                                        Grid.Row="0"
+                                        Grid.Column="1"                    
+                                        BorderColor="Transparent"
+                                        FormatString="c"
+                                        MaximumNumberDecimalDigits="2"
+                                        SelectAllOnFocus="True"
+                                        TextAlignment="End"
+                                        Culture="{Binding Cultura}"
+                                        TextColor="{DynamicResource colSec}"
+                                        Value="{Binding ValorIncremento}" 
+                                 />
+                                    <inputLayout:SfTextInputLayout.LeadingView>
+                                        <Label
+                                    FontSize="18"
+                                    Text="&#xf53a;"
+                                    TextColor="{DynamicResource colPrim}"
+                                    VerticalTextAlignment="Center">
+                                            <Label.FontFamily>
+                                                <OnPlatform
+                                            x:TypeArguments="x:String"
+                                            Android="fa-solid-900.ttf#Font Awesome 5 Free Solid"
+                                            iOS="Font Awesome 5 Free" />
+                                            </Label.FontFamily>
+                                        </Label>
+                                    </inputLayout:SfTextInputLayout.LeadingView>
+                                </inputLayout:SfTextInputLayout>
+                                <!--#endregion 25. Valor Incremento-->
+
+                                <!--#region 26. Posee Stock-->
+                                <StackLayout Margin="10,0,0,10" Orientation="Horizontal" Grid.Row="26" >
+                                    <Label Style="{StaticResource AppSettingCheckItemLabelStyle}" Text="{texts:Translate PoseeStockHint}" />
+                                    <button:SfSwitch
+                                        Margin="8,0"
+                                        AllowIndeterminateState="True"
+                                        HeightRequest="28"
+                                        HorizontalOptions="EndAndExpand"
+                                        IsOn="{Binding PoseeStock}"                            
+                                        VisualType="Cupertino">
+                                        <VisualStateManager.VisualStateGroups>
+                                            <VisualStateGroup x:Name="CommonStates">
+                                                <VisualState x:Name="On">
+                                                    <VisualState.Setters>
+                                                        <Setter Property="SwitchSettings">
+                                                            <Setter.Value>
+                                                                <button:CupertinoSwitchSettings
+                                                        x:TypeArguments="button:OnState"
+                                                        ThumbBorderColor="{DynamicResource Gray-500}"
+                                                        ThumbColor="{DynamicResource Gray-White}"
+                                                        TrackBorderColor="{DynamicResource Gray-200}"
+                                                        TrackColor="{DynamicResource RedColor}" />
+                                                            </Setter.Value>
+                                                        </Setter>
+                                                    </VisualState.Setters>
+                                                </VisualState>
+                                                <VisualState x:Name="Off">
+                                                    <VisualState.Setters>
+                                                        <Setter Property="SwitchSettings">
+                                                            <Setter.Value>
+                                                                <button:CupertinoSwitchSettings
+                                                        x:TypeArguments="button:OffState"
+                                                        ThumbBorderColor="{DynamicResource Gray-200}"
+                                                        ThumbColor="{DynamicResource Gray-White}"
+                                                        TrackBorderColor="{DynamicResource Gray-200}"
+                                                        TrackColor="{DynamicResource Gray-500}" />
+                                                            </Setter.Value>
+                                                        </Setter>
+                                                    </VisualState.Setters>
+                                                </VisualState>
+                                            </VisualStateGroup>
+                                        </VisualStateManager.VisualStateGroups>
+                                    </button:SfSwitch>
+                                </StackLayout>
+                                <!--#endregion 26. Posee Stock-->
+
+                                <!--#region 27. Descripción-->                                
+                                <inputLayout:SfTextInputLayout
+                                Grid.Row="27"
+                                ContainerBackgroundColor="Transparent"
+                                ContainerType="Outlined"
+                                FocusedColor="{DynamicResource colPrim}"
+                                Hint="{texts:Translate NoteHint}"
+                                HorizontalOptions="Fill"
+                                LeadingViewPosition="Inside">
+                                    <Editor HeightRequest="80" Text="{Binding Descripcion}" />
+                                    <inputLayout:SfTextInputLayout.LeadingView>
+                                        <Label
+                                        FontSize="18"
+                                        Text="&#xf044;"
+                                        TextColor="{DynamicResource colPrim}"
+                                        VerticalTextAlignment="Center">
+                                            <Label.FontFamily>
+                                                <OnPlatform
+                                                x:TypeArguments="x:String"
+                                                Android="fa-solid-900.ttf#Font Awesome 5 Free Solid"
+                                                iOS="Font Awesome 5 Free" />
+                                            </Label.FontFamily>
+                                        </Label>
+                                    </inputLayout:SfTextInputLayout.LeadingView>
+                                </inputLayout:SfTextInputLayout>
+                                <!--#endregion 27. Descripción-->
+                                
+                            </Grid>
+                        </ScrollView>
+                    </yummy:PancakeView>
+                </Grid>
+            </ScrollView>
+            <customViews:LoadingIndicator
+                Grid.Row="0"
+                HorizontalOptions="Fill"
+                IsRunning="{Binding IsBusy, Mode=TwoWay}"
+                VerticalOptions="Fill" />
+        </Grid>
+    </ContentPage.Content>
+    <!--#endregion 3. CONTENIDO  -->
+</ContentPage>

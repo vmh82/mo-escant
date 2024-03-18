@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentView xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:local="clr-namespace:Escant_App.UserControls"
+    x:Class="Escant_App.UserControls.InitialsCircleView">
+    <ContentView.Content>
+        <Grid x:Name="Container">
+            <local:CircleView x:Name="Circle" Margin="5" HorizontalOptions="Fill" VerticalOptions="Fill" Color="{Binding CircleColor}" CornerRadius="{Binding CornerRadius}"/>
+            <Label x:Name="InitialsLabel" VerticalOptions="Center" HorizontalOptions="Center" HorizontalTextAlignment="Center" TextColor="{Binding TextColor}" Font="{Binding Font}" FontSize="{Binding FontSize}" />
+        </Grid>
+    </ContentView.Content>
+</ContentView>

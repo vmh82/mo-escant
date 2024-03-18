@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pages:PopupPage xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:pages="clr-namespace:Rg.Plugins.Popup.Pages;assembly=Rg.Plugins.Popup"
+             xmlns:animations="clr-namespace:Rg.Plugins.Popup.Animations;assembly=Rg.Plugins.Popup"
+             xmlns:customViews="clr-namespace:Escant_App.UserControls;assembly=Escant_App"
+             xmlns:texts="clr-namespace:ManijodaServicios.Resources.Texts;assembly=ManijodaServicios"
+             xmlns:viewModelBase="clr-namespace:Escant_App.ViewModels.Base;assembly=Escant_App"
+             viewModelBase:ViewModelLocator.AutoWireViewModel="true"    
+             xmlns:sync="clr-namespace:Syncfusion.ListView.XForms;assembly=Syncfusion.SfListView.XForms"
+             xmlns:button="clr-namespace:Syncfusion.XForms.Buttons;assembly=Syncfusion.Buttons.XForms"
+             xmlns:border="clr-namespace:Syncfusion.XForms.Border;assembly=Syncfusion.Core.XForms"
+             x:Class="Escant_App.Views.GestionBDD.RestoreDbPopupView">
+    <pages:PopupPage.Resources>
+        <ResourceDictionary>
+            <Style x:Key="PopupItemHeaderStyle" 
+                   TargetType="{x:Type Label}">
+                <Setter Property="FontFamily"
+                        Value="{StaticResource NunitoBold}" />
+                <Setter Property="FontSize"
+                        Value="{StaticResource LargeSize}" />
+                <Setter Property="TextColor"
+                        Value="{StaticResource BlackColor}" />
+                <Setter Property="HorizontalTextAlignment"
+                        Value="Start" />
+                <Setter Property="VerticalTextAlignment"
+                        Value="Center" />
+                <Setter Property="Margin"
+                        Value="0,0,0,0" />
+            </Style>
+        </ResourceDictionary>
+    </pages:PopupPage.Resources>
+    <pages:PopupPage.Animation>
+        <animations:ScaleAnimation PositionIn="Bottom" PositionOut="Center" ScaleIn="1" ScaleOut="0.7" DurationIn="700" EasingIn="SpringOut"/>
+    </pages:PopupPage.Animation>
+    <StackLayout VerticalOptions="Center" HorizontalOptions="Center" Padding="20" Margin="30">
+        <border:SfBorder x:Name="border" CornerRadius="20" BorderWidth="1" BorderColor="#3c8dbc">
+            <Grid>
+                <StackLayout IsClippedToBounds="True" BackgroundColor="White">
+                    <Grid RowSpacing="0">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="60"/>
+                            <RowDefinition Height="270"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        <Label Grid.Row="0" Text="Restore data" Style="{StaticResource PopupItemHeaderStyle}"
+                               HorizontalTextAlignment="Center" BackgroundColor="Silver" />
+                        <StackLayout Orientation="Vertical" Margin="15" Grid.Row="1">
+                            <Label Text="{texts:Translate SelectBackup}" />
+                            <sync:SfListView
+                                    x:Name="RestoreListView"
+                                    ItemsSource="{Binding BackupFiles}"
+                                    SelectionChanged="OnRestoreListView_SelectionChanged"
+                                    SelectionMode="Single"
+                                    SelectedItem="{Binding SelectedRestoreFile}"
+                                    BackgroundColor="White"
+                                    ItemSpacing="0,3,0,0"
+                                    SelectionBackgroundColor="#ECECEC">
+                                    <sync:SfListView.ItemSize>
+                                        <OnIdiom x:TypeArguments="x:Double"
+                                                      Phone="50"
+                                                      Tablet="55"
+                                                      Desktop="60"/>
+                                    </sync:SfListView.ItemSize>
+                                    <sync:SfListView.ItemTemplate>
+                                        <DataTemplate>
+                                            <StackLayout Orientation="Horizontal" VerticalOptions="Center">
+                                                <Label FontSize="18" 
+                                                    Text="&#xf1c0;"
+                                                    TextColor="{DynamicResource colPrim}"
+                                                    VerticalOptions="Center"
+                                                    VerticalTextAlignment="Center">
+                                                    <Label.FontFamily>
+                                                        <OnPlatform x:TypeArguments="x:String" iOS="Font Awesome 5 Free" Android="fa-solid-900.ttf#Font Awesome 5 Free Solid" />
+                                                    </Label.FontFamily>
+                                                </Label>
+                                                <Grid Margin="8,0,0,0">
+                                                    <Grid.RowDefinitions>
+                                                        <RowDefinition Height="Auto"/>
+                                                        <RowDefinition Height="Auto"/>
+                                                    </Grid.RowDefinitions>
+                                                    <Label Text="{Binding FileName}" Grid.Row="0"/>
+                                                    <Grid Grid.Row="1">
+                                                        <Grid.ColumnDefinitions>
+                                                            <ColumnDefinition Width="0.8*"/>
+                                                            <ColumnDefinition Width="0.2*"/>
+                                                        </Grid.ColumnDefinitions>
+                                                        <StackLayout Grid.Column="0" Orientation="Horizontal">
+                                                            <Label Text="{Binding LastModified, StringFormat='{0:dd/MM/yyyy hh:mm tt}'}" FontSize="10"/>
+                                                        </StackLayout> 
+                                                        <StackLayout Grid.Column="1" Orientation="Horizontal">
+                                                            <Label Text="{Binding FileSize, Mode=OneTime}" FontSize="10"/>
+                                                        </StackLayout>
+                                                    </Grid>
+                                                </Grid>
+                                            </StackLayout>
+                                        </DataTemplate>
+                                    </sync:SfListView.ItemTemplate>    
+                                </sync:SfListView>
+                        </StackLayout>
+                        <Grid Grid.Row="2" Padding="0,8,0,8" ColumnSpacing="10">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="0.5*"/>
+                                <ColumnDefinition Width="0.5*"/>
+                            </Grid.ColumnDefinitions>
+                            <button:SfButton Grid.Column="0" Text="OK" BackgroundColor="Green" WidthRequest="100"
+                                             VerticalOptions="Center" CornerRadius="23" 
+                                             HorizontalOptions="End"
+                                             FontFamily="{StaticResource NunitoRegular}" 
+                                             BorderColor="{DynamicResource colPrim}" Command="{Binding OkCommand}"
+                                             BorderWidth="2"/>
+                            <button:SfButton Grid.Column="1" Text="{texts:Translate Cancel}" BackgroundColor="Red" WidthRequest="100"
+                                             HorizontalOptions="Start"
+                                             VerticalOptions="Center" CornerRadius="23" Command="{Binding CancelCommand}"
+                                             FontFamily="{StaticResource NunitoRegular}" 
+                                             BorderColor="{DynamicResource colPrim}"
+                                             BorderWidth="2"/>
+                        </Grid>
+                    </Grid>
+                </StackLayout>
+            <customViews:LoadingIndicator 
+                        Grid.Row="0"
+                        IsRunning="{Binding IsBusy, Mode=TwoWay}"
+                        HorizontalOptions="Fill"
+                        VerticalOptions="Fill" />    
+            </Grid>    
+        </border:SfBorder>
+    </StackLayout>
+</pages:PopupPage>

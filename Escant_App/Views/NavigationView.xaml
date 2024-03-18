@@ -1,0 +1,66 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<MasterDetailPage
+    x:Class="Escant_App.Views.NavigationView"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:converters="clr-namespace:Escant_App.Converters"
+    xmlns:ffimageloading="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+    xmlns:gradient="clr-namespace:Syncfusion.XForms.Graphics;assembly=Syncfusion.Core.XForms"
+    xmlns:sync="clr-namespace:Syncfusion.ListView.XForms;assembly=Syncfusion.SfListView.XForms"
+    xmlns:texts="clr-namespace:ManijodaServicios.Resources.Texts;assembly=ManijodaServicios"
+    xmlns:transformations="clr-namespace:FFImageLoading.Transformations;assembly=FFImageLoading.Transformations"
+    xmlns:viewModelBase="clr-namespace:Escant_App.ViewModels.Base;assembly=Escant_App"
+    xmlns:views="clr-namespace:Escant_App.Views;assembly=Escant_App"
+    viewModelBase:ViewModelLocator.AutoWireViewModel="true"
+    MasterBehavior="Popover">
+
+    <MasterDetailPage.Resources>
+        <ResourceDictionary>
+            <Style x:Key="MainMenuTitleStyle" TargetType="{x:Type Label}">
+                <Setter Property="FontFamily" Value="{StaticResource NunitoRegular}" />
+                <Setter Property="FontSize" Value="{StaticResource LargeSize}" />
+                <Setter Property="HorizontalOptions" Value="Start" />
+                <Setter Property="VerticalOptions" Value="Center" />
+                <Setter Property="Margin" Value="12, 0" />
+                <Setter Property="TextColor" Value="{StaticResource BlackTextColor}" />
+            </Style>
+            <Style x:Key="MainHeaderLabelStyle" TargetType="{x:Type Label}">
+                <Setter Property="FontFamily" Value="{StaticResource NunitoRegular}" />
+                <Setter Property="FontSize" Value="{StaticResource MediumSize}" />
+                <Setter Property="TextColor" Value="{StaticResource WhiteColor}" />
+                <Setter Property="HorizontalOptions" Value="Start" />
+                <Setter Property="Margin" Value="20,0" />
+            </Style>
+            <Style x:Key="SfGradientViewStyle" TargetType="gradient:SfGradientView">
+                <Setter Property="Opacity" Value="0.92" />
+                <Setter Property="VerticalOptions" Value="FillAndExpand" />
+                <Setter Property="HorizontalOptions" Value="FillAndExpand" />
+                <Setter Property="BackgroundBrush">
+                    <Setter.Value>
+                        <gradient:SfLinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                            <gradient:SfLinearGradientBrush.GradientStops>
+                                <gradient:SfGradientStop Offset="0.0" Color="{StaticResource GradientEndColor}" />
+                                <gradient:SfGradientStop Offset="1.0" Color="{StaticResource GradientStartColor}" />
+                            </gradient:SfLinearGradientBrush.GradientStops>
+                        </gradient:SfLinearGradientBrush>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+            <converters:StoreMobileNumberConverter x:Key="storeMobileNumberConverter" />
+        </ResourceDictionary>
+    </MasterDetailPage.Resources>
+
+    <MasterDetailPage.Master>
+        <views:MasterView x:Name="RootPage" />
+    </MasterDetailPage.Master>
+
+    <MasterDetailPage.Detail>
+        <!--<NavigationPage x:Name="navigationPage">
+            <x:Arguments>
+                <views:MainView/>
+            </x:Arguments>
+        </NavigationPage>-->
+        <ContentPage BackgroundColor="Transparent" />
+    </MasterDetailPage.Detail>
+
+</MasterDetailPage>

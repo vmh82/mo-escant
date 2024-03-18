@@ -1,0 +1,1076 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<pages:PopupPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Escant_App.Views.Ventas.PopupValidaView"
+             xmlns:animations="clr-namespace:Rg.Plugins.Popup.Animations;assembly=Rg.Plugins.Popup"
+                 xmlns:button="clr-namespace:Syncfusion.XForms.Buttons;assembly=Syncfusion.Buttons.XForms"
+                 xmlns:customViews="clr-namespace:Escant_App.UserControls;assembly=Escant_App"
+                 xmlns:local="clr-namespace:Escant_App.UserControls"
+                 xmlns:pages="clr-namespace:Rg.Plugins.Popup.Pages;assembly=Rg.Plugins.Popup"
+                 xmlns:texts="clr-namespace:ManijodaServicios.Resources.Texts;assembly=ManijodaServicios"
+                 xmlns:viewModelBase="clr-namespace:Escant_App.ViewModels.Base;assembly=Escant_App"
+                 xmlns:inputLayout="clr-namespace:Syncfusion.XForms.TextInputLayout;assembly=Syncfusion.Core.XForms"
+                 xmlns:datagrid="clr-namespace:Syncfusion.SfDataGrid.XForms;assembly=Syncfusion.SfDataGrid.XForms" 
+                 xmlns:combobox="clr-namespace:Syncfusion.XForms.ComboBox;assembly=Syncfusion.SfComboBox.XForms"
+                 xmlns:system="clr-namespace:System;assembly=mscorlib"
+    xmlns:ffimageloading="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+    xmlns:buttons="clr-namespace:Syncfusion.XForms.Buttons;assembly=Syncfusion.Buttons.XForms"
+    xmlns:transformations="clr-namespace:FFImageLoading.Transformations;assembly=FFImageLoading.Transformations"
+    xmlns:converters="clr-namespace:Escant_App.Converters;assembly=Escant_App"
+    viewModelBase:ViewModelLocator.AutoWireViewModel="true">
+    <!--#region 0. Recursos-->
+    <pages:PopupPage.Resources>
+        <ResourceDictionary>
+            <Style TargetType="inputLayout:SfTextInputLayout">
+                <Setter Property="IsHintAlwaysFloated" Value="True" />
+                <Setter Property="HintLabelStyle">
+                    <Setter.Value>
+                        <inputLayout:LabelStyle FontSize="12" />
+                    </Setter.Value>
+                </Setter>
+                <Setter Property="ContainerType" Value="Outlined" />
+            </Style>
+            <Style TargetType="Grid">
+                <Setter Property="ColumnSpacing" Value="0" />
+                <Setter Property="RowSpacing" Value="0" />
+            </Style>
+            <Style x:Key="AppSettingCheckItemLabelStyle" TargetType="{x:Type Label}">
+                <Setter Property="FontFamily" Value="{StaticResource NunitoRegular}" />
+                <Setter Property="FontSize" Value="{StaticResource MidMediumSize}" />
+                <Setter Property="HorizontalOptions" Value="Start" />
+                <Setter Property="VerticalOptions" Value="Center" />
+                <Setter Property="Margin" Value="0, 0" />
+                <Setter Property="TextColor" Value="{StaticResource BlackTextColor}" />
+            </Style>
+            <Style x:Key="PopupItemHeaderStyle" TargetType="{x:Type Label}">
+                <Setter Property="FontFamily" Value="{StaticResource NunitoBold}" />
+                <Setter Property="FontSize" Value="{StaticResource LargeSize}" />
+                <Setter Property="TextColor" Value="{StaticResource BlackColor}" />
+                <Setter Property="HorizontalTextAlignment" Value="Start" />
+                <Setter Property="VerticalTextAlignment" Value="Center" />
+                <Setter Property="Margin" Value="0,0,0,0" />
+            </Style>
+            <Style x:Key="PopupItemHeaderStyle_ls" TargetType="{x:Type Label}">
+                <Setter Property="FontFamily" Value="{StaticResource NunitoBold}" />
+                <Setter Property="FontSize" Value="{StaticResource SmallSize}" />
+                <Setter Property="TextColor" Value="{StaticResource BlackColor}" />
+                <Setter Property="HorizontalTextAlignment" Value="Start" />
+                <Setter Property="VerticalTextAlignment" Value="Center" />
+                <Setter Property="Margin" Value="0,0,0,0" />
+            </Style>
+
+            <Style x:Key="PopupLabelHeaderStyle" TargetType="{x:Type Label}">
+                <Setter Property="FontFamily" Value="{StaticResource NunitoRegular}" />
+                <Setter Property="FontSize" Value="{StaticResource MidMediumSize}" />
+                <Setter Property="TextColor" Value="Black" />
+                <Setter Property="HorizontalOptions" Value="StartAndExpand" />
+                <Setter Property="VerticalOptions" Value="Center" />
+                <Setter Property="Margin" Value="10,0,0,0" />
+            </Style>
+            <Style x:Key="PopupLabelHeaderStyle_ls" TargetType="{x:Type Label}">
+                <Setter Property="FontFamily" Value="{StaticResource NunitoRegular}" />
+                <Setter Property="FontSize" Value="{StaticResource SmallSize}" />
+                <Setter Property="TextColor" Value="Black" />
+                <Setter Property="HorizontalOptions" Value="StartAndExpand" />
+                <Setter Property="VerticalOptions" Value="Center" />
+                <Setter Property="Margin" Value="10,0,0,0" />
+            </Style>
+
+            <Style x:Key="PopupLabelStyle" TargetType="{x:Type Label}">
+                <Setter Property="FontFamily" Value="{StaticResource NunitoRegular}" />
+                <Setter Property="FontSize" Value="{StaticResource LargeSize}" />
+                <Setter Property="TextColor" Value="Black" />
+                <Setter Property="HorizontalOptions" Value="StartAndExpand" />
+                <Setter Property="VerticalOptions" Value="Center" />
+                <Setter Property="Margin" Value="10,0,0,0" />
+            </Style>
+
+            <Style x:Key="ListedItemLabelStyle" TargetType="{x:Type Label}">
+                <Setter Property="FontFamily" Value="{StaticResource NunitoRegular}" />
+                <Setter Property="FontSize" Value="{StaticResource MidMediumSize}" />
+                <Setter Property="TextColor" Value="{DynamicResource BlackTextColor}" />
+                <Setter Property="HorizontalOptions" Value="Start" />
+                <Setter Property="VerticalOptions" Value="Center" />
+                <Setter Property="Margin" Value="5,0,0,0" />
+            </Style>
+
+            <Style x:Key="ListedPriceLabelStyle" TargetType="{x:Type Label}">
+                <Setter Property="FontFamily" Value="{StaticResource NunitoRegular}" />
+                <Setter Property="FontSize" Value="{StaticResource LittleSize}" />
+                <Setter Property="TextColor" Value="{DynamicResource BlackTextColor}" />
+                <Setter Property="HorizontalOptions" Value="Start" />
+                <Setter Property="VerticalOptions" Value="Center" />
+                <Setter Property="Margin" Value="5,0,0,0" />
+            </Style>
+            <converters:ImageConverter x:Key="ByteArrayToImage"/>
+        </ResourceDictionary>
+    </pages:PopupPage.Resources>
+    <!--#endregion 0. Recursos-->
+    <!--#region 1. Animación-->
+    <pages:PopupPage.Animation>
+        <animations:ScaleAnimation
+            DurationIn="700"
+            EasingIn="SpringOut"
+            PositionIn="Bottom"
+            PositionOut="Center"
+            ScaleIn="1"
+            ScaleOut="0.7" />
+    </pages:PopupPage.Animation>
+    <!--#endregion 1. Animación-->
+    <!--#region 2. Contenido-->
+    <StackLayout HorizontalOptions="Center" VerticalOptions="Center">
+        <Frame
+            x:Name="FrameContainer"
+            Margin="10"
+            BackgroundColor="White"
+            CornerRadius="10"
+            HorizontalOptions="Center">
+            <ScrollView Scrolled="ScrollView_Scrolled">
+                <StackLayout
+                Padding="10,5"
+                IsClippedToBounds="True"
+                Spacing="3">
+                    <!--#region Grid Principal 1. Cabecera, 2. Cuerpo-->
+                    <Grid RowSpacing="0">
+                        <Grid.RowDefinitions>
+                            <!--0. Cabecera-->
+                            <RowDefinition Height="60" />
+                            <!--1. Cuerpo-->
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+                        <!--#region 0. Cabecera-->
+                        <Grid Grid.Row="0" RowSpacing="0">
+                            <Grid.RowDefinitions>
+                                <!--Fila 0 Información-->
+                                <RowDefinition Height="55" />
+                                <!--Fila 1 Línea de Resaltado-->
+                                <RowDefinition Height="1" />
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <!--0.0 Datos Cliente-->
+                                <ColumnDefinition Width="0.55*" />
+                                <!--0.1 Datos de la Orden-->
+                                <ColumnDefinition Width="0.45*" />
+                            </Grid.ColumnDefinitions>
+                            <!--0.0 Datos Cliente-->
+                            <Label
+                            Grid.Row="0"
+                            Grid.Column="0"
+                            LineBreakMode="TailTruncation"
+                            Style="{StaticResource PopupItemHeaderStyle_ls}"
+                            Text="{Binding OrdenSeleccionado.NombreCliente}" />
+                            <Grid Grid.Row="0"
+                            Grid.Column="1"
+                            RowSpacing="0">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="0.5*" />
+                                    <RowDefinition Height="0.5*" />
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="0.6*" />
+                                    <ColumnDefinition Width="0.4*" />
+                                </Grid.ColumnDefinitions>
+                                <!-- Celda 0,0 Número de Orden-->
+                                <Label
+                            Grid.Row="0"
+                            Grid.Column="0"
+                            HorizontalOptions="Fill"
+                            Style="{StaticResource PopupLabelHeaderStyle_ls}"
+                            Text="{texts:Translate NumeroOrdenLabel}" />
+                                <!-- Celda 0,1 Valor de la Orden-->
+                                <Label
+                            Grid.Row="0"
+                            Grid.Column="1"
+                            HorizontalOptions="End"
+                            Style="{StaticResource PopupLabelHeaderStyle_ls}"
+                            Text="{Binding OrdenSeleccionado.NumeroOrden, Mode=TwoWay}" />
+                                <!-- Celda 1,0 Estado de la Orden-->
+                                <Label
+                            Grid.Row="1"
+                            Grid.Column="0"
+                            HorizontalOptions="Fill"
+                            Style="{StaticResource PopupLabelHeaderStyle_ls}"
+                            Text="{texts:Translate EstadoOrdenLabel}" />
+                                <!-- Celda 1,1 Valor de la Orden-->
+                                <Label
+                            Grid.Row="1"
+                            Grid.Column="1"
+                            HorizontalOptions="End"
+                            Style="{StaticResource PopupLabelHeaderStyle_ls}"
+                            Text="{Binding OrdenSeleccionado.CodigoEstado, Mode=TwoWay}" />
+                            </Grid>
+                            <BoxView
+                            Grid.Row="1"
+                            Grid.Column="1"
+                            BackgroundColor="Black"
+                            HeightRequest="1" />
+                        </Grid>
+                        <!--#endregion 0. Cabecera-->
+
+                        <!--#region 1. Cuerpo-->
+                        <Grid Grid.Row="1" ColumnSpacing="0" RowSpacing = "0" >
+                            <Grid.RowDefinitions>
+                                <!-- Fila 0
+                                Condiciones de Venta - Estado Ingresado
+                                Forma de Pago - Estado Cancelación                                
+                                -->
+                                <RowDefinition Height="Auto" />
+                                <!-- Fila 1
+                                Días Crédito e Importe de Crédito - Estado Ingresado
+                                Valor A Pagar y Si aplica descuento - Estado Cancelación                                
+                                -->
+                                <RowDefinition Height="Auto" />
+                                <!-- Fila 2
+                                Grid de Pedido - Estado Ingresado  
+                                Tipo De Descuento - Valor Descuento - Estado Cancelación
+                                -->
+                                <RowDefinition Height="Auto" />
+                                <!-- Fila 3                                
+                                Grid de Cancelación - Estado Cancelación
+                                -->
+                                <RowDefinition Height="Auto" />
+                                <!-- Fila 4
+                                Grid de Administración Imagen - Estado Cancelación
+                                -->
+                                <RowDefinition Height="Auto" />
+                                <!-- Fila 5                               
+                                Observaciones - Estado Ingresado
+                                Observaciones - Estado Cancelación
+                                -->
+                                <RowDefinition Height="Auto" />
+                                <!-- Fila 6
+                                Botones - Estado Ingresado                                
+                                -->
+                                <RowDefinition Height="60" />
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="0.35*" />
+                                <ColumnDefinition Width="0.35*" />
+                                <ColumnDefinition Width="0.30*" />
+                            </Grid.ColumnDefinitions>
+
+                            <!--#region Estado Ingresado -->
+                            <!--#region Celda 0,0-1 Estado Ingresado Condiciones Venta-->
+                            <inputLayout:SfTextInputLayout
+                                    Grid.Row="0"
+                                    Grid.Column="0"
+                                    Grid.ColumnSpan="2"
+                                    ContainerBackgroundColor="Transparent"
+                                    ContainerType="Outlined"
+                                    FocusedColor="{DynamicResource colPrim}"
+                                    Hint="{texts:Translate CondicionesVentaHint}"
+                                    IsVisible="{Binding IsVisibleIngresado}"
+                                    IsEnabled="false"
+                                    HorizontalOptions="Fill"
+                                    LeadingViewPosition="Inside">
+                                <combobox:SfComboBox
+                                        DataSource="{Binding LCondicionesVenta}"
+                                        DisplayMemberPath="Nombre"
+                                        FontFamily="{StaticResource PoppinsRegular}"
+                                        IsEditableMode="true"
+                                        IsEnabled="false"
+                                        ShowBorder="false"
+                                        ShowSuggestionsOnFocus="true"
+                                        SelectedItem="{Binding CondicionesVentaSeleccionado}"
+                                        SelectionChanged="SfComboBox_SelectionChanged"
+                                        TextSize="14">
+                                    <combobox:SfComboBox.HeightRequest>
+                                        <OnPlatform x:TypeArguments="x:Double">
+                                            <On Platform="iOS">18</On>
+                                            <On Platform="Android">50</On>
+                                        </OnPlatform>
+                                    </combobox:SfComboBox.HeightRequest>
+                                </combobox:SfComboBox>
+                                <inputLayout:SfTextInputLayout.LeadingView>
+                                    <Label
+                                            FontSize="18"
+                                            Text="&#xf0e8;"
+                                            TextColor="{DynamicResource colPrim}"
+                                            VerticalTextAlignment="Center">
+                                        <Label.FontFamily>
+                                            <OnPlatform
+                                                    x:TypeArguments="x:String"
+                                                    Android="fa-solid-900.ttf#Font Awesome 5 Free Solid"
+                                                    iOS="Font Awesome 5 Free" />
+                                        </Label.FontFamily>
+                                    </Label>
+                                </inputLayout:SfTextInputLayout.LeadingView>
+                            </inputLayout:SfTextInputLayout>
+                            <!--#endregion Celda 0,0-1 Estado Ingresado Condiciones Venta-->
+
+                            <!--#region Celda 0,2 Estado Ingresado Importe de Crédito-->
+                            <inputLayout:SfTextInputLayout
+                                    Grid.Row="0"
+                                    Grid.Column="2"
+                                    ContainerBackgroundColor="Transparent"
+                                    ContainerType="Outlined"
+                                    FocusedColor="{DynamicResource colPrim}"
+                                    Hint="{texts:Translate ImporteCreditoHint}"
+                                    IsVisible="{Binding IsVisibleCondicionesCredito}"
+                                    HorizontalOptions="Fill"
+                                    LeadingViewPosition="Inside">
+                                <customViews:MyCustomEntry                                                  
+                            FontFamily="{StaticResource NunitoRegular}"
+                            MaxLength="100"
+                            Keyboard="Numeric"
+                            Placeholder="{texts:Translate ImporteCreditoHint}"
+                            PlaceholderColor="LightGray"
+                            Text="{Binding ImporteCredito,Mode=TwoWay}"                                                        
+                            Focused="MyCustomEntry_Focused"
+                            VerticalOptions="EndAndExpand" />
+                            </inputLayout:SfTextInputLayout>
+                            <!--#endregion Celda 0,2 Estado Ingresado Importe de Crédito-->
+
+                            <!--#region Celda 1,0 Fecha Vencimiento Condiciones de Crédito-->
+                            <inputLayout:SfTextInputLayout
+                                    Grid.Row="1"
+                                    Grid.Column="0"
+                                    Grid.ColumnSpan="2"
+                                    ContainerBackgroundColor="Transparent"
+                                    ContainerType="Outlined"
+                                    FocusedColor="{DynamicResource colPrim}"
+                                    Hint="{texts:Translate FechaVencimientoHint}"
+                                    IsVisible="{Binding IsVisibleCondicionesCredito}"
+                                    HorizontalOptions="Fill"
+                                    LeadingViewPosition="Inside">
+                                <DatePicker
+                                        x:Name="BirthDatePicker"
+                                        Date="{Binding FechaVencimiento}"
+                                        FontFamily="{StaticResource PoppinsRegular}"
+                                        FontSize="14"
+                                        Format="dd/MM/yyyy"
+                                        MaximumDate="{x:Static system:DateTime.Now}"
+                                        VerticalOptions="CenterAndExpand" />
+                                <inputLayout:SfTextInputLayout.LeadingView>
+                                    <Label
+                                            FontSize="18"
+                                            Text="&#xf073;"
+                                            TextColor="{DynamicResource colPrim}"
+                                            VerticalTextAlignment="Center">
+                                        <Label.FontFamily>
+                                            <OnPlatform
+                                                    x:TypeArguments="x:String"
+                                                    Android="fa-solid-900.ttf#Font Awesome 5 Free Solid"
+                                                    iOS="Font Awesome 5 Free" />
+                                        </Label.FontFamily>
+                                    </Label>
+                                </inputLayout:SfTextInputLayout.LeadingView>
+                            </inputLayout:SfTextInputLayout>
+                            <!--#endregion Celda 1,0 Fecha Vencimiento Condiciones de Crédito-->
+
+                            <!--#region Celda 1,2 Estado Ingresado Dias Crédito-->
+                            <inputLayout:SfTextInputLayout
+                                    Grid.Row="1"
+                                    Grid.Column="2"
+                                    ContainerBackgroundColor="Transparent"
+                                    ContainerType="Outlined"
+                                    FocusedColor="{DynamicResource colPrim}"
+                                    Hint="{texts:Translate DiasCreditoHint}"
+                                    IsVisible="{Binding IsVisibleCondicionesCredito}"
+                                    HorizontalOptions="Fill"
+                                    LeadingViewPosition="Inside">
+                                <customViews:MyCustomEntry                                                  
+                            FontFamily="{StaticResource NunitoRegular}"
+                            MaxLength="100"
+                            Keyboard="Numeric"
+                            Placeholder="{texts:Translate DiasCreditoHint}"
+                            PlaceholderColor="LightGray"
+                            Text="{Binding DiasCredito,Mode=TwoWay}"                                                        
+                            Focused="MyCustomEntry_Focused"
+                            VerticalOptions="EndAndExpand" />
+                            </inputLayout:SfTextInputLayout>
+                            <!--#endregion Celda 1,2 Estado Ingresado Dias Crédito-->
+
+                            <!--#region Celda 2,0-2 Estado Ingresado Grid-->
+                            <datagrid:SfDataGrid x:Name="dataGrid"
+                               Margin="2,2,2,2"
+                               Padding="0"     
+                               BackgroundColor="{DynamicResource BasePageColor}"
+                               Grid.Row="2"
+                               Grid.Column="0"
+                               Grid.ColumnSpan="3"
+                               IsVisible="{Binding IsVisibleIngresado}"                               
+                               EditorSelectionBehavior="SelectAll"
+                               NavigationMode="Cell"
+                               ColumnSizer="Star"                               
+                               SelectionMode="SingleDeselect"
+                               AutoGenerateColumns="false"
+                               ImeOptions="NoExtractUi"
+                               SelectionUnit="Cell"
+                               LiveDataUpdateMode="AllowDataShaping"
+                               ItemsSource="{Binding OrdenSeleccionado.OrdenDetalleCompras}">
+                                <datagrid:SfDataGrid.GridStyle>
+                                    <datagrid:DefaultStyle HeaderBackgroundColor="{DynamicResource BlueColor}" HeaderForegroundColor="White"
+                                 RowBackgroundColor="White" RowForegroundColor="Black"
+                                 SelectionBackgroundColor="LightSkyBlue" SelectionForegroundColor="White"
+                                 CaptionSummaryRowBackgroundColor="Black" CaptionSummaryRowForegroundColor="White"
+                                 GridCellBorderColor="White" LoadMoreViewBackgroundColor="Gray"
+                                 LoadMoreViewForegroundColor="Black" AlternatingRowColor="Yellow"/>
+                                </datagrid:SfDataGrid.GridStyle>
+                                <datagrid:SfDataGrid.TableSummaryRows>
+                                    <datagrid:GridTableSummaryRow Name="TableSummary" ShowSummaryInRow="False">
+                                        <datagrid:GridTableSummaryRow.SummaryColumns>
+                                            <datagrid:GridSummaryColumn Name="CantidadSummary"
+                                      Format="{}{Sum:0.###}"                                                                        
+                                      MappingName="Cantidad"                                                                        
+                                      SummaryType="DoubleAggregate" />
+                                            <datagrid:GridSummaryColumn Name="ValorFinalSummary"
+                                      Format="{}{Sum:c}"
+                                      MappingName="ValorCompra"                                                                                                     
+                                      SummaryType="DoubleAggregate" />
+                                        </datagrid:GridTableSummaryRow.SummaryColumns>
+                                    </datagrid:GridTableSummaryRow>
+                                </datagrid:SfDataGrid.TableSummaryRows>
+                                <datagrid:SfDataGrid.Columns>
+                                    <datagrid:GridTextColumn HeaderText="Item" MappingName="NombreItem" />
+                                    <datagrid:GridTextColumn HeaderText="Unidad" MappingName="Unidad" />
+                                    <datagrid:GridNumericColumn HeaderText="Val. Unitario" MappingName="ValorUnitario" Format="C" CultureInfo="{Binding Cultura}"/>
+                                    <datagrid:GridTextColumn HeaderText="Cant." MappingName="Cantidad" />
+                                    <datagrid:GridNumericColumn HeaderText="Subtotal" MappingName="ValorCompra" CultureInfo="{Binding Cultura}" Format="C" />
+                                </datagrid:SfDataGrid.Columns>
+                            </datagrid:SfDataGrid>
+                            <!--#endregion Celda 2,0-2 Estado Ingresado Grid-->
+                            <!--#endregion Estado Ingresado -->
+
+                            <!--#region Estado Cancelado-->
+                            <!--#region Celda 0,0 Estado Cancelado Valor Total-->
+                            <inputLayout:SfTextInputLayout
+                                    Grid.Row="0"
+                                    Grid.Column="0"                                    
+                                    ContainerBackgroundColor="Transparent"
+                                    ContainerType="Outlined"
+                                    FocusedColor="{DynamicResource colPrim}"
+                                    Hint="{texts:Translate ValorTotalHint}"
+                                    IsVisible="{Binding IsVisibleCancelado}"
+                                    HorizontalOptions="Fill"
+                                    LeadingViewPosition="Inside">
+                                <customViews:MyCustomEntry                                                  
+                            FontFamily="{StaticResource NunitoRegular}"
+                            MaxLength="100"
+                            Keyboard="Numeric"
+                            Placeholder="{texts:Translate ValorTotalHint}"
+                            PlaceholderColor="LightGray"
+                            Text="{Binding OrdenSeleccionado.ValorTotal}"
+                            IsReadOnly="True"
+                            VerticalOptions="EndAndExpand" 
+                            HorizontalTextAlignment="End"/>
+                            </inputLayout:SfTextInputLayout>
+                            <!--#endregion Celda 0,0 Estado Cancelado Valor Total-->
+
+                            <!--#region Celda 0,1 Estado Cancelado Valor a Pagar-->
+                            <inputLayout:SfTextInputLayout
+                                    Grid.Row="0"
+                                    Grid.Column="1"                                    
+                                    Margin="4,0,0,4"
+                                    ContainerBackgroundColor="Transparent"
+                                    ContainerType="Outlined"
+                                    FocusedColor="{DynamicResource colPrim}"
+                                    Hint="{texts:Translate ValorPagarHint}"
+                                    IsVisible="{Binding IsVisibleCancelado}"
+                                    HorizontalOptions="Fill"
+                                    LeadingViewPosition="Inside">
+                                <customViews:MyCustomEntry                                                  
+                            FontFamily="{StaticResource NunitoRegular}"
+                            MaxLength="100"
+                            Keyboard="Numeric"
+                            Placeholder="{texts:Translate ValorPagarHint}"
+                            PlaceholderColor="LightGray"
+                            Text="{Binding OrdenSeleccionado.ValorFinal,Mode=TwoWay}"
+                            IsReadOnly="True"
+                            VerticalOptions="EndAndExpand" 
+                            HorizontalTextAlignment="End"/>
+                            </inputLayout:SfTextInputLayout>
+                            <!--#endregion Celda 0,1 Estado Cancelado Valor a Pagar-->
+
+                            <!--#region Celda 0.2. Estado Cancelado Aplica Descuento-->
+                            <inputLayout:SfTextInputLayout
+                                    Grid.Row="0"
+                                    Grid.Column="2"                                    
+                                    Margin="4,4,4,4"
+                                    ContainerBackgroundColor="Transparent"
+                                    ContainerType="Outlined"
+                                    FocusedColor="{DynamicResource colPrim}"                                    
+                                    IsVisible="{Binding IsVisibleCancelado}"
+                                    HorizontalOptions="Fill"
+                                    VerticalOptions="EndAndExpand"
+                                    LeadingViewPosition="Inside">
+                                <button:SfSwitch
+                                        Margin="8,16,8,8"
+                                        AllowIndeterminateState="True"                                        
+                                        HorizontalOptions="Fill"
+                                        Orientation="Horizontal"
+                                        VerticalOptions="EndAndExpand"
+                                        IsOn="{Binding AplicaDescuento}"                            
+                                        VisualType="Cupertino">
+                                    <VisualStateManager.VisualStateGroups>
+                                        <VisualStateGroup x:Name="CommonStates">
+                                            <VisualState x:Name="On">
+                                                <VisualState.Setters>
+                                                    <Setter Property="SwitchSettings">
+                                                        <Setter.Value>
+                                                            <button:CupertinoSwitchSettings
+                                                        x:TypeArguments="button:OnState"
+                                                        ThumbBorderColor="{DynamicResource Gray-500}"
+                                                        ThumbColor="{DynamicResource Gray-White}"
+                                                        TrackBorderColor="{DynamicResource Gray-200}"
+                                                        TrackColor="{DynamicResource RedColor}" />
+                                                        </Setter.Value>
+                                                    </Setter>
+                                                </VisualState.Setters>
+                                            </VisualState>
+                                            <VisualState x:Name="Off">
+                                                <VisualState.Setters>
+                                                    <Setter Property="SwitchSettings">
+                                                        <Setter.Value>
+                                                            <button:CupertinoSwitchSettings
+                                                        x:TypeArguments="button:OffState"
+                                                        ThumbBorderColor="{DynamicResource Gray-200}"
+                                                        ThumbColor="{DynamicResource Gray-White}"
+                                                        TrackBorderColor="{DynamicResource Gray-200}"
+                                                        TrackColor="{DynamicResource Gray-500}" />
+                                                        </Setter.Value>
+                                                    </Setter>
+                                                </VisualState.Setters>
+                                            </VisualState>
+                                        </VisualStateGroup>
+                                    </VisualStateManager.VisualStateGroups>
+                                </button:SfSwitch>
+                                <inputLayout:SfTextInputLayout.LeadingView>
+                                    <Label
+                                            FontSize="18"
+                                            Text="&#xf541;"
+                                            TextColor="{DynamicResource colPrim}"
+                                            VerticalTextAlignment="Center">
+                                        <Label.FontFamily>
+                                            <OnPlatform
+                                                    x:TypeArguments="x:String"
+                                                    Android="fa-solid-900.ttf#Font Awesome 5 Free Solid"
+                                                    iOS="Font Awesome 5 Free" />
+                                        </Label.FontFamily>
+                                    </Label>
+                                    <!--<Image
+                                        Margin="0,0,4,0"
+                                        Source="descuento.png"                                        
+                                        HorizontalOptions="FillAndExpand"
+                                        VerticalOptions="FillAndExpand" />-->
+                                </inputLayout:SfTextInputLayout.LeadingView>
+                            </inputLayout:SfTextInputLayout>
+                            <!--#endregion Celda 0.2. Estado Cancelado Aplica Descuento-->
+
+                            <!--#region Celda 1,0 Estado Cancelado Tipo Descuento-->
+                            <inputLayout:SfTextInputLayout
+                                    Grid.Row="1"
+                                    Grid.Column="0"
+                                    ContainerBackgroundColor="Transparent"
+                                    ContainerType="Outlined"
+                                    FocusedColor="{DynamicResource colPrim}"
+                                    Hint="{texts:Translate TipoDescuentoVentaHint}"
+                                    IsVisible="{Binding IsVisibleCancelado}"
+                                    IsEnabled="{Binding IsVisibleCondicionesDescuento}"
+                                    HorizontalOptions="Fill"
+                                    LeadingViewPosition="Inside">
+                                <combobox:SfComboBox
+                                        DataSource="{Binding LTipoDescuentoVenta}"
+                                        DisplayMemberPath="Nombre"
+                                        FontFamily="{StaticResource PoppinsRegular}"
+                                        IsEditableMode="true"
+                                        IsEnabled="{Binding IsVisibleCondicionesDescuento}"
+                                        ShowBorder="false"
+                                        ShowSuggestionsOnFocus="true"
+                                        SelectedItem="{Binding TipoDescuentoSeleccionado}"
+                                        SelectionChanged="SfComboBox_SelectionChanged_1"
+                                        TextSize="14">
+                                    <combobox:SfComboBox.HeightRequest>
+                                        <OnPlatform x:TypeArguments="x:Double">
+                                            <On Platform="iOS">18</On>
+                                            <On Platform="Android">50</On>
+                                        </OnPlatform>
+                                    </combobox:SfComboBox.HeightRequest>
+                                </combobox:SfComboBox>
+                                <inputLayout:SfTextInputLayout.LeadingView>
+                                    <Label
+                                            FontSize="18"
+                                            Text="&#xf541;"
+                                            TextColor="{DynamicResource colPrim}"
+                                            VerticalTextAlignment="Center">
+                                        <Label.FontFamily>
+                                            <OnPlatform
+                                                    x:TypeArguments="x:String"
+                                                    Android="fa-solid-900.ttf#Font Awesome 5 Free Solid"
+                                                    iOS="Font Awesome 5 Free" />
+                                        </Label.FontFamily>
+                                    </Label>
+                                </inputLayout:SfTextInputLayout.LeadingView>
+                            </inputLayout:SfTextInputLayout>
+                            <!--#endregion Celda 1,0 Estado Cancelado Tipo Descuento-->
+
+                            <!--#region Celda 1,1 Estado Cancelado Valor de Descuento-->
+                            <inputLayout:SfTextInputLayout
+                                    Grid.Row="1"
+                                    Grid.Column="1"
+                                    Margin="4,0,0,4"
+                                    ContainerBackgroundColor="Transparent"
+                                    ContainerType="Outlined"
+                                    FocusedColor="{DynamicResource colPrim}"
+                                    Hint="{texts:Translate ValorDescuentoHint}"
+                                    IsVisible="{Binding IsVisibleCancelado}"
+                                    IsEnabled="{Binding EsEnableValorDescuento}"
+                                    HorizontalOptions="Fill"
+                                    LeadingViewPosition="Inside">
+                                <customViews:MyCustomEntry                                                  
+                            FontFamily="{StaticResource NunitoRegular}"
+                            MaxLength="100"
+                            Keyboard="Numeric"
+                            Placeholder="{texts:Translate ValorDescuentoHint}"
+                            PlaceholderColor="LightGray"
+                            Text="{Binding ValorDescuento,Mode=TwoWay}"                                                        
+                            Focused="MyCustomEntry_Focused"
+                            VerticalOptions="EndAndExpand"
+                            IsEnabled="{Binding EsEnableValorDescuento}"
+                                    Completed="MyCustomEntry_Completed"
+                            HorizontalTextAlignment="End"/>
+                            </inputLayout:SfTextInputLayout>
+                            <!--#endregion Celda 1,1 Estado Cancelado Valor de Descuento-->
+
+                            <!--#region Celda 1,2 Estado Cancelado Bótón Pagar-->
+                            <Image
+                                x:Name="imgPagar"
+                                Margin="4,4,4,4"
+                            Grid.Row="1"
+                            Grid.Column="2"
+                            IsVisible="{Binding IsVisibleCancelado}"     
+                            VerticalOptions="Fill"
+                            Source="pago"                            
+                            WidthRequest="15" />
+                            <!--#endregion Celda 1,2 Estado Cancelado Bótón Pagar-->
+
+                            <!--#region Celda 2,0-2 Estado Cancelado Forma de Cancelación-->
+                            <inputLayout:SfTextInputLayout
+                                    Grid.Row="2"
+                                    Grid.ColumnSpan="3"
+                                    ContainerBackgroundColor="Transparent"
+                                    ContainerType="Outlined"
+                                    FocusedColor="{DynamicResource colPrim}"
+                                    Hint="{texts:Translate FormaCancelacionHint}"
+                                    IsVisible="{Binding IsVisibleCondicionesPago}"                                    
+                                    HorizontalOptions="Fill"
+                                    LeadingViewPosition="Inside">
+                                <combobox:SfComboBox
+                                        x:Name="sfcmbFormaCancelacion"
+                                        DataSource="{Binding LFormaCancelacion}"
+                                        DisplayMemberPath="Nombre"
+                                        FontFamily="{StaticResource PoppinsRegular}"
+                                        IsEditableMode="true"    
+                                        IsSelectedItemsVisibleInDropDown="false"
+                                        ShowBorder="false"
+                                        SuggestionMode="Contains"
+                                        ShowSuggestionsOnFocus="true" 
+                                        SelectedItem="{Binding FormaCancelacionSeleccionado1}"
+                                        SelectionChanged="sfcmbFormaCancelacion_SelectionChanged"
+                                        MultiSelectMode="Token"                                   
+                                        ItemPadding="0,0,10,0"
+                                        TextSize="14">
+                                    <combobox:SfComboBox.HeightRequest>
+                                        <OnPlatform x:TypeArguments="x:Double">
+                                            <On Platform="iOS">18</On>
+                                            <On Platform="Android">50</On>
+                                        </OnPlatform>
+                                    </combobox:SfComboBox.HeightRequest>
+                                </combobox:SfComboBox>
+                                <inputLayout:SfTextInputLayout.LeadingView>
+                                    <Label
+                                            FontSize="18"
+                                            Text="&#xf53a;"
+                                            TextColor="{DynamicResource colPrim}"
+                                            VerticalTextAlignment="Center">
+                                        <Label.FontFamily>
+                                            <OnPlatform
+                                                    x:TypeArguments="x:String"
+                                                    Android="fa-solid-900.ttf#Font Awesome 5 Free Solid"
+                                                    iOS="Font Awesome 5 Free" />
+                                        </Label.FontFamily>
+                                    </Label>
+                                </inputLayout:SfTextInputLayout.LeadingView>
+                            </inputLayout:SfTextInputLayout>
+                            <!--#endregion Celda 2,0-2 Estado Cancelado Forma de Cancelación-->
+
+                            <!--#region Celda 3,0-2 Grid de Cancelación -->
+                            <datagrid:SfDataGrid x:Name="dgPagoOrden"
+                               Margin="0,0,0,0"
+                               Padding="0"
+                               BackgroundColor="{DynamicResource BasePageColor}"
+                               Grid.Row="3"                               
+                               Grid.Column="0"
+                               Grid.ColumnSpan="3"
+                               EditorSelectionBehavior="SelectAll"
+                               NavigationMode="Cell"
+                               ColumnSizer="SizeToHeader"
+                               SelectionMode="SingleDeselect"
+                               FrozenColumnsCount="1"
+                               AutoGenerateColumns="false"                                                       
+                               ImeOptions="NoExtractUi"                                                 
+                               SelectionUnit="Cell"  
+                               EditTapAction="OnTap"                                                       
+                               AllowPullToRefresh = "True"
+                               LiveDataUpdateMode="AllowDataShaping" 
+                               CurrentCellEndEdit="dataGrid_CurrentCellEndEdit"                               
+                               IsVisible="{Binding IsVisibleCondicionesPago}"                  
+                               ItemsSource="{Binding OrdenSeleccionado.OrdenPago, Mode=TwoWay}">
+                                <!--<datagrid:SfDataGrid.Resources>
+                                <Style TargetType="syncfusion:GridHeaderCellControl">
+                                    <Setter Property="Foreground" Value="{DynamicResource WhiteColor}" />
+                                    <Setter Property="Background" Value="{DynamicResource BlueColor}" />
+                                </Style>
+                            </datagrid:SfDataGrid.Resources>-->
+                                <datagrid:SfDataGrid.GridStyle>
+                                    <datagrid:DefaultStyle HeaderBackgroundColor="{DynamicResource BlueColor}" HeaderForegroundColor="White"
+                                 RowBackgroundColor="White" RowForegroundColor="Black"
+                                 SelectionBackgroundColor="LightSkyBlue" SelectionForegroundColor="White"
+                                 CaptionSummaryRowBackgroundColor="Black" CaptionSummaryRowForegroundColor="White"
+                                 GridCellBorderColor="White" LoadMoreViewBackgroundColor="Gray"
+                                 LoadMoreViewForegroundColor="Black" AlternatingRowColor="Yellow"/>
+                                </datagrid:SfDataGrid.GridStyle>
+                                <datagrid:SfDataGrid.TableSummaryRows>
+                                    <datagrid:GridTableSummaryRow Name="TableSummary1" ShowSummaryInRow="False">
+                                        <datagrid:GridTableSummaryRow.SummaryColumns>
+                                            <datagrid:GridSummaryColumn Name="ValorPagoSummary"
+                                      Format="{}{Sum:c}"
+                                      MappingName="ValorPago"
+                                      SummaryType="DoubleAggregate" />
+                                            <datagrid:GridSummaryColumn Name="ValorCambioSummary"
+                                      Format="{}{Sum:c}"
+                                      MappingName="ValorCambio"                                                                                                     
+                                      SummaryType="DoubleAggregate" />
+                                            <datagrid:GridSummaryColumn Name="ValorFinalSummary1"
+                                      Format="{}{Sum:c}"
+                                      MappingName="ValorFinal"                                                                                                     
+                                      SummaryType="DoubleAggregate" />
+                                        </datagrid:GridTableSummaryRow.SummaryColumns>
+                                    </datagrid:GridTableSummaryRow>
+                                </datagrid:SfDataGrid.TableSummaryRows>
+                                <datagrid:SfDataGrid.Columns>
+                                    <!--1. Forma de pago-->
+                                    <datagrid:GridTextColumn HeaderText="Forma Pago" MappingName="FormaCancelacion"/>
+                                    <!--2. Fecha de pago-->
+                                    <datagrid:GridTemplateColumn HeaderText="Fec. Vencimiento" MappingName="FechaVencimientoPago" IsHidden="{Binding IsHiddenCondicionesCheque, Mode=TwoWay}">
+                                        <datagrid:GridTemplateColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <DatePicker
+                                        x:Name="FechaVencimientoDatePicker"
+                                        Date="{Binding FechaVencimientoPago}"                                        
+                                        FontSize="13"
+                                        Format="dd/MM/yyyy"                                        
+                                        VerticalOptions="CenterAndExpand" />
+                                            </DataTemplate>
+                                        </datagrid:GridTemplateColumn.CellTemplate>
+                                    </datagrid:GridTemplateColumn>
+                                    <!--3. Institución Financiera-->
+                                    <datagrid:GridComboBoxColumn HeaderText="Inst. Financiera" AllowEditing="True" MappingName="InstitucionFinanciera" ItemsSource="{Binding OInstitucionFinanciera}" CanFilterSuggestions="True" SuggestionMode = "StartsWith" IsHidden="{Binding IsHiddenCondicionesCheque, Mode=TwoWay}"/>
+                                    <!--4. Número de Documento-->
+                                    <datagrid:GridTemplateColumn HeaderText="# Doc." MappingName="NumeroCheque" IsHidden="{Binding IsHiddenCondicionesCheque, Mode=TwoWay}">
+                                        <datagrid:GridTemplateColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <customViews:MyCustomEntry                                                                                                      
+                                                    MaxLength="100"
+                                                    Keyboard="Numeric"
+                                                    FontSize="13"
+                                                    Placeholder="{texts:Translate NumeroChequeHint}"
+                                                    PlaceholderColor="LightGray"
+                                                    Text="{Binding NumeroCheque}"                                                        
+                                                    Focused="MyCustomEntry_Focused"
+                                                    VerticalOptions="EndAndExpand" />
+                                            </DataTemplate>
+                                        </datagrid:GridTemplateColumn.CellTemplate>
+                                    </datagrid:GridTemplateColumn>
+                                    <!--<datagrid:GridTextColumn HeaderText="# Doc." AllowEditing="True" MappingName="NumeroCheque" IsHidden="{Binding IsHiddenCondicionesCheque, Mode=TwoWay}"/>-->
+                                    <!--5. Monto de Pago-->
+                                    <datagrid:GridTemplateColumn HeaderText="Val. Pago" MappingName="ValorPago" CultureInfo="{Binding Cultura}">
+                                        <datagrid:GridTemplateColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <local:CustomSfNumericTextBox   
+                                                    x:Name="{Binding FormaCancelacion}"
+                                        BorderColor="Transparent"                                        
+                                        MaximumNumberDecimalDigits="2"
+                                        TextAlignment="End"
+                                        SelectAllOnFocus="True"
+                                        FormatString="n"
+                                        Culture="{Binding Cultura}"
+                                        TextColor="Black" 
+                                        FontSize="13"
+                                        Unfocused="CustomSfNumericTextBox_Unfocused"            
+                                        Value="{Binding ValorPago}" />
+                                            </DataTemplate>
+                                        </datagrid:GridTemplateColumn.CellTemplate>
+                                    </datagrid:GridTemplateColumn>
+                                    <!--6. Valor de Cambio-->
+                                    <datagrid:GridNumericColumn HeaderText="Val. Cambio" MappingName="ValorCambio" CultureInfo="{Binding Cultura}" Format="C"/>
+                                    <!--7. Subtotal-->
+                                    <datagrid:GridNumericColumn HeaderText="Subtotal" MappingName="ValorFinal" CultureInfo="{Binding Cultura}" Format="C" />
+                                </datagrid:SfDataGrid.Columns>
+                            </datagrid:SfDataGrid>
+                            <!--#endregion Celda 3,0-2 Grid de Cancelación -->
+
+                            <!--#endregion Estado Cancelado-->
+
+
+                            <!--#region  Compartida-->
+                            <!--#region Celda 4, 0-1 Estado Compartido Administración de la Imagen para adjuntos-->
+                            <Grid Grid.Row="4" Grid.ColumnSpan="2" IsVisible="{Binding IsVisibleCompartido}">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="130" />
+                                    <ColumnDefinition Width="50" />
+                                    <ColumnDefinition Width="50" />
+                                    <ColumnDefinition Width="50" />
+                                </Grid.ColumnDefinitions>
+
+                                <!--0. Administración de la imagen left, top, right, bottom-->
+                                <ffimageloading:CachedImage
+                                x:Name="clienteImage"
+                                Grid.Column="0"
+                                Margin="0,0,0,4"
+                                Aspect="Fill"
+                                CacheType="All"
+                                DownsampleToViewSize="true"
+                                ErrorPlaceholder="picture_icon.png"
+                                HeightRequest="128"
+                                HorizontalOptions="Center"
+                                LoadingPlaceholder="picture_icon.png"                                
+                                Source="{Binding FuenteImagenRegistro}"
+                                TransformPlaceholders="True"
+                                WidthRequest="128">
+                                    <ffimageloading:CachedImage.Transformations>
+                                        <transformations:RoundedTransformation
+                                        BorderHexColor="#000000"
+                                        BorderSize="5"
+                                        Radius="20" />
+                                    </ffimageloading:CachedImage.Transformations>
+                                </ffimageloading:CachedImage>
+
+                                <buttons:SfButton
+                                Grid.Column="1"
+                                Padding="8"
+                                BackgroundColor="{StaticResource Gray-White}"
+                                BorderColor="{StaticResource colPrim}"
+                                BorderWidth="1"
+                                Command="{Binding OpenCameraCommand}"
+                                CornerRadius="20"
+                                HeightRequest="40"
+                                HorizontalOptions="Center"
+                                VerticalOptions="Center"
+                                WidthRequest="40">
+                                    <buttons:SfButton.Content>
+                                        <Image HeightRequest="15" Source="photo_camera.png">
+                                            <Image.GestureRecognizers>
+                                                <TapGestureRecognizer Command="{Binding OpenCameraCommand}" />
+                                            </Image.GestureRecognizers>
+                                        </Image>
+                                    </buttons:SfButton.Content>
+                                </buttons:SfButton>
+
+                                <buttons:SfButton
+                                Grid.Column="2"
+                                Padding="8"
+                                BackgroundColor="{StaticResource Gray-White}"
+                                BorderColor="{StaticResource colPrim}"
+                                BorderWidth="1"
+                                Command="{Binding BrowseGalleryCommand}"                                   
+                                CornerRadius="20"
+                                HeightRequest="40"
+                                HorizontalOptions="Center"
+                                VerticalOptions="Center"
+                                WidthRequest="40">
+                                    <buttons:SfButton.Content>
+                                        <Image
+                                        HeightRequest="32"
+                                        HorizontalOptions="Center"
+                                        Source="picture_black.png"
+                                        WidthRequest="32">
+                                            <Image.GestureRecognizers>
+                                                <TapGestureRecognizer Command="{Binding BrowseGalleryCommand}" />
+                                            </Image.GestureRecognizers>
+                                        </Image>
+                                    </buttons:SfButton.Content>
+                                </buttons:SfButton>
+
+                                <buttons:SfButton
+                                Grid.Column="3"
+                                Padding="8"
+                                BackgroundColor="{StaticResource Gray-White}"
+                                BorderColor="{StaticResource RedColor}"
+                                BorderWidth="1"
+                                Command="{Binding RemoveImageCommand}"
+                                CornerRadius="20"
+                                HeightRequest="40"
+                                HorizontalOptions="Center"
+                                VerticalOptions="Center"
+                                WidthRequest="40">
+                                    <buttons:SfButton.Content>
+                                        <Image
+                                        HeightRequest="32"
+                                        HorizontalOptions="Start"
+                                        Source="remove_512.png"
+                                        WidthRequest="32">
+                                            <Image.GestureRecognizers>
+                                                <TapGestureRecognizer Command="{Binding RemoveImageCommand}" />
+                                            </Image.GestureRecognizers>
+                                        </Image>
+                                    </buttons:SfButton.Content>
+                                </buttons:SfButton>
+                            </Grid>
+                            <!--#endregion Celda 4, 0-1 Estado Compartido Administración de la Imagen para adjuntos-->
+
+                            <!--#region Celda 4, 2 Estado Compartido Confirmado-->
+                            <inputLayout:SfTextInputLayout
+                                    Grid.Row="4"
+                                    Grid.Column="2"                                    
+                                    Margin="10,4,4,4"
+                                    ContainerBackgroundColor="Transparent"
+                                    ContainerType="Outlined"
+                                    FocusedColor="{DynamicResource colPrim}"                                    
+                                    IsVisible="{Binding IsVisibleCompartido}"
+                                    HorizontalOptions="Fill"
+                                    VerticalOptions="EndAndExpand"
+                                    LeadingViewPosition="Inside">
+                                <button:SfSwitch
+                                        Margin="8,16,8,8"
+                                        AllowIndeterminateState="True"                                        
+                                        HorizontalOptions="Fill"
+                                        Orientation="Horizontal"
+                                        VerticalOptions="EndAndExpand"
+                                        IsOn="{Binding ConfirmadaTransaccion}"
+                                        VisualType="Cupertino">
+                                    <VisualStateManager.VisualStateGroups>
+                                        <VisualStateGroup x:Name="CommonStates">
+                                            <VisualState x:Name="On">
+                                                <VisualState.Setters>
+                                                    <Setter Property="SwitchSettings">
+                                                        <Setter.Value>
+                                                            <button:CupertinoSwitchSettings
+                                                        x:TypeArguments="button:OnState"
+                                                        ThumbBorderColor="{DynamicResource Gray-500}"
+                                                        ThumbColor="{DynamicResource Gray-White}"
+                                                        TrackBorderColor="{DynamicResource Gray-200}"
+                                                        TrackColor="{DynamicResource RedColor}" />
+                                                        </Setter.Value>
+                                                    </Setter>
+                                                </VisualState.Setters>
+                                            </VisualState>
+                                            <VisualState x:Name="Off">
+                                                <VisualState.Setters>
+                                                    <Setter Property="SwitchSettings">
+                                                        <Setter.Value>
+                                                            <button:CupertinoSwitchSettings
+                                                        x:TypeArguments="button:OffState"
+                                                        ThumbBorderColor="{DynamicResource Gray-200}"
+                                                        ThumbColor="{DynamicResource Gray-White}"
+                                                        TrackBorderColor="{DynamicResource Gray-200}"
+                                                        TrackColor="{DynamicResource Gray-500}" />
+                                                        </Setter.Value>
+                                                    </Setter>
+                                                </VisualState.Setters>
+                                            </VisualState>
+                                        </VisualStateGroup>
+                                    </VisualStateManager.VisualStateGroups>
+                                </button:SfSwitch>
+                                <inputLayout:SfTextInputLayout.LeadingView>
+                                    <Label
+                                            FontSize="18"
+                                            Text="&#xf4fc;"
+                                            TextColor="{DynamicResource colPrim}"
+                                            VerticalTextAlignment="Center">
+                                        <Label.FontFamily>
+                                            <OnPlatform
+                                                    x:TypeArguments="x:String"
+                                                    Android="fa-solid-900.ttf#Font Awesome 5 Free Solid"
+                                                    iOS="Font Awesome 5 Free" />
+                                        </Label.FontFamily>
+                                    </Label>
+                                    <!--<Image
+                                        Margin="0,0,4,0"
+                                        Source="descuento.png"                                        
+                                        HorizontalOptions="FillAndExpand"
+                                        VerticalOptions="FillAndExpand" />-->
+                                </inputLayout:SfTextInputLayout.LeadingView>
+                            </inputLayout:SfTextInputLayout>
+                            <!--#endregion Celda 4, 2 Estado Compartido Confirmado-->
+
+                            <!--#region Celda 5,0-2 Notas observaciones-->
+                            <inputLayout:SfTextInputLayout
+                                Grid.Row="5"
+                                Grid.ColumnSpan="3"
+                                Margin="0,0,0,4"
+                                ContainerBackgroundColor="Transparent"
+                                ContainerType="Outlined"
+                                FocusedColor="{DynamicResource colPrim}"
+                                Hint="{texts:Translate NoteHint}"
+                                HorizontalOptions="Fill"
+                                LeadingViewPosition="Inside">
+                                <Editor Margin="0,0,0,10" HeightRequest="130" Text="{Binding OrdenSeleccionado.Observaciones, Mode=TwoWay}" />
+                                <inputLayout:SfTextInputLayout.LeadingView>
+                                    <Label
+                                        FontSize="18"
+                                        Text="&#xf044;"
+                                        TextColor="{DynamicResource colPrim}"
+                                        VerticalTextAlignment="Center">
+                                        <Label.FontFamily>
+                                            <OnPlatform
+                                                x:TypeArguments="x:String"
+                                                Android="fa-solid-900.ttf#Font Awesome 5 Free Solid"
+                                                iOS="Font Awesome 5 Free" />
+                                        </Label.FontFamily>
+                                    </Label>
+                                </inputLayout:SfTextInputLayout.LeadingView>
+                            </inputLayout:SfTextInputLayout>
+                            <!--#endregion Celda 5,0-2 Notas observaciones-->
+
+                            <!--#region Celda 6,0 Botón de Ok-->
+                            <button:SfButton
+                            Grid.Row="6"
+                            Grid.Column="0"
+                            BackgroundColor="Green"
+                            BorderColor="{DynamicResource colPrim}"
+                            BorderWidth="2"
+                            Command="{Binding Ok_Command}"
+                            CornerRadius="4"
+                            FontFamily="{StaticResource NunitoRegular}"
+                            HorizontalOptions="FillAndExpand"
+                            Text="OK"
+                            TextColor="White"
+                            VerticalOptions="Center" />
+                            <!--#endregion Celda 6,0 Botón de Ok-->
+
+                            <!--#region Celda 6,2 Botón Cancelar-->
+                            <button:SfButton
+                            Grid.Row="6"
+                            Grid.Column="2"
+                            BackgroundColor="Red"
+                            BorderColor="{DynamicResource colPrim}"
+                            BorderWidth="2"
+                            Command="{Binding Cancel_Command}"
+                            CornerRadius="4"
+                            FontFamily="{StaticResource NunitoRegular}"
+                            HorizontalOptions="FillAndExpand"
+                            Text="{texts:Translate Cancel}"
+                            TextColor="White"
+                            VerticalOptions="Center" />
+                            <!--#endregion Celda 6,2 Botón Cancelar-->
+
+                            <!--#endregion  Compartida-->
+
+                        </Grid>
+                        <!--#endregion 1. Cuerpo-->
+
+                        <customViews:LoadingIndicator
+                                    Grid.Row="1"
+                                    HorizontalOptions="Fill"
+                                    IsRunning="{Binding IsBusy, Mode=TwoWay}"
+                                    VerticalOptions="Fill" 
+                        />
+                    </Grid>
+                    <!--#endregion Grid Principal 1. Cabecera, 2. Cuerpo-->
+                </StackLayout>
+            </ScrollView>
+        </Frame>
+    </StackLayout>
+    <!--#endregion 2. Contenido-->
+</pages:PopupPage>

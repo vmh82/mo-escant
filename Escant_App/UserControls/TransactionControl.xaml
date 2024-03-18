@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentView xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Escant_App.UserControls.TransactionControl">
+    <ContentView.Content>
+        <Grid RowDefinitions="60,Auto" Padding="0" ColumnDefinitions="60,60">
+            <Frame x:Name="frame" Grid.Row="0" CornerRadius="100" BackgroundColor="{Binding BGColor}">
+                <Image x:Name="img" HeightRequest="10" WidthRequest="10" Margin="5" Source="{Binding Image}"></Image>
+            </Frame>
+            <Label x:Name="lbl" Grid.Row="1" FontSize="11" Text="{Binding Text}" HorizontalOptions="Center" TextColor="#202020"></Label>
+        </Grid>
+    </ContentView.Content>
+</ContentView>

@@ -1,0 +1,70 @@
+{
+  "rules": {    
+    "usuarios":{   
+      "$uid":{
+    	".write": "$uid === auth.uid"
+      },
+      ".read": "root.child('usuarios').child(auth.uid).exists()",  
+    	".write": "root.child('usuarios').child(auth.uid).exists()" 
+    },        
+    "Galeria": {
+      ".read": "root.child('usuarios').child(auth.uid).exists()",  
+    	".write": "root.child('usuarios').child(auth.uid).exists()"    
+    }
+    ,
+    "Persona": {
+      ".read": "root.child('usuarios').child(auth.uid).exists()",  
+    	".write": "root.child('usuarios').child(auth.uid).exists()"    
+    }
+    ,
+    "Sincroniza": {
+      ".read": "root.child('usuarios').child(auth.uid).exists()",  
+    	".write": "root.child('usuarios').child(auth.uid).exists()"    
+    }
+    ,
+    "Setting": {
+      ".read": "root.child('usuarios').child(auth.uid).exists()",  
+    	".write": "root.child('usuarios').child(auth.uid).exists()"    
+    }
+    ,
+    "SettingFirebase": {
+      ".read": "root.child('usuarios').child(auth.uid).exists()",  
+    	".write": "root.child('usuarios').child(auth.uid).exists()"    
+    }
+    ,
+    "Catalogo": {
+      ".read": "root.child('usuarios').child(auth.uid).exists()",  
+    	".write": "root.child('usuarios').child(auth.uid).exists()"    
+    }
+    ,
+    "Empresa": {
+      ".read": "root.child('usuarios').child(auth.uid).exists()",  
+    	".write": "root.child('usuarios').child(auth.uid).exists()"    
+    }
+    ,
+    "Proveedor": {
+      ".read": "root.child('usuarios').child(auth.uid).exists()",  
+    	".write": "root.child('usuarios').child(auth.uid).exists()"    
+    },
+    "Cliente": {
+      ".read": "root.child('usuarios').child(auth.uid).exists()",  
+    	".write": "root.child('usuarios').child(auth.uid).exists()"    
+    },
+    "PerfilMenu": {
+      ".read": "root.child('usuarios').child(auth.uid).exists()",  
+    	".write": "root.child('usuarios').child(auth.uid).exists()"    
+    },
+    "Item": {
+      ".read": "root.child('usuarios').child(auth.uid).exists()",  
+    	".write": "root.child('usuarios').child(auth.uid).exists()"    
+    },
+    "Precio": {
+      ".read": "root.child('usuarios').child(auth.uid).exists()",  
+    	".write": "root.child('usuarios').child(auth.uid).exists()"    
+    },     
+    "Orden": {
+      ".read": "root.child('usuarios').child(auth.uid).exists()",  
+    	".write": "root.child('usuarios').child(auth.uid).exists()"    
+    }
+  }
+}

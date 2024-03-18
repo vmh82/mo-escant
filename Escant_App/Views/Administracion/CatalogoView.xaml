@@ -1,0 +1,237 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+            x:Class="Escant_App.Views.Administracion.CatalogoView"
+            xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+            xmlns:button="clr-namespace:Syncfusion.XForms.Buttons;assembly=Syncfusion.Buttons.XForms"
+            xmlns:combobox="clr-namespace:Syncfusion.XForms.ComboBox;assembly=Syncfusion.SfComboBox.XForms"
+            xmlns:syncfusion="clr-namespace:Syncfusion.XForms.TreeView;assembly=Syncfusion.SfTreeView.XForms"
+            xmlns:inputLayout="clr-namespace:Syncfusion.XForms.TextInputLayout;assembly=Syncfusion.Core.XForms"
+            xmlns:local="clr-namespace:Escant_App.UserControls;assembly=Escant_App"
+            xmlns:localb="clr-namespace:Escant_App.Behaviors"
+            xmlns:texts="clr-namespace:ManijodaServicios.Resources.Texts;assembly=ManijodaServicios"
+            xmlns:viewModelBase="clr-namespace:Escant_App.ViewModels.Base;assembly=Escant_App"
+            Title="{texts:Translate CatalogoAdministracionTitle}"
+            viewModelBase:ViewModelLocator.AutoWireViewModel="true"
+            BackgroundColor="{DynamicResource MainWrapperBackgroundColor}"
+            >
+    <ContentPage.Resources>
+        <ResourceDictionary>
+
+            <Color x:Key="BackgroundColor">#333EBD</Color>
+            <Color x:Key="CellBackgroundColor">#2E249E</Color>
+            <Color x:Key="SwipeItemTextColor">#FFECCB</Color>
+            <Color x:Key="SwipeItemBackgroundColor">#FE744D</Color>
+            <Color x:Key="TitleColor">#55A1FA</Color>
+            <Color x:Key="SubTitleColor">#FFFFFF</Color>
+
+            <Style x:Key="TitleStyle" TargetType="Label">
+                <Setter Property="FontSize" Value="24" />
+                <Setter Property="FontAttributes" Value="Bold" />
+                <Setter Property="TextColor" Value="White" />
+                <Setter Property="HorizontalOptions" Value="Center" />
+                <Setter Property="Margin" Value="0, 60, 0, 0" />
+            </Style>
+
+            <Style x:Key="FrameStyle" TargetType="Frame">
+                <Setter Property="BackgroundColor" Value="{StaticResource CellBackgroundColor}" />
+                <Setter Property="CornerRadius" Value="12" />
+                <Setter Property="HasShadow" Value="False" />
+                <Setter Property="Padding" Value="12" />
+                <Setter Property="Margin" Value="0, 12, 0, 0" />
+            </Style>
+
+            <Style x:Key="TierStyle" TargetType="Label">
+                <Setter Property="FontSize" Value="12" />
+                <Setter Property="TextColor" Value="{StaticResource TitleColor}" />
+                <Setter Property="Margin" Value="0, 4, 0, 0" />
+            </Style>
+
+            <Style x:Key="NameStyle" TargetType="Label">
+                <Setter Property="TextColor" Value="{StaticResource SubTitleColor}" />
+                <Setter Property="FontAttributes" Value="Bold" />
+                <Setter Property="FontSize" Value="18" />
+                <Setter Property="Margin" Value="2, 0, 2, 2" />
+                <!---The Margin is specified as left, top, right, bottom values.-->
+            </Style>
+
+            <Style x:Key="CategoryStyle" TargetType="Image">
+                <Setter Property="Opacity" Value="0.75" />
+                <Setter Property="Aspect" Value="AspectFit" />
+                <Setter Property="Margin" Value="0, 0, 20, 0" />
+            </Style>
+
+            <Style x:Key="SwipeItemBorderStyle" TargetType="BoxView">
+                <Setter Property="BackgroundColor" Value="{StaticResource SwipeItemBackgroundColor}" />
+                <Setter Property="CornerRadius" Value="0, 12, 0, 12" />
+                <Setter Property="Margin" Value="0, 12, 0, 0" />
+            </Style>
+
+            <Style x:Key="SwipeItemIconStyle" TargetType="Image">
+                <Setter Property="Aspect" Value="AspectFit" />
+                <Setter Property="HorizontalOptions" Value="Center" />
+                <Setter Property="VerticalOptions" Value="Center" />
+                <Setter Property="Margin" Value="30" />
+            </Style>
+
+            <Style x:Key="SwipeItemTextStyle" TargetType="Label">
+                <Setter Property="TextColor" Value="{StaticResource SwipeItemTextColor}" />
+                <Setter Property="FontAttributes" Value="Bold" />
+                <Setter Property="FontSize" Value="12" />
+                <Setter Property="HorizontalOptions" Value="Center" />
+                <Setter Property="VerticalOptions" Value="Center" />
+                <Setter Property="Margin" Value="0, 36, 0, 0" />
+            </Style>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <!--  TOOLBAR ITEMS  -->
+    <ContentPage.ToolbarItems>
+        <ToolbarItem
+            Command="{Binding OnAddItem}"
+            Order="Primary"
+            Priority="1"
+            Text="{texts:Translate Save}">
+            <ToolbarItem.Icon>
+                <OnPlatform x:TypeArguments="FileImageSource">
+                    <On Platform="Android" Value="add_circle_green_512.png" />
+                </OnPlatform>
+            </ToolbarItem.Icon>
+        </ToolbarItem>
+    </ContentPage.ToolbarItems>
+    <ContentPage.Content>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <StackLayout Grid.Row="0" Orientation="Vertical" Padding="5">
+                <Grid Margin="15,10,15,10">
+                    <Grid.RowSpacing>
+                        <OnPlatform
+                                x:TypeArguments="x:Double"
+                                Android="-5"
+                                iOS="10" />
+                    </Grid.RowSpacing>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+
+                    <inputLayout:SfTextInputLayout
+                        Margin="5,0,0,10"
+                        Grid.Row="0"    
+                        ContainerBackgroundColor="Transparent"
+                        ContainerType="Outlined"
+                        FocusedColor="{DynamicResource colPrim}"
+                        Hint="{texts:Translate CatalogoHint}"
+                        IsEnabled="{Binding EsPermitido}"
+                        HorizontalOptions="Fill"
+                        
+                        LeadingViewPosition="Inside">
+                        <combobox:SfComboBox
+                            x:Name="catalogoCombobox"
+                            DataSource="{Binding CatalogoList}"
+                            DisplayMemberPath="Nombre"
+                            SelectedItem="{Binding CatalogoSeleccionado}"   
+                            IsEnabled="{Binding EsPermitido}"
+                            ShowBorder="false"
+                            TextSize="14">
+                            <combobox:SfComboBox.HeightRequest>
+                                <OnPlatform x:TypeArguments="x:Double">
+                                    <On Platform="iOS">18</On>
+                                    <On Platform="Android">50</On>
+                                </OnPlatform>
+                            </combobox:SfComboBox.HeightRequest>
+                        </combobox:SfComboBox>
+                        <inputLayout:SfTextInputLayout.LeadingView>
+                            <Label
+                                FontSize="18"
+                                Text="&#xf085;"
+                                TextColor="{DynamicResource colPrim}"
+                                VerticalTextAlignment="Center">
+                                <Label.FontFamily>
+                                    <OnPlatform
+                                        x:TypeArguments="x:String"
+                                        Android="fa-solid-900.ttf#Font Awesome 5 Free Solid"
+                                        iOS="Font Awesome 5 Free" />
+                                </Label.FontFamily>
+                            </Label>
+                        </inputLayout:SfTextInputLayout.LeadingView>
+                    </inputLayout:SfTextInputLayout>
+                    <ScrollView Orientation="Vertical" Grid.Row="1">
+                    <syncfusion:SfTreeView x:Name="treeView" NotificationSubscriptionMode="CollectionChange,PropertyChange"  
+                                 ItemHeight="40"                                             
+                                 Indentation="15"
+                                 ExpanderWidth="40"
+                                 ChildPropertyName="subCatalogos"
+                                 ItemsSource="{Binding ImageNodeInfo}"
+                                 SelectedItem="{Binding ItemSeleccionado}"                                   
+                                 AutoExpandMode="AllNodesExpanded"
+                                 ItemHolding="treeView_ItemHolding"
+                                 ItemDoubleTapped="treeView_ItemDoubleTapped"
+                                 IsScrollBarVisible="True"
+                                 NodePopulationMode="Instant"
+                                 Loaded="treeView_Loaded">
+                        <!--<syncfusion:SfTreeView.Behaviors>
+                            <localb:BehaviorTreeView/>
+                        </syncfusion:SfTreeView.Behaviors>-->
+                        <syncfusion:SfTreeView.ItemTemplate>
+                            <DataTemplate>
+                                <ViewCell>
+                                    <ViewCell.View>
+                                        <Grid x:Name="grid" RowSpacing="0" BackgroundColor="Transparent">
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="*" />
+                                                <RowDefinition Height="1" />
+                                            </Grid.RowDefinitions>
+                                            <Grid RowSpacing="0" Grid.Row="0">
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="40" />
+                                                    <ColumnDefinition Width="Auto" />
+                                                </Grid.ColumnDefinitions>
+                                                <Grid Grid.Column="0" Padding="5,5,5,5">
+                                                        <Image                                                                
+                                                                Margin="0"
+                                                                HeightRequest="35"
+                                                                WidthRequest="35"
+                                                                HorizontalOptions="Center"
+                                                                VerticalOptions="Center"
+                                                                >
+                                                            <Image.Source>
+                                                                <FontImageSource
+                                                                        FontFamily="{DynamicResource FuenteImagen}"                                                                        
+                                                                        Glyph="{Binding IconoMenu.CodigoIcono}"
+                                                                        Size="35"
+                                                                        Color="{DynamicResource ColorImagen}"/>
+                                                            </Image.Source>
+                                                        </Image>
+                                                    </Grid>
+                                                <Grid Grid.Column="1"
+                                                  RowSpacing="1"
+                                                  Padding="1,0,0,0"
+                                                  VerticalOptions="Center">
+                                                    <Label LineBreakMode="NoWrap" TextColor="Black"
+                                                       Text="{Binding Nombre}"
+                                                       VerticalOptions="StartAndExpand"    
+                                                       VerticalTextAlignment="Center">
+                                                    </Label>
+                                                </Grid>
+                                            </Grid>
+                                            <StackLayout Grid.Row="1" HeightRequest="1"/>
+                                        </Grid>
+                                    </ViewCell.View>
+                                </ViewCell>
+                            </DataTemplate>
+                        </syncfusion:SfTreeView.ItemTemplate>
+                    </syncfusion:SfTreeView>
+                    </ScrollView>
+                </Grid>
+            </StackLayout>
+            <local:LoadingIndicator
+                Grid.Row="0"
+                Grid.RowSpan="2"
+                HorizontalOptions="Fill"
+                IsRunning="{Binding IsBusy, Mode=TwoWay}"
+                VerticalOptions="Fill" />
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

@@ -1,0 +1,520 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Escant_App.Views.Inventario.StockView"                      
+             xmlns:local="clr-namespace:Escant_App.UserControls"
+             xmlns:converters="clr-namespace:Escant_App.Converters;assembly=Escant_App"
+             xmlns:pancake="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView"
+             xmlns:sync="clr-namespace:Syncfusion.ListView.XForms;assembly=Syncfusion.SfListView.XForms"
+             xmlns:texts="clr-namespace:ManijodaServicios.Resources.Texts;assembly=ManijodaServicios"
+             xmlns:viewModelBase="clr-namespace:Escant_App.ViewModels.Base;assembly=Escant_App"
+             xmlns:data="clr-namespace:Syncfusion.DataSource;assembly=Syncfusion.DataSource.Portable"
+             xmlns:ffimageloading="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"    
+             xmlns:transformations="clr-namespace:FFImageLoading.Transformations;assembly=FFImageLoading.Transformations"
+             Title="{texts:Translate StockTitulo}"
+             viewModelBase:ViewModelLocator.AutoWireViewModel="true"
+             
+             >
+    <!--#region 0. Recursos-->
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Style x:Key="SupplierNameStyle" TargetType="{x:Type Label}">
+                <Setter Property="FontFamily" Value="{StaticResource PoppinsMedium}" />
+                <Setter Property="FontSize" Value="{StaticResource MidMediumSize}" />
+                <Setter Property="HorizontalOptions" Value="Start" />
+                <Setter Property="VerticalOptions" Value="End" />
+                <Setter Property="Margin" Value="0, 0, 0, 0" />
+                <Setter Property="TextColor" Value="{StaticResource colPrim}" />
+            </Style>
+
+            <Style x:Key="SupplierEmailStyle" TargetType="{x:Type Label}">
+                <Setter Property="FontFamily" Value="{StaticResource PoppinsRegular}" />
+                <Setter Property="FontSize" Value="{StaticResource LittleSize}" />
+                <Setter Property="HorizontalOptions" Value="Start" />
+                <Setter Property="VerticalOptions" Value="Center" />
+                <Setter Property="Margin" Value="10, 0, 0, 0" />
+                <Setter Property="TextColor" Value="{StaticResource BlackColor}" />
+            </Style>
+
+            <Style x:Key="DireccionStyle" TargetType="{x:Type Label}">
+                <Setter Property="FontFamily" Value="{StaticResource PoppinsRegular}" />
+                <Setter Property="FontSize" Value="{StaticResource LittleSize}" />
+                <Setter Property="HorizontalOptions" Value="Start" />
+                <Setter Property="VerticalOptions" Value="Center" />
+                <Setter Property="Margin" Value="0, 0, 0, 0" />
+                <Setter Property="TextColor" Value="{StaticResource Orange}" />
+            </Style>
+
+            <Style x:Key="PhoneNumberStyle" TargetType="{x:Type Label}">
+                <Setter Property="FontFamily" Value="{StaticResource PoppinsRegular}" />
+                <Setter Property="FontSize" Value="{StaticResource LittleSize}" />
+                <Setter Property="HorizontalOptions" Value="Start" />
+                <Setter Property="VerticalOptions" Value="Center" />
+                <Setter Property="Margin" Value="0, 0, 0, 0" />
+                <Setter Property="TextColor" Value="{StaticResource colAcc}" />
+            </Style>
+            <converters:ImageConverter x:Key="ByteArrayToImage"/>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <!--#endregion 0. Recursos-->
+    <!--#region  1.Contenido-->
+    <ContentPage.Content>
+        <Grid RowSpacing="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <Grid>
+                <Grid>
+                    <Grid RowSpacing="0">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="*" />
+                        </Grid.RowDefinitions>
+                        <!--#region 1.1 Caja de Búsqueda de registros-->
+                        <Grid
+                            Grid.Row="0"
+                            Padding="15,0,15,25"
+                            BackgroundColor="{DynamicResource colPrim}"
+                            HeightRequest="{OnPlatform Android='46',
+                                                       iOS='56'}">
+                            <Frame
+                                Margin="0"
+                                Padding="10,0"
+                                BackgroundColor="{DynamicResource Gray-White}"
+                                CornerRadius="{OnPlatform Android='23',
+                                                          iOS='28'}"
+                                HeightRequest="{OnPlatform Android='46',
+                                                           iOS='56'}">
+                                <SearchBar
+                                    x:Name="barraBusqueda"
+                                    Margin="5,5,10,5"
+                                    FontFamily="{StaticResource NunitoItalic}"
+                                    FontSize="14"
+                                    HorizontalOptions="FillAndExpand"
+                                    Placeholder="{texts:Translate ItemSearchPlaceHolder}"
+                                    Text="{Binding ScannedText, Mode=TwoWay}"
+                                    TextChanged="SearchBar_OnTextChanged"
+                                    VerticalOptions="CenterAndExpand">
+                                    <SearchBar.PlaceholderColor>
+                                        <OnPlatform x:TypeArguments="Color" Android="DarkGray" />
+                                    </SearchBar.PlaceholderColor>
+                                    <SearchBar.BackgroundColor>
+                                        <OnPlatform
+                                            x:TypeArguments="Color"
+                                            Android="{StaticResource WhiteColor}"
+                                            iOS="Transparent" />
+                                    </SearchBar.BackgroundColor>
+                                    <SearchBar.TextColor>
+                                        <OnPlatform
+                                            x:TypeArguments="Color"
+                                            Android="{StaticResource BlackColor}"
+                                            iOS="{StaticResource BlackColor}" />
+                                    </SearchBar.TextColor>
+                                    <SearchBar.CancelButtonColor>
+                                        <OnPlatform
+                                            x:TypeArguments="Color"
+                                            Android="{StaticResource BlackColor}"
+                                            iOS="{StaticResource BlackColor}" />
+                                    </SearchBar.CancelButtonColor>
+                                </SearchBar>
+                            </Frame>
+                        </Grid>
+                        <!--#endregion 1.1 Caja de Búsqueda de registros-->
+                        <!--#region 1.2 Detalle y Listado de datos-->
+                        <pancake:PancakeView
+                            Grid.Row="1"
+                            Margin="0,-15,0,0"
+                            Padding="10,10"
+                            BackgroundColor="{DynamicResource MainWrapperBackgroundColor}"
+                            CornerRadius="20,20,0,0"
+                            VerticalOptions="FillAndExpand">
+                            <StackLayout Spacing="10">
+                                <Grid
+                                    Padding="0,5,0,0"
+                                    HeightRequest="30"
+                                    VerticalOptions="End">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="*" />
+                                    </Grid.ColumnDefinitions>
+                                    <StackLayout Orientation="Horizontal" Spacing="0">
+                                        <StackLayout.GestureRecognizers>
+                                            <TapGestureRecognizer Command="{Binding NameSortingCommand}" />
+                                        </StackLayout.GestureRecognizers>
+                                        <Label
+                                            x:Name="LabelSortDirection"
+                                            IsVisible="False"
+                                            Text="{Binding OrdenamientoPorNombre}" />
+                                        <Label
+                                            Margin="10,0"
+                                            FontFamily="{StaticResource FontAwesome}"
+                                            FontSize="20"
+                                            HorizontalOptions="StartAndExpand"
+                                            Text="&#xf0dc;"
+                                            TextColor="{DynamicResource Gray-800}"
+                                            VerticalOptions="Center">
+                                            <Label.Triggers>
+                                                <DataTrigger
+                                                    Binding="{Binding Source={x:Reference LabelSortDirection}, Path=Text}"
+                                                    TargetType="Label"
+                                                    Value="-1">
+                                                    <Setter Property="Text" Value="&#xf0dc;" />
+                                                </DataTrigger>
+                                                <DataTrigger
+                                                    Binding="{Binding Source={x:Reference LabelSortDirection}, Path=Text}"
+                                                    TargetType="Label"
+                                                    Value="0">
+                                                    <Setter Property="Text" Value="&#xf15d;" />
+                                                </DataTrigger>
+                                                <DataTrigger
+                                                    Binding="{Binding Source={x:Reference LabelSortDirection}, Path=Text}"
+                                                    TargetType="Label"
+                                                    Value="1">
+                                                    <Setter Property="Text" Value="&#xf881;" />
+                                                </DataTrigger>
+                                            </Label.Triggers>
+                                        </Label>
+                                        <Label
+                                            FontFamily="{StaticResource PoppinsRegular}"
+                                            FontSize="12"
+                                            HorizontalOptions="StartAndExpand"
+                                            Text="{texts:Translate NameLabel}"
+                                            TextColor="{DynamicResource Gray-900}"
+                                            VerticalOptions="Center" />
+                                    </StackLayout>
+                                    <Label
+                                        Grid.Column="1"
+                                        FontFamily="{StaticResource PoppinsLight}"
+                                        FontSize="13"
+                                        HorizontalOptions="EndAndExpand"
+                                        Text="{texts:Translate SwipeLabel}"
+                                        TextColor="{DynamicResource Gray-800}"
+                                        VerticalOptions="Center" />
+                                </Grid>
+                                <!--Definición del ListView-->
+                                <BoxView BackgroundColor="{DynamicResource Gray-300}" HeightRequest="0.5" />
+                                <sync:SfListView
+                                    x:Name="registroListView"
+                                    AllowSwiping="True"
+                                    AutoFitMode="Height"
+                                    IsStickyHeader="True"
+                                    ItemsSource="{Binding Registros}"
+                                    SelectedItem="{Binding RegistroSeleccionado, Mode=OneWay}"
+                                    SelectionBackgroundColor="Transparent"
+                                    SelectionChanged="Handle_SelectionChanged"
+                                    SelectionMode="SingleDeselect"
+                                    SwipeEnded="Handle_SwipeEnded"
+                                    SwipeStarted="Handle_SwipeStarted">
+                                    <!--Definición del Trigger de Ordenamiento de Información-->
+                                    <sync:SfListView.Triggers>
+                                        <DataTrigger TargetType="sync:SfListView" Binding="{Binding Orientacion}" Value="Ascending">
+                                            <Setter Property="DataSource">
+                                                <Setter.Value>
+                                                    <data:DataSource>
+                                                        <data:DataSource.SortDescriptors>
+                                                            <data:SortDescriptor PropertyName="Descripcion" Direction="Ascending"/>
+                                                        </data:DataSource.SortDescriptors>
+                                                    </data:DataSource>
+                                                </Setter.Value>
+                                            </Setter>
+                                        </DataTrigger>
+                                        <DataTrigger TargetType="sync:SfListView" Binding="{Binding Orientacion}" Value="Descending">
+                                            <Setter Property="DataSource">
+                                                <Setter.Value>
+                                                    <data:DataSource>
+                                                        <data:DataSource.SortDescriptors>
+                                                            <data:SortDescriptor PropertyName="Descripcion" Direction="Descending"/>
+                                                        </data:DataSource.SortDescriptors>
+                                                    </data:DataSource>
+                                                </Setter.Value>
+                                            </Setter>
+                                        </DataTrigger>
+                                    </sync:SfListView.Triggers>
+                                    <!--Definición del Swipe para deslizar opciones-->
+                                    <sync:SfListView.SwipeOffset>
+                                        <OnIdiom
+                                            x:TypeArguments="x:Double"
+                                            Desktop="200"
+                                            Phone="100"
+                                            Tablet="200" />
+                                    </sync:SfListView.SwipeOffset>
+                                    <sync:SfListView.SwipeThreshold>
+                                        <OnIdiom
+                                            x:TypeArguments="x:Double"
+                                            Desktop="100"
+                                            Phone="50"
+                                            Tablet="100" />
+                                    </sync:SfListView.SwipeThreshold>
+                                    <!--Información a desplegarse-->
+                                    <sync:SfListView.ItemTemplate>
+                                        <DataTemplate>
+                                            <Grid ColumnSpacing="10">
+                                                <Grid.RowDefinitions>
+                                                    <RowDefinition Height="0.33*" />
+                                                    <RowDefinition Height="0.33*" />
+                                                    <RowDefinition Height="0.33*" />
+                                                    <RowDefinition Height="0.5" />
+                                                </Grid.RowDefinitions>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="50" />
+                                                    <ColumnDefinition Width="60" />
+                                                    <ColumnDefinition Width="*" />
+                                                </Grid.ColumnDefinitions>
+                                                <local:SfCircleView
+                                                    Grid.Row="0"
+                                                    Grid.RowSpan="4"
+                                                    Grid.Column="0"
+                                                    AbbrText="{Binding TipoInventario}"
+                                                    BackgroundColor="LightSteelBlue"
+                                                    BorderColor="{DynamicResource Gray-800}"                                                    
+                                                    CornerRadius="20"
+                                                    FontSize="15"
+                                                    HeightRequest="40"
+                                                    WidthRequest="40" />
+                                                <ffimageloading:CachedImage
+                                x:Name="clienteImage"                                                    
+                                Grid.Column="1"
+                                                    Grid.Row="0"
+                                                    Grid.RowSpan="4"
+                                Margin="0,8,0,15"
+                                Aspect="Fill"
+                                CacheType="All"
+                                DownsampleToViewSize="true"
+                                ErrorPlaceholder="picture_icon.png"
+                                HeightRequest="128"
+                                HorizontalOptions="Center"
+                                LoadingPlaceholder="picture_icon.png"
+                                Source="{Binding CodigoEstado, Converter={StaticResource ByteArrayToImage},ConverterParameter=CodigoEstado}"                                                    
+                                TransformPlaceholders="True"
+                                WidthRequest="128">
+                                                    <ffimageloading:CachedImage.Transformations>
+                                                        <transformations:RoundedTransformation
+                                        BorderHexColor="#000000"
+                                        BorderSize="5"
+                                        Radius="20" />
+                                                    </ffimageloading:CachedImage.Transformations>
+                                                    <!--<ffimageloading:CachedImage.GestureRecognizers>
+                                                        <TapGestureRecognizer Command="{Binding Path=BindingContext.ViewDocumentoCommand, Source={x:Reference registroListView}}" CommandParameter="{Binding .}" />
+                                                    </ffimageloading:CachedImage.GestureRecognizers>-->
+                                                </ffimageloading:CachedImage>
+
+                                                <!--<Image Grid.Row="0" Grid.Column="1" Grid.RowSpan="4" Source="{Binding Image}" VerticalOptions="Center" HorizontalOptions="Center" HeightRequest="50" WidthRequest="50"/>-->
+                                                <Label
+                                                    Grid.Row="0"
+                                                    Grid.Column="2"
+                                                    Style="{StaticResource SupplierNameStyle}"
+                                                    Text="{Binding TipoInventario}" />
+                                                <Label
+                                                    Grid.Row="1"
+                                                    Grid.Column="2"
+                                                    Style="{StaticResource DireccionStyle}"
+                                                    Text="{Binding NumeroOrden}" />
+                                                <!--<Label
+                                                    Grid.Row="2"
+                                                    Grid.Column="2"
+                                                    Style="{StaticResource PhoneNumberStyle}"
+                                                    Text="{Binding CodigoEstado}" />-->
+                                                <StackLayout Orientation="Horizontal" Padding="0" Margin="0" Spacing="0" Grid.Row="2"
+                                                    Grid.Column="2">
+                                                    <Label Text="{Binding CodigoEstado}" Margin="0" Style="{StaticResource PhoneNumberStyle}"/>
+                                                    <Label Text=" - " Margin="0" />
+                                                    <Label Text="{Binding Condicion}" Margin="0" Style="{StaticResource PhoneNumberStyle}"/>
+                                                </StackLayout>
+
+                                                <StackLayout
+                                                    Grid.Row="3"
+                                                    Grid.ColumnSpan="2"
+                                                    BackgroundColor="{DynamicResource Gray-400}"
+                                                    HeightRequest="0.5" />
+                                            </Grid>
+                                        </DataTemplate>
+                                    </sync:SfListView.ItemTemplate>
+                                    <!--Definición del botón de deslizamiento-->
+                                    <sync:SfListView.RightSwipeTemplate>
+                                        <DataTemplate x:Name="RightSwipeTemplate">
+                                            <Grid>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="*" />
+                                                    <ColumnDefinition Width="*" />
+                                                    <ColumnDefinition Width="*" />
+                                                </Grid.ColumnDefinitions>
+                                                <Grid
+                                                    Grid.Column="0"
+                                                    BackgroundColor="Aquamarine"
+                                                    HorizontalOptions="Fill"
+                                                    VerticalOptions="Fill">
+                                                    <Grid.GestureRecognizers>
+                                                        <TapGestureRecognizer Command="{Binding Path=BindingContext.ViewDocumentoCommand, Source={x:Reference registroListView}}" CommandParameter="{Binding .}" />
+                                                    </Grid.GestureRecognizers>
+                                                    <Grid HorizontalOptions="Center" VerticalOptions="Center">
+                                                        <Image
+                                                            Grid.Row="0"
+                                                            Grid.Column="0"
+                                                            BackgroundColor="Transparent"
+                                                            HeightRequest="28"
+                                                            Source="showFile.png"
+                                                            WidthRequest="28" />
+                                                    </Grid>
+                                                </Grid>
+                                                <Grid
+                                                    Grid.Column="1"
+                                                    BackgroundColor="#32CD32"
+                                                    HorizontalOptions="Fill"
+                                                    VerticalOptions="Fill">
+                                                    <Grid.GestureRecognizers>
+                                                        <TapGestureRecognizer Command="{Binding Path=BindingContext.UpdateRegistroCommand, Source={x:Reference registroListView}}" CommandParameter="{Binding .}" />
+                                                    </Grid.GestureRecognizers>
+                                                    <Grid HorizontalOptions="Center" VerticalOptions="Center">
+                                                        <Image
+                                                            Grid.Row="0"
+                                                            Grid.Column="0"
+                                                            BackgroundColor="Transparent"
+                                                            HeightRequest="28"
+                                                            Source="edit_white.png"
+                                                            WidthRequest="28" />
+                                                    </Grid>
+                                                </Grid>
+                                                <Grid
+                                                    Grid.Column="2"
+                                                    BackgroundColor="#FF0000"
+                                                    HorizontalOptions="Fill"
+                                                    VerticalOptions="Fill">
+                                                    <Grid.GestureRecognizers>
+
+                                                        <TapGestureRecognizer Command="{Binding Path=BindingContext.DeleteRegistroCommand, Source={x:Reference registroListView}}" CommandParameter="{Binding .}" />
+                                                    </Grid.GestureRecognizers>
+                                                    <Grid HorizontalOptions="Center" VerticalOptions="Center">
+                                                        <Image
+                                                            Grid.Row="0"
+                                                            Grid.Column="0"
+                                                            BackgroundColor="Transparent"
+                                                            HeightRequest="28"
+                                                            Source="Delete.png"
+                                                            WidthRequest="28" />
+                                                    </Grid>
+                                                </Grid>
+                                            </Grid>
+                                        </DataTemplate>
+                                    </sync:SfListView.RightSwipeTemplate>
+
+                                </sync:SfListView>
+                            </StackLayout>
+                        </pancake:PancakeView>
+                        <!--#endregion 1.2 Detalle y Listado de datos-->
+                    </Grid>
+                    <!--Botón para Añadir más registros-->
+                    <pancake:PancakeView
+                        Margin="0,0,16,10"
+                        BackgroundGradientAngle="45"
+                        BackgroundGradientEndColor="{DynamicResource Accent}"
+                        BackgroundGradientStartColor="{DynamicResource colPrim}"
+                        CornerRadius="28"
+                        HasShadow="True"
+                        HeightRequest="56"
+                        HorizontalOptions="EndAndExpand"
+                        VerticalOptions="EndAndExpand"
+                        WidthRequest="56">
+                        <pancake:PancakeView.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped"/>
+                        </pancake:PancakeView.GestureRecognizers>
+                        <Label
+                            x:Name="menu"
+                            FontFamily="{StaticResource FontAwesome}"
+                            FontSize="16"
+                            HorizontalOptions="Center"
+                            Text="{Binding MenuImagen}"
+                            TextColor="{StaticResource Gray-White}"
+                            VerticalOptions="Center" />
+                    </pancake:PancakeView>
+                    <pancake:PancakeView
+                        Margin="0,30,70,65"
+                        BackgroundGradientAngle="45"
+                        BackgroundGradientEndColor="{DynamicResource Accent}"
+                        BackgroundGradientStartColor="{DynamicResource colPrim}"
+                        CornerRadius="28"
+                        HasShadow="True"
+                        HeightRequest="56"
+                        HorizontalOptions="EndAndExpand"
+                        VerticalOptions="EndAndExpand"
+                        WidthRequest="56"
+                        IsVisible="{Binding IsVisibleBotones}">
+                        <pancake:PancakeView.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="AdicionarInventarioConcilia_Tapped"></TapGestureRecognizer>
+                        </pancake:PancakeView.GestureRecognizers>
+                        <Label
+                            FontFamily="{StaticResource FontAwesome}"
+                            FontSize="16"
+                            HorizontalOptions="Center"
+                            Text="&#xf022;"
+                            TextColor="{StaticResource Gray-White}"
+                            VerticalOptions="Center" />
+                    </pancake:PancakeView>
+                    <pancake:PancakeView
+                        Margin="0,30,100,10"
+                        BackgroundGradientAngle="45"
+                        BackgroundGradientEndColor="{DynamicResource Accent}"
+                        BackgroundGradientStartColor="{DynamicResource colPrim}"
+                        CornerRadius="28"
+                        HasShadow="True"
+                        HeightRequest="56"
+                        HorizontalOptions="EndAndExpand"
+                        VerticalOptions="EndAndExpand"
+                        WidthRequest="56"
+                IsVisible="{Binding IsVisibleBotones}">
+                        <pancake:PancakeView.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="AdicionarInventarioInicial_Tapped"></TapGestureRecognizer>
+                        </pancake:PancakeView.GestureRecognizers>
+                        <Label
+                            FontFamily="{StaticResource FontAwesome}"
+                            FontSize="16"
+                            HorizontalOptions="Center"
+                            Text="&#xe066;"
+                            TextColor="{StaticResource Gray-White}"
+                            VerticalOptions="Center" />
+                    </pancake:PancakeView>
+                    <pancake:PancakeView
+                        Margin="0,0,16,100"
+                        BackgroundGradientAngle="45"
+                        BackgroundGradientEndColor="{DynamicResource Accent}"
+                        BackgroundGradientStartColor="{DynamicResource colPrim}"
+                        CornerRadius="28"
+                        HasShadow="True"
+                        HeightRequest="56"
+                        HorizontalOptions="EndAndExpand"
+                        VerticalOptions="EndAndExpand"
+                        WidthRequest="56"
+                IsVisible="{Binding IsVisibleBotones}">
+                        <pancake:PancakeView.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="AdicionarInventarioTransferencia_Tapped"></TapGestureRecognizer>
+                        </pancake:PancakeView.GestureRecognizers>
+                        <Label
+                            FontFamily="{StaticResource FontAwesome}"
+                            FontSize="16"
+                            HorizontalOptions="Center"
+                            Text="&#xf31e;"
+                            TextColor="{StaticResource Gray-White}"
+                            VerticalOptions="Center" />
+                    </pancake:PancakeView>
+
+
+                </Grid>
+            </Grid>
+            <!--Banner para desplegar publicidad-->
+            <StackLayout
+                Grid.Row="1"
+                Padding="0"
+                BackgroundColor="{DynamicResource Gray-900}">
+                <!--<local:AdBanner Size="Standardbanner" VerticalOptions="Fill" />-->
+                <local:AdmobControl BackgroundColor="Transparent" />
+            </StackLayout>
+            <!--Espacio para ícono de procesamiento de información-->
+            <local:LoadingIndicator
+                Grid.RowSpan="2"
+                HorizontalOptions="Fill"
+                IsRunning="{Binding IsBusy, Mode=TwoWay}"
+                VerticalOptions="Fill" />
+        </Grid>
+    </ContentPage.Content>
+    <!--#endregion  1.Contenido-->
+</ContentPage>

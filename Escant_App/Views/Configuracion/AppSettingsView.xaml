@@ -1,0 +1,415 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="Escant_App.Views.Configuracion.AppSettingsView"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:button="clr-namespace:Syncfusion.XForms.Buttons;assembly=Syncfusion.Buttons.XForms"
+    xmlns:combobox="clr-namespace:Syncfusion.XForms.ComboBox;assembly=Syncfusion.SfComboBox.XForms"
+    xmlns:customViews="clr-namespace:Escant_App.UserControls;assembly=Escant_App"
+    xmlns:inputKit="clr-namespace:Plugin.InputKit.Shared.Controls;assembly=Plugin.InputKit"
+    xmlns:inputLayout="clr-namespace:Syncfusion.XForms.TextInputLayout;assembly=Syncfusion.Core.XForms"
+    xmlns:local="clr-namespace:Escant_App.UserControls;assembly=Escant_App"
+    xmlns:texts="clr-namespace:ManijodaServicios.Resources.Texts;assembly=ManijodaServicios"
+    xmlns:viewModelBase="clr-namespace:Escant_App.ViewModels.Base;assembly=Escant_App"
+    xmlns:views="clr-namespace:Escant_App.Views;assembly=Escant_App"
+    Title="{texts:Translate AppSettingTitle}"
+    viewModelBase:ViewModelLocator.AutoWireViewModel="true"
+    BackgroundColor="{DynamicResource MainWrapperBackgroundColor}">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Style x:Key="AppSettingHeaderLabelStyle" TargetType="{x:Type Label}">
+                <Setter Property="FontFamily" Value="{StaticResource NunitoBold}" />
+                <Setter Property="FontSize" Value="{StaticResource LargeSize}" />
+                <Setter Property="HorizontalOptions" Value="Start" />
+                <Setter Property="VerticalOptions" Value="Center" />
+                <Setter Property="Margin" Value="0,0,0,10" />
+                <Setter Property="TextColor" Value="{DynamicResource colPrim}" />
+            </Style>
+
+            <Style x:Key="AppSettingCheckItemLabelStyle" TargetType="{x:Type Label}">
+                <Setter Property="FontFamily" Value="{StaticResource NunitoRegular}" />
+                <Setter Property="FontSize" Value="{StaticResource MediumSize}" />
+                <Setter Property="HorizontalOptions" Value="Start" />
+                <Setter Property="VerticalOptions" Value="Center" />
+                <Setter Property="Margin" Value="0, 0" />
+                <Setter Property="TextColor" Value="{StaticResource BlackTextColor}" />
+            </Style>
+
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <!--  TOOLBAR ITEMS  -->
+    <ContentPage.ToolbarItems>
+        <ToolbarItem
+            Command="{Binding DiscardCommand}"
+            Order="Primary"
+            Priority="0"
+            Text="{texts:Translate Cancel}">
+            <ToolbarItem.Icon>
+                <OnPlatform x:TypeArguments="FileImageSource">
+                    <On Platform="Android" Value="cross_512.png" />
+                </OnPlatform>
+            </ToolbarItem.Icon>
+        </ToolbarItem>
+
+        <ToolbarItem
+            Command="{Binding SaveApplicationSettingCommand}"
+            Order="Primary"
+            Priority="1"
+            Text="{texts:Translate Save}">
+            <ToolbarItem.Icon>
+                <OnPlatform x:TypeArguments="FileImageSource">
+                    <On Platform="Android" Value="save.png" />
+                </OnPlatform>
+            </ToolbarItem.Icon>
+        </ToolbarItem>
+    </ContentPage.ToolbarItems>
+    <ContentPage.Content>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+
+            <ScrollView Grid.Row="0">
+                <StackLayout Padding="10,10,10,15">
+                    <Label Style="{StaticResource AppSettingHeaderLabelStyle}" Text="{texts:Translate POSScreen}" />
+                    <!--<StackLayout Orientation="Horizontal" Margin="10,0,0,10">
+                        <Label Text="Chọn Khách hàng" Style="{StaticResource AppSettingCheckItemLabelStyle}"/>
+                        <Switch IsToggled="{Binding IsEnableSelectCustomer}" VerticalOptions="Center" HorizontalOptions="EndAndExpand"/>
+                    </StackLayout>-->
+
+                    <!--<StackLayout Orientation="Horizontal" Margin="10,0,0,10">
+                        <Label Text="Chọn Nhà cung cấp" Style="{StaticResource AppSettingCheckItemLabelStyle}"/>
+                        <Switch IsToggled="{Binding IsEnableSelectSupplier}" VerticalOptions="Center" HorizontalOptions="EndAndExpand"/>
+                    </StackLayout>
+
+                    <StackLayout Orientation="Horizontal" Margin="10,0,0,10">
+                        <Label Text="Chọn Nhân viên" Style="{StaticResource AppSettingCheckItemLabelStyle}"/>
+                        <Switch IsToggled="{Binding IsEnableSelectStaff}" VerticalOptions="Center" HorizontalOptions="EndAndExpand"/>
+                    </StackLayout>-->
+
+                    <!--  DELIVERY OPTION IS NOT AVAILABLE AT 1.0.0 VERSION  -->
+                    <!--<StackLayout Orientation="Horizontal" Margin="10,0,0,10">
+                        <Label Text="Giao hàng" Style="{StaticResource AppSettingCheckItemLabelStyle}"/>
+                        <Switch IsToggled="{Binding IsEnableDelivery}" VerticalOptions="Center" HorizontalOptions="EndAndExpand"/>
+                    </StackLayout>-->
+
+                    <!--  SALE COMMISSION OPTION IS NOT AVAILABLE AT 1.0.0 VERSION  -->
+                    <!--<StackLayout Orientation="Horizontal" Margin="10,0,0,10">
+                        <Label Text="Mục tiêu doanh thu (1 triệu đồng)" Style="{StaticResource AppSettingCheckItemLabelStyle}"/>
+                        <Switch IsToggled="{Binding IsEnableRevenue}" VerticalOptions="Center" HorizontalOptions="EndAndExpand"/>
+                    </StackLayout>-->
+
+                    <StackLayout Margin="10,0,0,10" Orientation="Horizontal">
+                        <Label Style="{StaticResource AppSettingCheckItemLabelStyle}" Text="{texts:Translate ShowStockBalanced}" />
+                        <!--<Switch
+                            HorizontalOptions="EndAndExpand"
+                            IsToggled="{Binding IsDisplayStockBalanceQty}"
+                            VerticalOptions="Center" />-->
+                        <button:SfSwitch
+                            Margin="8,0"
+                            AllowIndeterminateState="False"
+                            HeightRequest="28"
+                            HorizontalOptions="EndAndExpand"
+                            IsOn="{Binding IsDisplayStockBalanceQty}"
+                            VisualType="Cupertino">
+                            <VisualStateManager.VisualStateGroups>
+                                <VisualStateGroup x:Name="CommonStates">
+                                    <VisualState x:Name="On">
+                                        <VisualState.Setters>
+                                            <Setter Property="SwitchSettings">
+                                                <Setter.Value>
+                                                    <button:CupertinoSwitchSettings
+                                                        x:TypeArguments="button:OnState"
+                                                        ThumbBorderColor="{DynamicResource Gray-500}"
+                                                        ThumbColor="{DynamicResource Gray-White}"
+                                                        TrackBorderColor="{DynamicResource Gray-200}"
+                                                        TrackColor="{DynamicResource RedColor}" />
+                                                </Setter.Value>
+                                            </Setter>
+                                        </VisualState.Setters>
+                                    </VisualState>
+                                    <VisualState x:Name="Off">
+                                        <VisualState.Setters>
+                                            <Setter Property="SwitchSettings">
+                                                <Setter.Value>
+                                                    <button:CupertinoSwitchSettings
+                                                        x:TypeArguments="button:OffState"
+                                                        ThumbBorderColor="{DynamicResource Gray-200}"
+                                                        ThumbColor="{DynamicResource Gray-White}"
+                                                        TrackBorderColor="{DynamicResource Gray-200}"
+                                                        TrackColor="{DynamicResource Gray-500}" />
+                                                </Setter.Value>
+                                            </Setter>
+                                        </VisualState.Setters>
+                                    </VisualState>
+                                </VisualStateGroup>
+                            </VisualStateManager.VisualStateGroups>
+                        </button:SfSwitch>
+                    </StackLayout>
+
+                    <!--<StackLayout Orientation="Horizontal" Margin="10,0,0,10">
+                        <Label Text="{texts:Translate NumericKeyboard}" Style="{StaticResource AppSettingCheckItemLabelStyle}"/>
+                        <Switch IsToggled="{Binding IsEnableHotKeyWhenSearchProduct}" VerticalOptions="Center" HorizontalOptions="EndAndExpand"/>
+                    </StackLayout>-->
+
+                    <BoxView
+                        Margin="15,10,15,10"
+                        BackgroundColor="LightGray"
+                        HeightRequest="2" />
+
+                    <Label Style="{StaticResource AppSettingHeaderLabelStyle}" Text="{texts:Translate OtherSettings}" />
+                    <StackLayout
+                        Margin="10,0,0,10"
+                        HorizontalOptions="FillAndExpand"
+                        Orientation="Horizontal">
+                        <Label Style="{StaticResource AppSettingCheckItemLabelStyle}" Text="{texts:Translate LanguageLabel}" />
+                        <!--<local:FilterPicker Title="{texts:Translate SelectLanguage}" Margin="20,5,10,10" BackgroundColor="LightSteelBlue"
+                                HorizontalOptions="FillAndExpand" VerticalOptions="StartAndExpand"
+                                x:Name="pickerSelectLanguage"
+
+                                Image="ic_drop_down"
+    			                FontSize="20">
+               </local:FilterPicker>-->
+                        <inputLayout:SfTextInputLayout
+                            ContainerType="None"
+                            FocusedColor="{DynamicResource colPrim}"
+                            HorizontalOptions="FillAndExpand"
+                            LeadingViewPosition="Outside"
+                            OutlineCornerRadius="4">
+                            <combobox:SfComboBox
+                                x:Name="LangListCombobox"
+                                BorderColor="{DynamicResource colPrim}"
+                                DataSource="{Binding LanguageList}"
+                                DisplayMemberPath="Name"
+                                HorizontalOptions="EndAndExpand"
+                                IsEditableMode="true"
+                                SelectedItem="{Binding LanguageSelected}"
+                                SelectionChanged="LanguageSelectionChanged"
+                                ShowBorder="true"
+                                TextSize="14"
+                                VerticalOptions="Center">
+                                <combobox:SfComboBox.HeightRequest>
+                                    <OnPlatform
+                                        x:TypeArguments="x:Double"
+                                        Android="46"
+                                        iOS="18" />
+                                </combobox:SfComboBox.HeightRequest>
+                            </combobox:SfComboBox>
+                            <inputLayout:SfTextInputLayout.LeadingView>
+                                <Label
+                                    FontSize="18"
+                                    Text="&#xf1ab;"
+                                    TextColor="{DynamicResource colPrim}"
+                                    VerticalTextAlignment="Center">
+                                    <Label.FontFamily>
+                                        <OnPlatform
+                                            x:TypeArguments="x:String"
+                                            Android="fa-solid-900.ttf#Font Awesome 5 Free Solid"
+                                            iOS="Font Awesome 5 Free" />
+                                    </Label.FontFamily>
+                                </Label>
+                            </inputLayout:SfTextInputLayout.LeadingView>
+                        </inputLayout:SfTextInputLayout>
+                    </StackLayout>
+
+                    <!-- <StackLayout Orientation="Horizontal" Margin="10,0,0,10">
+                        <Label Text="{texts:Translate AutoBackup}" Style="{StaticResource AppSettingCheckItemLabelStyle}"/>
+                        <Switch IsToggled="{Binding IsEnableAutoBackup}" VerticalOptions="Center" HorizontalOptions="EndAndExpand"/>
+                    </StackLayout>-->
+
+                    <!--<StackLayout Orientation="Horizontal" Margin="10,0,0,10">
+                        <Label Text="Sử dụng mức giá khuyến mãi" Style="{StaticResource AppSettingCheckItemLabelStyle}"/>
+                        <Switch IsToggled="{Binding IsEnablePromotionPrice}" VerticalOptions="Center" HorizontalOptions="EndAndExpand"/>
+                    </StackLayout>
+
+                    <StackLayout Orientation="Horizontal" Margin="10,0,0,10">
+                        <Label Text="Nhân viên không thể chỉnh sửa giá bán" Style="{StaticResource AppSettingCheckItemLabelStyle}"/>
+                        <Switch IsToggled="{Binding IsEnableStaffCannotAdjustSalePrice}" VerticalOptions="Center" HorizontalOptions="EndAndExpand"/>
+                    </StackLayout>
+
+                    <StackLayout Orientation="Horizontal" Margin="10,0,0,10">
+                        <Label Text="Nhân viên không thể chỉnh sửa giá nhập sản phẩm" Style="{StaticResource AppSettingCheckItemLabelStyle}"/>
+                        <Switch IsToggled="{Binding IsEnableStaffCannotAdjustInboundPrice}" VerticalOptions="Center" HorizontalOptions="EndAndExpand"/>
+                    </StackLayout>-->
+                    <StackLayout Margin="10,0,0,10" Orientation="Horizontal">
+                        <Label Style="{StaticResource AppSettingCheckItemLabelStyle}" Text="{texts:Translate DefaultCurrencyFormat}" />
+                        <!--<Switch
+                            HorizontalOptions="EndAndExpand"
+                            IsToggled="{Binding IsUseDefaultCurrencyFormat}"
+                            Toggled="CustomCurencyFormat_Toggled"
+                            VerticalOptions="Center" />-->
+                        <button:SfSwitch
+                            Margin="8,0"
+                            AllowIndeterminateState="False"
+                            HeightRequest="28"
+                            HorizontalOptions="EndAndExpand"
+                            IsOn="{Binding IsUseDefaultCurrencyFormat}"
+                            StateChanged="SfCustomCurencyFormat_Toggled"
+                            VisualType="Cupertino">
+                            <VisualStateManager.VisualStateGroups>
+                                <VisualStateGroup x:Name="CommonStates">
+                                    <VisualState x:Name="On">
+                                        <VisualState.Setters>
+                                            <Setter Property="SwitchSettings">
+                                                <Setter.Value>
+                                                    <button:CupertinoSwitchSettings
+                                                        x:TypeArguments="button:OnState"
+                                                        ThumbBorderColor="{DynamicResource Gray-500}"
+                                                        ThumbColor="{DynamicResource Gray-White}"
+                                                        TrackBorderColor="{DynamicResource Gray-200}"
+                                                        TrackColor="{DynamicResource RedColor}" />
+                                                </Setter.Value>
+                                            </Setter>
+                                        </VisualState.Setters>
+                                    </VisualState>
+                                    <VisualState x:Name="Off">
+                                        <VisualState.Setters>
+                                            <Setter Property="SwitchSettings">
+                                                <Setter.Value>
+                                                    <button:CupertinoSwitchSettings
+                                                        x:TypeArguments="button:OffState"
+                                                        ThumbBorderColor="{DynamicResource Gray-200}"
+                                                        ThumbColor="{DynamicResource Gray-White}"
+                                                        TrackBorderColor="{DynamicResource Gray-200}"
+                                                        TrackColor="{DynamicResource Gray-500}" />
+                                                </Setter.Value>
+                                            </Setter>
+                                        </VisualState.Setters>
+                                    </VisualState>
+                                </VisualStateGroup>
+                            </VisualStateManager.VisualStateGroups>
+                        </button:SfSwitch>
+                    </StackLayout>
+                    <inputLayout:SfTextInputLayout
+                        Margin="5,0,0,10"
+                        ContainerBackgroundColor="Transparent"
+                        ContainerType="Outlined"
+                        FocusedColor="{DynamicResource colPrim}"
+                        Hint="{texts:Translate SelectCurrencyCustomFormat}"
+                        HorizontalOptions="Fill"
+                        IsVisible="{Binding ShowCustomFormat}"
+                        LeadingViewPosition="Inside">
+                        <combobox:SfComboBox
+                            x:Name="devicesCombobox"
+                            DataSource="{Binding FormatList}"
+                            SelectedItem="{Binding CurrentCurrencyCustomFormat}"
+                            SelectionChanged="CustomCurrencyFormatCombobox_SelectionChanged"
+                            ShowBorder="false"
+                            TextSize="14">
+                            <combobox:SfComboBox.HeightRequest>
+                                <OnPlatform x:TypeArguments="x:Double">
+                                    <On Platform="iOS">18</On>
+                                    <On Platform="Android">50</On>
+                                </OnPlatform>
+                            </combobox:SfComboBox.HeightRequest>
+                        </combobox:SfComboBox>
+                        <inputLayout:SfTextInputLayout.LeadingView>
+                            <Label
+                                FontSize="18"
+                                Text="&#xf0d6;"
+                                TextColor="{DynamicResource colPrim}"
+                                VerticalTextAlignment="Center">
+                                <Label.FontFamily>
+                                    <OnPlatform
+                                        x:TypeArguments="x:String"
+                                        Android="fa-solid-900.ttf#Font Awesome 5 Free Solid"
+                                        iOS="Font Awesome 5 Free" />
+                                </Label.FontFamily>
+                            </Label>
+                        </inputLayout:SfTextInputLayout.LeadingView>
+                    </inputLayout:SfTextInputLayout>
+
+                    <inputLayout:SfTextInputLayout
+                        Margin="0,0,0,10"
+                        ContainerBackgroundColor="Transparent"
+                        ContainerType="Outlined"
+                        FocusedColor="{DynamicResource colPrim}"
+                        Hint="{texts:Translate CustomCurrencySymbol}"
+                        HorizontalOptions="Fill"
+                        IsVisible="{Binding ShowCustomFormat}"
+                        LeadingViewPosition="Inside">
+                        <Entry MaxLength="50" Text="{Binding CustomCurrencySymbol}" />
+                        <inputLayout:SfTextInputLayout.LeadingView>
+                            <Label
+                                FontSize="18"
+                                Text="&#xf155;"
+                                TextColor="{DynamicResource colPrim}"
+                                VerticalTextAlignment="Center">
+                                <Label.FontFamily>
+                                    <OnPlatform
+                                        x:TypeArguments="x:String"
+                                        Android="fa-solid-900.ttf#Font Awesome 5 Free Solid"
+                                        iOS="Font Awesome 5 Free" />
+                                </Label.FontFamily>
+                            </Label>
+                        </inputLayout:SfTextInputLayout.LeadingView>
+                    </inputLayout:SfTextInputLayout>
+
+                    <StackLayout Margin="10,0,0,10" Orientation="Horizontal">
+                        <Label Style="{StaticResource AppSettingCheckItemLabelStyle}" Text="{texts:Translate PreventNegative}" />
+                        <!--<Switch
+                            HorizontalOptions="EndAndExpand"
+                            IsToggled="{Binding IsPreventSellWhenNegative}"
+                            VerticalOptions="Center" />-->
+                        <button:SfSwitch
+                            Margin="8,0"
+                            AllowIndeterminateState="False"
+                            HeightRequest="28"
+                            HorizontalOptions="EndAndExpand"
+                            IsOn="{Binding IsPreventSellWhenNegative}"
+                            VisualType="Cupertino">
+                            <VisualStateManager.VisualStateGroups>
+                                <VisualStateGroup x:Name="CommonStates">
+                                    <VisualState x:Name="On">
+                                        <VisualState.Setters>
+                                            <Setter Property="SwitchSettings">
+                                                <Setter.Value>
+                                                    <button:CupertinoSwitchSettings
+                                                        x:TypeArguments="button:OnState"
+                                                        ThumbBorderColor="{DynamicResource Gray-500}"
+                                                        ThumbColor="{DynamicResource Gray-White}"
+                                                        TrackBorderColor="{DynamicResource Gray-200}"
+                                                        TrackColor="{DynamicResource RedColor}" />
+                                                </Setter.Value>
+                                            </Setter>
+                                        </VisualState.Setters>
+                                    </VisualState>
+                                    <VisualState x:Name="Off">
+                                        <VisualState.Setters>
+                                            <Setter Property="SwitchSettings">
+                                                <Setter.Value>
+                                                    <button:CupertinoSwitchSettings
+                                                        x:TypeArguments="button:OffState"
+                                                        ThumbBorderColor="{DynamicResource Gray-200}"
+                                                        ThumbColor="{DynamicResource Gray-White}"
+                                                        TrackBorderColor="{DynamicResource Gray-200}"
+                                                        TrackColor="{DynamicResource Gray-500}" />
+                                                </Setter.Value>
+                                            </Setter>
+                                        </VisualState.Setters>
+                                    </VisualState>
+                                </VisualStateGroup>
+                            </VisualStateManager.VisualStateGroups>
+                        </button:SfSwitch>
+                    </StackLayout>
+                </StackLayout>
+            </ScrollView>
+
+            <StackLayout
+                Grid.Row="1"
+                Padding="0"
+                BackgroundColor="{DynamicResource Gray-900}">
+                <!--<local:AdBanner Size="Standardbanner" VerticalOptions="EndAndExpand" />-->
+                <local:AdmobControl BackgroundColor="Transparent" />
+            </StackLayout>
+
+            <local:LoadingIndicator
+                Grid.Row="0"
+                Grid.RowSpan="2"
+                HorizontalOptions="Fill"
+                IsRunning="{Binding IsBusy, Mode=TwoWay}"
+                VerticalOptions="Fill" />
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

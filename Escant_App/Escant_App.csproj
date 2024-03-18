@@ -1,0 +1,127 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <ProduceReferenceAssembly>true</ProduceReferenceAssembly>
+    <BaseOutputPath>..\Lib</BaseOutputPath>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Behaviors\DiscountMoneyNumericTextboxBehavior.cs" />
+    <Compile Remove="Views\Ventas\PopupItemOrdenVentasView.xaml.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Remove="Views\Ventas\PopupItemOrdenVentasView.xaml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="MarcTron.Admob" Version="1.6.9" />
+    <PackageReference Include="Plugin.Multilingual" Version="1.0.2" />
+    <PackageReference Include="Plugin.Permissions" Version="6.0.1" />
+    <PackageReference Include="Plugin.Share" Version="7.1.1" />
+    <PackageReference Include="Rg.Plugins.Popup" Version="2.1.0" />
+    <PackageReference Include="Syncfusion.Licensing" Version="19.3.0.43" />
+    <PackageReference Include="Syncfusion.Xamarin.Buttons" Version="19.3.0.43" />
+    <PackageReference Include="Syncfusion.Xamarin.Core" Version="19.3.0.43" />
+    <PackageReference Include="Syncfusion.Xamarin.Pdf" Version="19.3.0.43" />
+    <PackageReference Include="Syncfusion.Xamarin.SfBusyIndicator" Version="19.3.0.43" />
+    <PackageReference Include="Syncfusion.Xamarin.SfChart" Version="19.3.0.43" />
+    <PackageReference Include="Syncfusion.Xamarin.SfDataForm" Version="19.3.0.43" />
+    <PackageReference Include="Syncfusion.Xamarin.SfDataGrid" Version="19.3.0.43" />
+    <PackageReference Include="Syncfusion.Xamarin.SfListView" Version="19.3.0.43" />
+    <PackageReference Include="Syncfusion.Xamarin.SfNumericTextBox" Version="19.3.0.43" />
+    <PackageReference Include="Syncfusion.Xamarin.SfNumericUpDown" Version="19.3.0.43" />
+    <PackageReference Include="Syncfusion.Xamarin.SfPdfViewer" Version="19.3.0.43" />
+    <PackageReference Include="Syncfusion.Xamarin.SfPopupLayout" Version="19.3.0.43" />
+    <PackageReference Include="Syncfusion.Xamarin.SfPullToRefresh" Version="19.3.0.43" />
+    <PackageReference Include="Syncfusion.Xamarin.SfRadialMenu" Version="19.3.0.43" />
+    <PackageReference Include="Syncfusion.Xamarin.SfTabView" Version="19.3.0.43" />
+    <PackageReference Include="Syncfusion.Xamarin.SfTreeView" Version="19.3.0.43" />
+    <PackageReference Include="Syncfusion.Xamarin.XlsIO" Version="19.3.0.43" />
+    <PackageReference Include="Xam.Plugin.Connectivity" Version="3.2.0" />
+    <PackageReference Include="Xam.Plugin.Media" Version="5.0.1" />
+    <PackageReference Include="Xam.Plugins.Messaging" Version="5.2.0" />
+    <PackageReference Include="Xam.Plugins.Settings" Version="3.1.1" />
+    <PackageReference Include="Xam.Plugins.Vibrate" Version="4.0.0.5" />
+    <PackageReference Include="Xamarin.CommunityToolkit" Version="1.1.0" />
+    <PackageReference Include="Xamarin.FFImageLoading" Version="2.4.11.982" />
+    <PackageReference Include="Xamarin.FFImageLoading.Forms" Version="2.4.11.982" />
+    <PackageReference Include="Xamarin.FFImageLoading.Transformations" Version="2.4.11.982" />
+    <PackageReference Include="Xamarin.Forms" Version="5.0.0.2196" />  
+    <PackageReference Include="Xamarin.Essentials" Version="1.7.0" />  
+    <PackageReference Include="Xamarin.Forms.InputKit" Version="3.7.2" />  
+    <PackageReference Include="Xamarin.Forms.PancakeView" Version="1.4.2" />  
+    <PackageReference Include="Xamarin.Plugin.FilePicker" Version="2.1.41" />  
+    <PackageReference Include="ZXing.Net.Mobile" Version="2.4.1" />  
+    <PackageReference Include="ZXing.Net.Mobile.Forms" Version="2.4.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\DataModel\DataModel.csproj" />
+    <ProjectReference Include="..\Escant_App.Common\Escant_App.Common.csproj" />
+    <ProjectReference Include="..\ServiciosManijoda\ManijodaServicios.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Extensions\" />
+    <Folder Include="Services\Impl\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="Bluetooth.Xamarin.Abstractions">
+      <HintPath>..\Lib\Bluetooth.Xamarin.Abstractions.dll</HintPath>
+    </Reference>
+    <Reference Include="Bluetooth.Xamarin.Android">
+      <HintPath>..\Lib\Bluetooth.Xamarin.Android.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Views\Compras\PopupReceptaItemOrdenComprasView.xaml.cs">
+      <DependentUpon>PopupReceptaItemOrdenComprasView.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\Documentos\PdfViewerView.xaml.cs">
+      <DependentUpon>PdfViewerView.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\Ventas\PopupValidaView.xaml.cs">
+      <DependentUpon>PopupValidaView.xaml</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Update="Views\Cajas\PopupOrdenTablaPagoView.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\Compras\PopupReceptaItemOrdenComprasView.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\Documentos\PdfViewerView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\GestionBDD\ResincronizarDatosPopupView.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\Ventas\IngresoVentasView.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\Ventas\OrdenMaestroVentaView.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\Ventas\PopupActualizaItemOrdenVentasView.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\Ventas\PopupActualizaOrdenVentasView.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\Ventas\PopupDetalleOrdenView.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\Ventas\PopupValidaView.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\Ventas\VentasView.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+  </ItemGroup>
+</Project>

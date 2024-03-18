@@ -1,0 +1,509 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Application xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"      
+             xmlns:xct="http://xamarin.com/schemas/2020/toolkit"
+             x:Class="Escant_App.App"
+             xmlns:behaviors="clr-namespace:Escant_App.Behaviors;assembly=Escant_App"
+            xmlns:converters="clr-namespace:Escant_App.Converters;assembly=Escant_App"
+            xmlns:ctrls="clr-namespace:Escant_App.UserControls;assembly=Escant_App"
+            xmlns:effects="clr-namespace:Escant_App.Effects;assembly=Escant_App">
+    <!--
+        Define global resources and styles here, that apply to all pages in your app.
+    -->
+    <Application.Resources>
+        <ResourceDictionary>
+            <!--  Application resource dictionary  -->            
+
+            <!--  COLORS  -->
+            <Color x:Key="colPrim">#005030</Color>
+            <Color x:Key="colSec">#81BC41</Color>
+            <Color x:Key="colAcc">#81BC41</Color>
+            <!--<Color x:Key="ListSeparator">#C8C7CC</Color>-->
+            <Color x:Key="ListSeparator">#000000</Color>
+            <!--<Color x:Key="ListSeparator">#A9A9AC</Color>-->
+            <Color x:Key="Accent">#81BC41</Color>
+            <Color x:Key="AccentColor">#81BC41</Color>
+            <Color x:Key="WhiteColor">#ffffff</Color>
+            <Color x:Key="BlueColor">#0072C6</Color>
+            <Color x:Key="ColorImagen">#0072C6</Color>
+            <Color x:Key="BlackColor">#000000</Color>
+            <Color x:Key="BackgroundColor">#E0F2F1</Color>
+            <Color x:Key="LightGreenColor">#83D01B</Color>
+            <Color x:Key="LightOrangeColor">#D87E56</Color>
+            <Color x:Key="Orange">#ff844a</Color>
+            <Color x:Key="OrangeColor">#BC4C1B</Color>
+            <Color x:Key="RedColor">#FF0000</Color>
+            <Color x:Key="ValidationErrorColor">#FF204F</Color>
+            <Color x:Key="GreenColor">#368f94</Color>
+            <Color x:Key="GreenColor2">#00A69C</Color>
+            <Color x:Key="DarkGreenColor">#00857D</Color>
+            <Color x:Key="GrayColor">#F6F1E9</Color>
+            <Color x:Key="ErrorColor">#ff5252</Color>
+            <Color x:Key="TextColor">#757575</Color>
+            <Color x:Key="BlackTextColor">#253748</Color>
+            <Color x:Key="InverseTextColor">#FFFFFF</Color>
+            <Color x:Key="LightTextColor">#979797</Color>
+            <Color x:Key="iOSDefaultTintColor">#007aff</Color>
+            <Color x:Key="SeparatorLineColor">#CCCCCC</Color>
+            <Color x:Key="AndroidDefaultButtonClassBackgroundColor">#C9C9C9</Color>
+            <Color x:Key="iOSDefaultButtonClassBackgroundColor">Transparent</Color>
+            <Color x:Key="AndroidDefaultButtonClassBorderColor">Transparent</Color>
+            <Color x:Key="iOSDefaultButtonClassBorderColor">#007aff</Color>
+            <Color x:Key="AndroidDefaultButtonClassTextColor">#FFFFFF</Color>
+            <Color x:Key="iOSDefaultButtonClassTextColor">#007aff</Color>
+            <Color x:Key="AndroidEntryBackgroundColor">Transparent</Color>
+            <Color x:Key="iOSEntryBackgroundColor">#FFFFFF</Color>
+            <Color x:Key="AndroidDefaultAccentColorColor">#1FAECE</Color>
+            <Color x:Key="AndroidListViewBackgroundColor">Transparent</Color>
+            <Color x:Key="iOSListViewBackgroundColor">Transparent</Color>
+
+            <Color x:Key="MainWrapperBackgroundColor">#E8EAF6</Color>
+            <Color x:Key="BasePageColor">#FFFFFF</Color>
+            <Color x:Key="GradientStartColor">#014B81</Color>
+            <Color x:Key="GradientEndColor">#9CD1E7</Color>
+
+            <Color x:Key="Gray-100">#f6f7f8</Color>
+            <Color x:Key="Gray-200">#ebecef</Color>
+            <Color x:Key="Gray-300">#ced2d9</Color>
+            <Color x:Key="Gray-400">#b2b8c2</Color>
+            <Color x:Key="Gray-500">#959eac</Color>
+            <Color x:Key="Gray-600">#788396</Color>
+            <Color x:Key="Gray-600-Shadow">#a8788396</Color>
+            <Color x:Key="Gray-700">#606a7b</Color>
+            <Color x:Key="Gray-700-Shadow">#a8606a7b</Color>
+            <Color x:Key="Gray-800">#4a515e</Color>
+            <Color x:Key="Gray-900">#333942</Color>
+            <Color x:Key="Gray-Black">#000000</Color>
+            <Color x:Key="Gray-White">#ffffff</Color>
+
+            <OnPlatform x:Key="ActivityIndicatorColor" x:TypeArguments="Color">
+                <On Platform="iOS" Value="{StaticResource iOSDefaultTintColor}" />
+            </OnPlatform>
+
+            <OnPlatform x:Key="DefaultButtonClassBackgroundColor" x:TypeArguments="Color">
+                <On Platform="iOS" Value="{StaticResource iOSDefaultButtonClassBackgroundColor}" />
+                <On Platform="Android" Value="{StaticResource AndroidDefaultButtonClassBackgroundColor}" />
+            </OnPlatform>
+
+            <OnPlatform x:Key="DefaultButtonClassBorderColor" x:TypeArguments="Color">
+                <On Platform="iOS" Value="{StaticResource iOSDefaultButtonClassBorderColor}" />
+                <On Platform="Android" Value="{StaticResource AndroidDefaultButtonClassBorderColor}" />
+            </OnPlatform>
+
+            <OnPlatform x:Key="DefaultButtonClassTextColor" x:TypeArguments="Color">
+                <On Platform="iOS" Value="{StaticResource iOSDefaultButtonClassTextColor}" />
+                <On Platform="Android" Value="{StaticResource AndroidDefaultButtonClassTextColor}" />
+            </OnPlatform>
+
+            <OnPlatform x:Key="EntryBackgroundColor" x:TypeArguments="Color">
+                <On Platform="iOS" Value="{StaticResource iOSEntryBackgroundColor}" />
+                <On Platform="Android" Value="{StaticResource AndroidEntryBackgroundColor}" />
+            </OnPlatform>
+
+            <OnPlatform x:Key="ThemeListViewBackgroundColor" x:TypeArguments="Color">
+                <On Platform="iOS" Value="{StaticResource iOSListViewBackgroundColor}" />
+                <On Platform="Android" Value="{StaticResource AndroidListViewBackgroundColor}" />
+            </OnPlatform>
+
+            <!--  CONVERTERS  -->
+            <converters:CountToBoolConverter x:Key="CountToBoolConverter" />
+            <converters:DatetimeConverter x:Key="DatetimeConverter" />
+            <converters:ImageConverter x:Key="ImageConverter" />
+            <converters:ItemTappedEventArgsConverter x:Key="ItemTappedEventArgsConverter" />
+            <converters:InverseCountToBoolConverter x:Key="InverseCountToBoolConverter" />
+            <converters:InverseBoolConverter x:Key="InverseBoolConverter" />
+            <converters:ItemsToHeightConverter x:Key="ItemsToHeightConverter" />
+            <converters:ToUpperConverter x:Key="ToUpperConverter" />
+            
+            <converters:FirstValidationErrorConverter x:Key="FirstValidationErrorConverter" />
+            <converters:WebNavigatingEventArgsConverter x:Key="WebNavigatingEventArgsConverter" />
+            <converters:WebNavigatedEventArgsConverter x:Key="WebNavigatedEventArgsConverter" />
+
+            <!--  SIZES  -->
+            <OnPlatform x:Key="BaseButtonBorderRadius" x:TypeArguments="x:Double">
+                <On Platform="iOS" Value="6" />
+            </OnPlatform>
+
+            <OnPlatform x:Key="BaseButtonBorderWidth" x:TypeArguments="x:Double">
+                <On Platform="iOS, Android" Value="0" />
+            </OnPlatform>
+
+            <!--  FONTS  -->
+            
+            
+            <OnPlatform x:Key="customfontfamily" x:TypeArguments="x:String" Android="radialmenu_Segoe MDL2 Assets.ttf#Segoe MDL2 Assets" WinPhone="radialmenu_Segoe_MDL2_Assets.ttf#Segoe MDL2 Assets" iOS="Segoe MDL2 Assets" />
+            
+            <OnPlatform x:Key="FontAwesome" x:TypeArguments="x:String">
+                <OnPlatform.Platforms>
+                    <On Platform="Android" Value="fa-solid-900.ttf#Font Awesome 5 Free Solid" />
+                    <On Platform="iOS" Value="Font Awesome 5 Free" />
+                </OnPlatform.Platforms>
+            </OnPlatform>
+
+            <OnPlatform x:Key="FuenteImagen" x:TypeArguments="x:String">
+                <OnPlatform.Platforms>
+                    <On Platform="Android" Value="Manijoda.ttf#Manijoda. Version 1.0" />
+                    <On Platform="iOS" Value="Font Awesome 5 Free" />
+                </OnPlatform.Platforms>
+            </OnPlatform>
+
+            <OnPlatform x:Key="Fontello" x:TypeArguments="x:String">
+                <OnPlatform.Platforms>
+                    <On Platform="Android" Value="fontello.ttf#fontello. Version 1.0 Manufacturer" />
+                    <On Platform="iOS" Value="Font Awesome 5 Free" />
+                </OnPlatform.Platforms>
+            </OnPlatform>
+
+            <OnPlatform x:Key="MaterialIcons-Regular" x:TypeArguments="x:String">
+                <OnPlatform.Platforms>
+                    <On Platform="Android" Value="MaterialIcons-Regular.ttf#Material Icons. Version 1.017" />
+                    <On Platform="iOS" Value="Font Awesome 5 Free" />
+                </OnPlatform.Platforms>
+            </OnPlatform>
+
+            <OnPlatform x:Key="OpenSansRegular" x:TypeArguments="x:String">
+                <On Platform="iOS" Value="OpenSans-Regular" />
+                <On Platform="Android" Value="OpenSans-Regular.ttf#OpenSans" />
+            </OnPlatform>
+
+            <OnPlatform
+                x:Key="NunitoRegular"
+                x:TypeArguments="x:String"
+                Android="Nunito-Regular.ttf#Nunito"
+                iOS="Nunito-Regular" />
+
+            <OnPlatform x:Key="NunitoItalic" x:TypeArguments="x:String">
+                <On Platform="iOS" Value="Nunito-Italic" />
+                <On Platform="Android" Value="Nunito-Italic.ttf#Nunito" />
+            </OnPlatform>
+
+            <OnPlatform x:Key="NunitoLight" x:TypeArguments="x:String">
+                <On Platform="iOS" Value="Nunito-Light" />
+                <On Platform="Android" Value="Nunito-Light.ttf#Nunito" />
+            </OnPlatform>
+
+            <OnPlatform x:Key="NunitoBold" x:TypeArguments="x:String">
+                <On Platform="iOS" Value="Nunito-Bold" />
+                <On Platform="Android" Value="Nunito-Bold.ttf#Nunito" />
+            </OnPlatform>
+
+            <OnPlatform x:Key="MontserratRegular" x:TypeArguments="x:String">
+                <On Platform="iOS" Value="Montserrat-Regular" />
+                <On Platform="Android" Value="Montserrat-Regular.ttf#Montserrat" />
+            </OnPlatform>
+
+            <OnPlatform x:Key="MontserratBold" x:TypeArguments="x:String">
+                <On Platform="iOS" Value="Montserrat-Bold" />
+                <On Platform="Android" Value="Montserrat-Bold.ttf#Montserrat" />
+            </OnPlatform>
+
+            <OnPlatform x:Key="SpectralBold" x:TypeArguments="x:String">
+                <On Platform="iOS" Value="Spectral-Bold" />
+                <On Platform="Android" Value="Spectral-Bold.ttf#Spectral" />
+            </OnPlatform>
+
+            <OnPlatform x:Key="SpectralRegular" x:TypeArguments="x:String">
+                <On Platform="iOS" Value="Spectral-Regular" />
+                <On Platform="Android" Value="Spectral-Regular.ttf#Spectral" />
+            </OnPlatform>
+
+            <OnPlatform
+                x:Key="PoppinsBold"
+                x:TypeArguments="x:String"
+                Android="Poppins-Bold.ttf#Poppins"
+                iOS="Poppins-Bold" />
+
+            <OnPlatform
+                x:Key="PoppinsLight"
+                x:TypeArguments="x:String"
+                Android="Poppins-Light.ttf#Poppins"
+                iOS="Poppins-Light" />
+
+            <OnPlatform
+                x:Key="PoppinsMedium"
+                x:TypeArguments="x:String"
+                Android="Poppins-Medium.ttf#Poppins"
+                iOS="Poppins-Medium" />
+
+            <OnPlatform
+                x:Key="PoppinsRegular"
+                x:TypeArguments="x:String"
+                Android="Poppins-Regular.ttf#Poppins"
+                iOS="Poppins-Regular" />
+
+            <OnPlatform
+                x:Key="PoppinsSemiBold"
+                x:TypeArguments="x:String"
+                Android="Poppins-SemiBold.ttf#Poppins"
+                iOS="Poppins-SemiBold" />
+
+            <OnPlatform
+                x:Key="FiraSansBold"
+                x:TypeArguments="x:String"
+                Android="FiraSans-Bold.ttf#Fira Sans"
+                iOS="FiraSans-Bold" />
+
+            <OnPlatform
+                x:Key="FiraSansSemiBold"
+                x:TypeArguments="x:String"
+                Android="FiraSans-SemiBold.ttf#Fira Sans"
+                iOS="FiraSans-SemiBold" />
+
+            <OnPlatform
+                x:Key="FiraSansRegular"
+                x:TypeArguments="x:String"
+                Android="FiraSans-Regular.ttf#Fira Sans"
+                iOS="FiraSans-Regular" />
+
+            <OnPlatform x:Key="BaseButtonFontSize" x:TypeArguments="x:Double">
+                <On Platform="iOS" Value="18" />
+                <On Platform="Android" Value="16" />
+            </OnPlatform>
+
+            <OnPlatform x:Key="BaseFontSize" x:TypeArguments="x:Double">
+                <On Platform="iOS" Value="16" />
+                <On Platform="Android" Value="15" />
+            </OnPlatform>
+            
+            <OnPlatform x:Key="SmallSize" x:TypeArguments="x:Double">
+                <On Platform="iOS" Value="9" />
+                <On Platform="Android" Value="10" />
+            </OnPlatform>
+
+            <OnPlatform x:Key="LittleSize" x:TypeArguments="x:Double">
+                <On Platform="iOS" Value="11" />
+                <On Platform="Android" Value="12" />
+            </OnPlatform>
+
+            <OnPlatform x:Key="MidMediumSize" x:TypeArguments="x:Double">
+                <On Platform="iOS" Value="12" />
+                <On Platform="Android" Value="14" />
+            </OnPlatform>
+
+            <OnPlatform x:Key="MediumSize" x:TypeArguments="x:Double">
+                <On Platform="iOS" Value="14" />
+                <On Platform="Android" Value="16" />
+            </OnPlatform>
+
+            <OnPlatform x:Key="LargeSize" x:TypeArguments="x:Double">
+                <On Platform="iOS" Value="16" />
+                <On Platform="Android" Value="18" />
+            </OnPlatform>
+
+            <OnPlatform x:Key="LargerSize" x:TypeArguments="x:Double">
+                <On Platform="iOS" Value="18" />
+                <On Platform="Android" Value="20" />
+            </OnPlatform>
+
+            <OnPlatform x:Key="BigSize" x:TypeArguments="x:Double">
+                <On Platform="iOS" Value="20" />
+                <On Platform="Android" Value="24" />
+            </OnPlatform>
+
+            <OnPlatform x:Key="ExtraBigSize" x:TypeArguments="x:Double">
+                <On Platform="iOS" Value="24" />
+                <On Platform="Android" Value="32" />
+            </OnPlatform>
+
+            <OnPlatform x:Key="HugeSize" x:TypeArguments="x:Double">
+                <On Platform="iOS" Value="32" />
+                <On Platform="Android" Value="48" />
+            </OnPlatform>
+
+            <OnPlatform x:Key="BaseButtonFontAttributes" x:TypeArguments="FontAttributes">
+                <On Platform="iOS" Value="Bold" />
+                <On Platform="Android" Value="None" />
+            </OnPlatform>
+
+            <!--  EXPLICIT STYLES  -->
+            <Style x:Key="ValidationErrorLabelStyle" TargetType="{x:Type Label}">
+                <Setter Property="TextColor" Value="{StaticResource ErrorColor}" />
+                <Setter Property="FontSize" Value="{StaticResource LittleSize}" />
+            </Style>
+
+            <!--<Style TargetType="Entry">
+                <Setter Property="FontSize" Value="30" />
+                <Setter Property="HorizontalOptions" Value="FillAndExpand" />
+                <Setter Property="TextColor" Value="Purple" />
+            </Style>-->
+            <Style x:Key="InvalidStyle" TargetType="Entry">
+                <Setter Property="TextColor" Value="Red" />
+            </Style>
+
+            <Style x:Key="EntryStyle" TargetType="{x:Type Entry}">
+                <Setter Property="FontFamily" Value="{StaticResource SpectralRegular}" />
+                <Setter Property="TextColor" Value="{StaticResource BlackColor}" />
+                <Setter Property="PlaceholderColor" Value="{StaticResource BlackColor}" />
+                <Setter Property="FontSize" Value="{StaticResource LargeSize}" />
+                <Setter Property="HorizontalOptions" Value="FillAndExpand" />
+                <Setter Property="FontAttributes" Value="Bold" />
+                <Setter Property="BackgroundColor" Value="Transparent" />
+                <Setter Property="Opacity" Value="0.6" />
+                <Setter Property="behaviors:LineColorBehavior.ApplyLineColor" Value="True" />
+                <Setter Property="behaviors:LineColorBehavior.LineColor" Value="{StaticResource BlackColor}" />
+                <Style.Triggers>
+                    <Trigger TargetType="Entry" Property="IsFocused" Value="True">
+                        <Setter Property="Opacity" Value="1" />
+                    </Trigger>
+                </Style.Triggers>
+            </Style>
+
+            <!--  IMPLICIT STYLES  -->
+            <!--<Style TargetType="Button" ApplyToDerivedTypes="True" CanCascade="True">
+                <Setter Property="FontSize" Value="{ StaticResource BaseButtonFontSize }" />
+                <Setter Property="FontAttributes" Value="{ StaticResource BaseButtonFontAttributes }" />
+                <Setter Property="BorderRadius" Value="{ StaticResource BaseButtonBorderRadius }" />
+                <Setter Property="BorderWidth" Value="{ StaticResource BaseButtonBorderWidth }" />
+                <Setter Property="BackgroundColor" Value="{ StaticResource DefaultButtonClassBackgroundColor }" />
+                <Setter Property="BorderColor" Value="{ StaticResource DefaultButtonClassBorderColor }" />
+                <Setter Property="TextColor" Value="{ StaticResource DefaultButtonClassTextColor }" />
+            </Style>
+
+            <Style TargetType="Label" ApplyToDerivedTypes="True" CanCascade="True">
+                <Setter Property="FontSize" Value="{ StaticResource BaseFontSize }" />
+            </Style>
+
+            <Style TargetType="Entry" ApplyToDerivedTypes="True" CanCascade="True">
+                <Setter Property="TextColor" Value="{ StaticResource TextColor }" />
+                <Setter Property="PlaceholderColor" Value="{ StaticResource LightTextColor }" />
+                <Setter Property="BackgroundColor" Value="{ StaticResource EntryBackgroundColor }" />
+            </Style>
+
+            <Style TargetType="ImageCell" ApplyToDerivedTypes="True" CanCascade="True">
+                <Setter Property="TextColor" Value="{ StaticResource InverseTextColor }" />
+                <Setter Property="DetailColor" Value="{ StaticResource AccentColor }" />
+            </Style>
+
+            <Style TargetType="TextCell" ApplyToDerivedTypes="True" CanCascade="True">
+                <Setter Property="TextColor" Value="{ StaticResource InverseTextColor }" />
+                <Setter Property="DetailColor" Value="{ StaticResource AccentColor }" />
+            </Style>
+
+            <Style TargetType="ListView" ApplyToDerivedTypes="True" CanCascade="True">
+                <Setter Property="BackgroundColor" Value="{ StaticResource ThemeListViewBackgroundColor }" />
+                <Setter Property="SeparatorColor" Value="{ StaticResource SeparatorLineColor }" />
+                <Setter Property="SeparatorVisibility" Value="Default" />
+            </Style>
+
+            <Style TargetType="ActivityIndicator" ApplyToDerivedTypes="True" CanCascade="True">
+                <Setter Property="Color" Value="{ StaticResource ActivityIndicatorColor }" />
+            </Style>
+            -->
+            <Style TargetType="NavigationPage">
+                <Setter Property="BarBackgroundColor" Value="{StaticResource BlueColor}"/>
+                <Setter Property="BarTextColor" Value="{StaticResource WhiteColor}"/>
+            </Style>
+
+
+            <!--  STYLES  -->
+            <Style x:Key="BaseLabelStyle" TargetType="{x:Type Label}" />
+
+            <Style BasedOn="{StaticResource BaseLabelStyle}" TargetType="{x:Type Label}" />
+
+            <Style
+                x:Key="PoppinsBoldLabelStyle"
+                BasedOn="{StaticResource BaseLabelStyle}"
+                TargetType="{x:Type Label}">
+                <Setter Property="FontFamily" Value="{StaticResource PoppinsBold}" />
+            </Style>
+
+            <Style
+                x:Key="PoppinsLightLabelStyle"
+                BasedOn="{StaticResource BaseLabelStyle}"
+                TargetType="{x:Type Label}">
+                <Setter Property="FontFamily" Value="{StaticResource PoppinsLight}" />
+            </Style>
+
+            <Style
+                x:Key="PoppinsMediumLabelStyle"
+                BasedOn="{StaticResource BaseLabelStyle}"
+                TargetType="{x:Type Label}">
+                <Setter Property="FontFamily" Value="{StaticResource PoppinsMedium}" />
+            </Style>
+
+            <Style
+                x:Key="PoppinsSemiBoldLabelStyle"
+                BasedOn="{StaticResource BaseLabelStyle}"
+                TargetType="{x:Type Label}">
+                <Setter Property="FontFamily" Value="{StaticResource PoppinsSemiBold}" />
+            </Style>
+
+            <Style
+                x:Key="NunitoBoldLabelStyle"
+                BasedOn="{StaticResource BaseLabelStyle}"
+                TargetType="{x:Type Label}">
+                <Setter Property="FontFamily" Value="{StaticResource NunitoBold}" />
+            </Style>
+
+            <Style
+                x:Key="NunitoLightLabelStyle"
+                BasedOn="{StaticResource BaseLabelStyle}"
+                TargetType="{x:Type Label}">
+                <Setter Property="FontFamily" Value="{StaticResource NunitoLight}" />
+            </Style>
+
+            <Style
+                x:Key="NunitoRegularLabelStyle"
+                BasedOn="{StaticResource BaseLabelStyle}"
+                TargetType="{x:Type Label}">
+                <Setter Property="FontFamily" Value="{StaticResource NunitoRegular}" />
+            </Style>
+
+            <Style
+                x:Key="SpectralRegularLabelStyle"
+                BasedOn="{StaticResource BaseLabelStyle}"
+                TargetType="{x:Type Label}">
+                <Setter Property="FontFamily" Value="{StaticResource SpectralRegular}" />
+            </Style>
+
+            <Style x:Key="BaseEntryStyle" TargetType="{x:Type ctrls:ExtendedEntry}">
+                <Setter Property="FontFamily" Value="{StaticResource NunitoRegular}" />
+                <Setter Property="BackgroundColor" Value="Transparent" />
+                <Setter Property="TextColor" Value="{StaticResource BlackTextColor}" />
+                <Setter Property="PlaceholderColor" Value="{StaticResource BlackTextColor}" />
+                <!--<Setter Property="HeightRequest"
+                        Value="45" />-->
+                <Setter Property="FontSize" Value="{StaticResource LittleSize}" />
+                <Setter Property="HorizontalOptions" Value="FillAndExpand" />
+                <Setter Property="FontAttributes" Value="Bold" />
+                <Setter Property="Opacity" Value="0.4" />
+                <Setter Property="FocusLineColor" Value="{StaticResource GreenColor}" />
+                <Setter Property="InvalidLineColor" Value="{StaticResource ValidationErrorColor}" />
+                <Style.Triggers>
+                    <Trigger TargetType="Entry" Property="IsFocused" Value="True">
+                        <Setter Property="Opacity" Value="1" />
+                    </Trigger>
+                </Style.Triggers>
+            </Style>
+
+            <Style BasedOn="{StaticResource BaseEntryStyle}" TargetType="{x:Type ctrls:ExtendedEntry}" />
+
+            <Style x:Key="BaseButtonStyle" TargetType="{x:Type Button}">
+                <Setter Property="BorderRadius" Value="0" />
+                <Setter Property="HeightRequest" Value="73" />
+                <Setter Property="HorizontalOptions" Value="Fill" />
+                <Setter Property="FontSize" Value="{StaticResource MidMediumSize}" />
+                <Setter Property="FontFamily" Value="{StaticResource SpectralBold}" />
+            </Style>
+
+            <Style BasedOn="{StaticResource BaseButtonStyle}" TargetType="{x:Type Button}" />
+
+            <Style TargetType="{x:Type ctrls:ButtonFrame}">
+                <Setter Property="Padding" Value="0" />
+            </Style>
+
+            <Style TargetType="{x:Type ActivityIndicator}">
+                <Setter Property="VerticalOptions" Value="Center" />
+                <Setter Property="HorizontalOptions" Value="Center" />
+                <Setter Property="WidthRequest">
+                    <Setter.Value>
+                        <OnPlatform x:TypeArguments="x:Double">
+                            <On Platform="Android, iOS" Value="100" />
+                        </OnPlatform>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+
+        </ResourceDictionary>
+    </Application.Resources>
+</Application>

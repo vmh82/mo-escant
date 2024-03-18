@@ -1,0 +1,608 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<pages:PopupPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Escant_App.Views.Inventario.PopupActualizaOrdenInventarioView"
+             xmlns:animations="clr-namespace:Rg.Plugins.Popup.Animations;assembly=Rg.Plugins.Popup"
+    xmlns:button="clr-namespace:Syncfusion.XForms.Buttons;assembly=Syncfusion.Buttons.XForms"
+    xmlns:customViews="clr-namespace:Escant_App.UserControls;assembly=Escant_App"
+                 xmlns:local="clr-namespace:Escant_App.UserControls"
+                 xmlns:pages="clr-namespace:Rg.Plugins.Popup.Pages;assembly=Rg.Plugins.Popup"
+                 xmlns:texts="clr-namespace:ManijodaServicios.Resources.Texts;assembly=ManijodaServicios"
+                 xmlns:viewModelBase="clr-namespace:Escant_App.ViewModels.Base;assembly=Escant_App"
+                 xmlns:inputLayout="clr-namespace:Syncfusion.XForms.TextInputLayout;assembly=Syncfusion.Core.XForms"
+                 xmlns:datagrid="clr-namespace:Syncfusion.SfDataGrid.XForms;assembly=Syncfusion.SfDataGrid.XForms" 
+    xmlns:ffimageloading="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+    xmlns:buttons="clr-namespace:Syncfusion.XForms.Buttons;assembly=Syncfusion.Buttons.XForms"
+    xmlns:transformations="clr-namespace:FFImageLoading.Transformations;assembly=FFImageLoading.Transformations"
+    xmlns:converters="clr-namespace:Escant_App.Converters;assembly=Escant_App"
+    viewModelBase:ViewModelLocator.AutoWireViewModel="true">
+    <!--#region 0. Recursos-->
+    <pages:PopupPage.Resources>
+        <OnPlatform 
+            x:Key="FontFamilyHeaderName" 
+            x:TypeArguments="x:String" 
+            Android="Nunito-Bold.ttf" 
+            iOS="Nunito-Bold.ttf" />
+        <OnPlatform 
+            x:Key="FontFamilyName" 
+            x:TypeArguments="x:String" 
+            Android="Nunito-Regular.ttf" 
+            iOS="Nunito-Regular.ttf" />
+        <OnPlatform 
+        x:Key="GridFontSize" 
+            x:TypeArguments="x:Double" 
+            Android="13" 
+            iOS="12" />
+        <OnPlatform 
+        x:Key="GridFontSize12" 
+            x:TypeArguments="x:Double" 
+            Android="12" 
+            iOS="12" />
+        <OnPlatform 
+        x:Key="GridFontSize11" 
+            x:TypeArguments="x:Double" 
+            Android="11" 
+            iOS="12" />
+        <OnPlatform 
+        x:Key="GridFontSize10" 
+            x:TypeArguments="x:Double" 
+            Android="10" 
+            iOS="12" />
+        <OnPlatform 
+        x:Key="GridFontSize8" 
+            x:TypeArguments="x:Double" 
+            Android="8" 
+            iOS="12" />
+        <OnPlatform 
+        x:Key="GridFontSizeHeader" 
+            x:TypeArguments="x:Double" 
+            Android="10" 
+            iOS="12" />
+        <ResourceDictionary>
+            <Style x:Key="PopupItemHeaderStyle" TargetType="{x:Type Label}">
+                <Setter Property="FontFamily" Value="{StaticResource NunitoBold}" />
+                <Setter Property="FontSize" Value="{StaticResource LargeSize}" />
+                <Setter Property="TextColor" Value="{StaticResource BlackColor}" />
+                <Setter Property="HorizontalTextAlignment" Value="Start" />
+                <Setter Property="VerticalTextAlignment" Value="Center" />
+                <Setter Property="Margin" Value="0,0,0,0" />
+            </Style>
+            <Style x:Key="PopupItemHeaderStyle_ls" TargetType="{x:Type Label}">
+                <Setter Property="FontFamily" Value="{StaticResource NunitoBold}" />
+                <Setter Property="FontSize" Value="{StaticResource SmallSize}" />
+                <Setter Property="TextColor" Value="{StaticResource BlackColor}" />
+                <Setter Property="HorizontalTextAlignment" Value="Start" />
+                <Setter Property="VerticalTextAlignment" Value="Center" />
+                <Setter Property="Margin" Value="0,0,0,0" />
+            </Style>
+
+            <Style x:Key="PopupLabelHeaderStyle" TargetType="{x:Type Label}">
+                <Setter Property="FontFamily" Value="{StaticResource NunitoRegular}" />
+                <Setter Property="FontSize" Value="{StaticResource MidMediumSize}" />
+                <Setter Property="TextColor" Value="Black" />
+                <Setter Property="HorizontalOptions" Value="StartAndExpand" />
+                <Setter Property="VerticalOptions" Value="Center" />
+                <Setter Property="Margin" Value="10,0,0,0" />
+            </Style>
+            <Style x:Key="PopupLabelHeaderStyle_ls" TargetType="{x:Type Label}">
+                <Setter Property="FontFamily" Value="{StaticResource NunitoRegular}" />
+                <Setter Property="FontSize" Value="{StaticResource SmallSize}" />
+                <Setter Property="TextColor" Value="Black" />
+                <Setter Property="HorizontalOptions" Value="StartAndExpand" />
+                <Setter Property="VerticalOptions" Value="Center" />
+                <Setter Property="Margin" Value="10,0,0,0" />
+            </Style>
+
+            <Style x:Key="PopupLabelStyle" TargetType="{x:Type Label}">
+                <Setter Property="FontFamily" Value="{StaticResource NunitoRegular}" />
+                <Setter Property="FontSize" Value="{StaticResource LargeSize}" />
+                <Setter Property="TextColor" Value="Black" />
+                <Setter Property="HorizontalOptions" Value="StartAndExpand" />
+                <Setter Property="VerticalOptions" Value="Center" />
+                <Setter Property="Margin" Value="10,0,0,0" />
+            </Style>
+
+            <Style x:Key="ListedItemLabelStyle" TargetType="{x:Type Label}">
+                <Setter Property="FontFamily" Value="{StaticResource NunitoRegular}" />
+                <Setter Property="FontSize" Value="{StaticResource MidMediumSize}" />
+                <Setter Property="TextColor" Value="{DynamicResource BlackTextColor}" />
+                <Setter Property="HorizontalOptions" Value="Start" />
+                <Setter Property="VerticalOptions" Value="Center" />
+                <Setter Property="Margin" Value="5,0,0,0" />
+            </Style>
+
+            <Style x:Key="ListedPriceLabelStyle" TargetType="{x:Type Label}">
+                <Setter Property="FontFamily" Value="{StaticResource NunitoRegular}" />
+                <Setter Property="FontSize" Value="{StaticResource LittleSize}" />
+                <Setter Property="TextColor" Value="{DynamicResource BlackTextColor}" />
+                <Setter Property="HorizontalOptions" Value="Start" />
+                <Setter Property="VerticalOptions" Value="Center" />
+                <Setter Property="Margin" Value="5,0,0,0" />
+            </Style>
+            <converters:ImageConverter x:Key="ByteArrayToImage"/>
+        </ResourceDictionary>
+    </pages:PopupPage.Resources>
+    <!--#endregion 0. Recursos-->
+    <!--#region 1. Animación-->
+    <pages:PopupPage.Animation>
+        <animations:ScaleAnimation
+            DurationIn="700"
+            EasingIn="SpringOut"
+            PositionIn="Bottom"
+            PositionOut="Center"
+            ScaleIn="1"
+            ScaleOut="0.7" />
+    </pages:PopupPage.Animation>
+    <!--#endregion 1. Animación-->
+    <!--#region 2. Contenido-->
+    <StackLayout HorizontalOptions="Center" VerticalOptions="Center">
+        <Frame
+            x:Name="FrameContainer"
+            Margin="10"
+            BackgroundColor="White"
+            CornerRadius="10"
+            HorizontalOptions="Center">
+            <ScrollView Scrolled="ScrollView_Scrolled">
+                <StackLayout
+                Padding="10,5"
+                IsClippedToBounds="True"
+                Spacing="3">
+                    <Grid RowSpacing="0">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="60" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+
+                        <Grid Grid.Row="0" RowSpacing="0">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="55" />
+                                <RowDefinition Height="1" />
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="0.55*" />
+                                <ColumnDefinition Width="0.45*" />
+                            </Grid.ColumnDefinitions>
+                            <Label
+                            Grid.Row="0"
+                            Grid.Column="0"
+                            LineBreakMode="TailTruncation"
+                            Style="{StaticResource PopupItemHeaderStyle_ls}"
+                            Text="{Binding OrdenSeleccionado.NombreProveedor}" />
+                            <Grid Grid.Row="0"
+                            Grid.Column="1"
+                            RowSpacing="0">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="0.5*" />
+                                    <RowDefinition Height="0.5*" />
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="0.6*" />
+                                    <ColumnDefinition Width="0.4*" />
+                                </Grid.ColumnDefinitions>
+                                <!-- Celda 0,0 Número de Orden-->
+                                <Label
+                            Grid.Row="0"
+                            Grid.Column="0"
+                            HorizontalOptions="Fill"
+                            Style="{StaticResource PopupLabelHeaderStyle_ls}"
+                            Text="{texts:Translate NumeroOrdenLabel}" />
+                                <!-- Celda 0,1 Valor de la Orden-->
+                                <Label
+                            Grid.Row="0"
+                            Grid.Column="1"
+                            HorizontalOptions="End"
+                            Style="{StaticResource PopupLabelHeaderStyle_ls}"
+                            Text="{Binding OrdenSeleccionado.NumeroOrden, Mode=TwoWay}" />
+                                <!-- Celda 1,0 Estado de la Orden-->
+                                <Label
+                            Grid.Row="1"
+                            Grid.Column="0"
+                            HorizontalOptions="Fill"
+                            Style="{StaticResource PopupLabelHeaderStyle_ls}"
+                            Text="{texts:Translate EstadoOrdenLabel}" />
+                                <!-- Celda 1,1 Valor de la Orden-->
+                                <Label
+                            Grid.Row="1"
+                            Grid.Column="1"
+                            HorizontalOptions="End"
+                            Style="{StaticResource PopupLabelHeaderStyle_ls}"
+                            Text="{Binding OrdenSeleccionado.CodigoEstado, Mode=TwoWay}" />
+                            </Grid>
+                            <BoxView
+                            Grid.Row="1"
+                            Grid.Column="1"
+                            BackgroundColor="Black"
+                            HeightRequest="1" />
+                        </Grid>
+
+                        <Grid Grid.Row="1" ColumnSpacing="0" RowSpacing = "0" >
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="60" />
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="0.5*" />
+                                <ColumnDefinition Width="0.5*" />
+                            </Grid.ColumnDefinitions>
+                            <Grid Grid.Row="0" Grid.ColumnSpan="2" IsVisible="{Binding IsVisibleCompartido}">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="130" />
+                                    <ColumnDefinition Width="50" />
+                                    <ColumnDefinition Width="50" />
+                                    <ColumnDefinition Width="50" />
+                                </Grid.ColumnDefinitions>
+
+                                <!--0. Administración de la imagen-->
+                                <ffimageloading:CachedImage
+                                x:Name="clienteImage"
+                                Grid.Column="0"
+                                Margin="0,8,0,15"
+                                Aspect="Fill"
+                                CacheType="All"
+                                DownsampleToViewSize="true"
+                                ErrorPlaceholder="picture_icon.png"
+                                HeightRequest="128"
+                                HorizontalOptions="Center"
+                                LoadingPlaceholder="picture_icon.png"                                
+                                Source="{Binding FuenteImagenRegistro}"
+                                TransformPlaceholders="True"
+                                WidthRequest="128">
+                                    <ffimageloading:CachedImage.Transformations>
+                                        <transformations:RoundedTransformation
+                                        BorderHexColor="#000000"
+                                        BorderSize="5"
+                                        Radius="20" />
+                                    </ffimageloading:CachedImage.Transformations>
+                                </ffimageloading:CachedImage>
+
+                                <buttons:SfButton
+                                Grid.Column="1"
+                                Padding="8"
+                                BackgroundColor="{StaticResource Gray-White}"
+                                BorderColor="{StaticResource colPrim}"
+                                BorderWidth="1"
+                                Command="{Binding OpenCameraCommand}"
+                                CornerRadius="20"
+                                HeightRequest="40"
+                                HorizontalOptions="Center"
+                                VerticalOptions="Center"
+                                WidthRequest="40">
+                                    <buttons:SfButton.Content>
+                                        <Image HeightRequest="15" Source="photo_camera.png">
+                                            <Image.GestureRecognizers>
+                                                <TapGestureRecognizer Command="{Binding OpenCameraCommand}" />
+                                            </Image.GestureRecognizers>
+                                        </Image>
+                                    </buttons:SfButton.Content>
+                                </buttons:SfButton>
+
+                                <buttons:SfButton
+                                Grid.Column="2"
+                                Padding="8"
+                                BackgroundColor="{StaticResource Gray-White}"
+                                BorderColor="{StaticResource colPrim}"
+                                BorderWidth="1"
+                                Command="{Binding BrowseGalleryCommand}"                                   
+                                CornerRadius="20"
+                                HeightRequest="40"
+                                HorizontalOptions="Center"
+                                VerticalOptions="Center"
+                                WidthRequest="40">
+                                    <buttons:SfButton.Content>
+                                        <Image
+                                        HeightRequest="32"
+                                        HorizontalOptions="Center"
+                                        Source="picture_black.png"
+                                        WidthRequest="32">
+                                            <Image.GestureRecognizers>
+                                                <TapGestureRecognizer Command="{Binding BrowseGalleryCommand}" />
+                                            </Image.GestureRecognizers>
+                                        </Image>
+                                    </buttons:SfButton.Content>
+                                </buttons:SfButton>
+
+                                <buttons:SfButton
+                                Grid.Column="3"
+                                Padding="8"
+                                BackgroundColor="{StaticResource Gray-White}"
+                                BorderColor="{StaticResource RedColor}"
+                                BorderWidth="1"
+                                Command="{Binding RemoveImageCommand}"
+                                CornerRadius="20"
+                                HeightRequest="40"
+                                HorizontalOptions="Center"
+                                VerticalOptions="Center"
+                                WidthRequest="40">
+                                    <buttons:SfButton.Content>
+                                        <Image
+                                        HeightRequest="32"
+                                        HorizontalOptions="Start"
+                                        Source="remove_512.png"
+                                        WidthRequest="32">
+                                            <Image.GestureRecognizers>
+                                                <TapGestureRecognizer Command="{Binding RemoveImageCommand}" />
+                                            </Image.GestureRecognizers>
+                                        </Image>
+                                    </buttons:SfButton.Content>
+                                </buttons:SfButton>
+
+
+                            </Grid>
+                            <Label
+                            Grid.Row="1"
+                            Grid.Column="0"
+                            HorizontalOptions="Fill"
+                            IsVisible="{Binding IsVisibleRecibido}"
+                            Style="{StaticResource PopupLabelStyle}"
+                            Text="{texts:Translate Factura}" />
+                            <Entry
+                            Grid.Row="1"
+                            Grid.Column="1"                            
+                            IsVisible="{Binding IsVisibleRecibido}"
+                            FontFamily="{StaticResource NunitoRegular}"
+                            MaxLength="100"
+                            Placeholder="{texts:Translate FacturaLabel}"
+                            PlaceholderColor="LightGray"
+                            Text="{Binding OrdenSeleccionado.NumeroFactura,Mode=TwoWay}"
+                            VerticalOptions="EndAndExpand" />
+                            <!-- Estado Cancelado-->
+                            <Label
+                            Grid.Row="1"
+                            Grid.Column="0"
+                            HorizontalOptions="Fill"
+                            IsVisible="{Binding IsVisibleCancelado}"
+                            Style="{StaticResource PopupLabelStyle}"
+                            Text="{texts:Translate ValorCancelado}" />
+
+                            <local:CustomSfNumericTextBox
+                                        Grid.Row="1"
+                                        Grid.Column="1"                    
+                                        BorderColor="Transparent"
+                                        FormatString="c"
+                                        MaximumNumberDecimalDigits="2"
+                                        IsVisible="{Binding IsVisibleCancelado}"
+                                        TextAlignment="End"                                        
+                                        TextColor="{DynamicResource colSec}"
+                                        Unfocused="CustomSfNumericTextBox_Unfocused"
+                                        Value="{Binding ValorCancelado}" 
+                                 />
+
+                            <Label
+                            Grid.Row="2"
+                            Grid.Column="0"
+                            HorizontalOptions="Fill"
+                            IsVisible="{Binding IsVisibleCancelado}"
+                            Style="{StaticResource PopupLabelStyle}"
+                            Text="{texts:Translate FechaCancelado}" />
+                            <DatePicker
+                                        x:Name="FechaCanceladoDatePicker"
+                                        Grid.Row="2"
+                                        Grid.Column="1"
+                                        IsVisible="{Binding IsVisibleCancelado}"
+                                        Date="{Binding OrdenSeleccionado.FechaCancelado}"                                        
+                                        FontSize="13"
+                                        Format="dd/MM/yyyy"                                        
+                                        VerticalOptions="CenterAndExpand" />
+                            <!-- Estado Cancelado-->
+                            <!-- Celda 2,0 Estado Ingresado Grid-->
+                            <datagrid:SfDataGrid x:Name="dataGrid"
+                               Margin="4,4,4,4"
+                               Padding="0"                                             
+                               BackgroundColor="{DynamicResource BasePageColor}"
+                               Grid.Row="2"
+                               Grid.Column="0"
+                               IsVisible="{Binding IsVisibleIngresado}"
+                               Grid.ColumnSpan="2"                                          
+                               EditorSelectionBehavior="SelectAll"
+                               NavigationMode="Cell"
+                               ColumnSizer="Star"
+                               SelectionMode="SingleDeselect"
+                               AutoGenerateColumns="false"                                                       
+                               ImeOptions="NoExtractUi"                                                 
+                               SelectionUnit="Cell"                                                                
+                               LiveDataUpdateMode="AllowDataShaping"                                
+                               ItemsSource="{Binding OrdenSeleccionado.OrdenDetalleCompras}">
+                                <datagrid:SfDataGrid.GridStyle>
+                                    <datagrid:DefaultStyle HeaderBackgroundColor="{DynamicResource BlueColor}" HeaderForegroundColor="White"
+                                 RowBackgroundColor="White" RowForegroundColor="Black"
+                                 SelectionBackgroundColor="LightSkyBlue" SelectionForegroundColor="White"
+                                 CaptionSummaryRowBackgroundColor="Black" CaptionSummaryRowForegroundColor="White"
+                                 GridCellBorderColor="White" LoadMoreViewBackgroundColor="Gray"
+                                 LoadMoreViewForegroundColor="Black" AlternatingRowColor="Yellow"/>
+                                </datagrid:SfDataGrid.GridStyle>
+                                <datagrid:SfDataGrid.TableSummaryRows>
+                                    <datagrid:GridTableSummaryRow Name="TableSummary" ShowSummaryInRow="False">
+                                        <datagrid:GridTableSummaryRow.SummaryColumns>
+                                            <datagrid:GridSummaryColumn Name="CantidadSummary"
+                                      Format="{}{Sum}"
+                                      MappingName="Cantidad"
+                                      SummaryType="DoubleAggregate" />
+                                            <datagrid:GridSummaryColumn Name="ValorFinalSummary"
+                                      Format="{}{Sum:c}"
+                                      MappingName="ValorCompra"                                                                                                     
+                                      SummaryType="DoubleAggregate" />
+                                        </datagrid:GridTableSummaryRow.SummaryColumns>
+                                    </datagrid:GridTableSummaryRow>
+                                </datagrid:SfDataGrid.TableSummaryRows>
+                                <datagrid:SfDataGrid.Columns>
+                                    <datagrid:GridTextColumn HeaderText="Item" MappingName="NombreItem" />
+                                    <datagrid:GridTextColumn HeaderText="Unidad" MappingName="Unidad" />
+                                    <datagrid:GridNumericColumn HeaderText="Val. Unitario" MappingName="ValorUnitario" Format="C" CultureInfo="{Binding Cultura}"/>
+                                    <datagrid:GridTextColumn HeaderText="Cant." MappingName="Cantidad" />
+                                    <datagrid:GridNumericColumn HeaderText="Subtotal" MappingName="ValorCompra" CultureInfo="{Binding Cultura}" Format="C" />
+                                </datagrid:SfDataGrid.Columns>
+                            </datagrid:SfDataGrid>
+
+                            <!-- Celda 0,0 Estado Recibido Grid-->
+                            <datagrid:SfDataGrid x:Name="dataGridRecibido"
+                               Margin="4,4,4,4"
+                               Padding="0"     
+                               IsVisible="{Binding IsVisibleRecibido}"
+                               BackgroundColor="{DynamicResource BasePageColor}"
+                               Grid.Row="2"
+                               Grid.Column="0"
+                               Grid.ColumnSpan="2"    
+                               FrozenColumnsCount="2"                  
+                               EditorSelectionBehavior="SelectAll"
+                               NavigationMode="Cell"
+                               ColumnSizer="SizeToHeader"
+                               SelectionMode="SingleDeselect"
+                               AutoGenerateColumns="false"                                                       
+                               ImeOptions="NoExtractUi"                                                 
+                               SelectionUnit="Cell"                                                                
+                               LiveDataUpdateMode="AllowDataShaping"                                
+                               ItemsSource="{Binding OrdenSeleccionado.OrdenDetalleComprasRecibido}">
+                                <datagrid:SfDataGrid.GridStyle>
+                                    <datagrid:DefaultStyle HeaderBackgroundColor="{DynamicResource BlueColor}" HeaderForegroundColor="White"
+                                 RowBackgroundColor="White" RowForegroundColor="Black"
+                                 SelectionBackgroundColor="LightSkyBlue" SelectionForegroundColor="White"
+                                 CaptionSummaryRowBackgroundColor="Black" CaptionSummaryRowForegroundColor="White"
+                                 GridCellBorderColor="White" LoadMoreViewBackgroundColor="Gray"
+                                 LoadMoreViewForegroundColor="Black" AlternatingRowColor="Yellow"/>
+                                </datagrid:SfDataGrid.GridStyle>
+                                <datagrid:SfDataGrid.TableSummaryRows>
+                                    <datagrid:GridTableSummaryRow Name="Table1Summary" ShowSummaryInRow="False">
+                                        <datagrid:GridTableSummaryRow.SummaryColumns>
+                                            <datagrid:GridSummaryColumn Name="Cantidad1Summary"
+                                      Format="{}{Sum}"
+                                      MappingName="Cantidad"
+                                      SummaryType="DoubleAggregate" />
+                                            <datagrid:GridSummaryColumn Name="ValorCompra1Summary"
+                                      Format="{}{Sum:C}"
+                                      MappingName="ValorCompra"                                                                                                     
+                                      SummaryType="DoubleAggregate" />
+                                            <datagrid:GridSummaryColumn Name="ValorDescuento1Summary"
+                                      Format="{}{Sum:C}"
+                                      MappingName="ValorDescuento"                                                                                                     
+                                      SummaryType="DoubleAggregate" />
+                                            <datagrid:GridSummaryColumn Name="ValorFinal1Summary"
+                                      Format="{}{Sum:C}"
+                                      MappingName="ValorFinal"                                                                                                     
+                                      SummaryType="DoubleAggregate" />
+                                        </datagrid:GridTableSummaryRow.SummaryColumns>
+                                    </datagrid:GridTableSummaryRow>
+                                </datagrid:SfDataGrid.TableSummaryRows>
+                                <datagrid:SfDataGrid.Columns>
+                                    <datagrid:GridTextColumn HeaderText="Item/Servicio" MappingName="NombreItem" 
+                                                             LoadUIView="True" 
+                                                             HeaderFont="{StaticResource FontFamilyHeaderName}" 
+                                                             HeaderCellTextSize="{StaticResource GridFontSizeHeader}" 
+                                                             RecordFont="{StaticResource FontFamilyName}"  
+                                                             CellTextSize="{StaticResource GridFontSize11}"/>
+                                    <datagrid:GridTextColumn HeaderText="Unidad" MappingName="Unidad" 
+                                                             LoadUIView="True" 
+                                                             HeaderFont="{StaticResource FontFamilyHeaderName}" 
+                                                             HeaderCellTextSize="{StaticResource GridFontSizeHeader}" 
+                                                             RecordFont="{StaticResource FontFamilyName}"  
+                                                             CellTextSize="{StaticResource GridFontSize8}"/>
+                                    <datagrid:GridTextColumn HeaderText="Tipo. Descto" MappingName="TipoDescuento" 
+                                                             LoadUIView="True" 
+                                                             HeaderFont="{StaticResource FontFamilyHeaderName}" 
+                                                             HeaderCellTextSize="{StaticResource GridFontSizeHeader}" 
+                                                             RecordFont="{StaticResource FontFamilyName}"  
+                                                             CellTextSize="{StaticResource GridFontSize11}"/>
+                                    <datagrid:GridNumericColumn HeaderText="Val. Unitario" MappingName="ValorUnitario" Format="C" CultureInfo="{Binding Cultura}"
+                                                                LoadUIView="True" 
+                                                             HeaderFont="{StaticResource FontFamilyHeaderName}" 
+                                                             HeaderCellTextSize="{StaticResource GridFontSizeHeader}" 
+                                                             RecordFont="{StaticResource FontFamilyName}"  
+                                                             CellTextSize="{StaticResource GridFontSize11}"/>
+                                    <datagrid:GridTextColumn HeaderText="Cant." MappingName="Cantidad" 
+                                                             LoadUIView="True" 
+                                                             HeaderFont="{StaticResource FontFamilyHeaderName}" 
+                                                             HeaderCellTextSize="{StaticResource GridFontSizeHeader}" 
+                                                             RecordFont="{StaticResource FontFamilyName}"  
+                                                             CellTextSize="{StaticResource GridFontSize11}"/>
+                                    <datagrid:GridNumericColumn HeaderText="Val. Compra" MappingName="ValorCompra" CultureInfo="{Binding Cultura}" Format="C" 
+                                                                LoadUIView="True" 
+                                                             HeaderFont="{StaticResource FontFamilyHeaderName}" 
+                                                             HeaderCellTextSize="{StaticResource GridFontSizeHeader}" 
+                                                             RecordFont="{StaticResource FontFamilyName}"  
+                                                             CellTextSize="{StaticResource GridFontSize11}"/>
+                                    <datagrid:GridTextColumn HeaderText="Val. Descto" MappingName="ValorDescuento" CultureInfo="{Binding Cultura}" Format="C"
+                                                             LoadUIView="True" 
+                                                             HeaderFont="{StaticResource FontFamilyHeaderName}" 
+                                                             HeaderCellTextSize="{StaticResource GridFontSizeHeader}" 
+                                                             RecordFont="{StaticResource FontFamilyName}"  
+                                                             CellTextSize="{StaticResource GridFontSize11}"/>
+                                    <datagrid:GridNumericColumn HeaderText="Subtotal" MappingName="ValorFinal" CultureInfo="{Binding Cultura}" Format="C" 
+                                                                LoadUIView="True" 
+                                                             HeaderFont="{StaticResource FontFamilyHeaderName}" 
+                                                             HeaderCellTextSize="{StaticResource GridFontSizeHeader}" 
+                                                             RecordFont="{StaticResource FontFamilyName}"  
+                                                             CellTextSize="{StaticResource GridFontSize11}"/>
+                                </datagrid:SfDataGrid.Columns>
+                            </datagrid:SfDataGrid>
+
+
+                            <!-- Celda 1,0 Notas observaciones-->
+                            <inputLayout:SfTextInputLayout
+                                Grid.Row="3"
+                                Grid.ColumnSpan="2"
+                                Margin="0,0,0,10"
+                                ContainerBackgroundColor="Transparent"
+                                ContainerType="Outlined"
+                                FocusedColor="{DynamicResource colPrim}"
+                                Hint="{texts:Translate NoteHint}"
+                                HorizontalOptions="Fill"
+                                LeadingViewPosition="Inside">
+                                <Editor Margin="0,0,0,30" HeightRequest="130" Text="{Binding OrdenSeleccionado.Observaciones, Mode=TwoWay}" />
+                                <inputLayout:SfTextInputLayout.LeadingView>
+                                    <Label
+                                        FontSize="18"
+                                        Text="&#xf044;"
+                                        TextColor="{DynamicResource colPrim}"
+                                        VerticalTextAlignment="Center">
+                                        <Label.FontFamily>
+                                            <OnPlatform
+                                                x:TypeArguments="x:String"
+                                                Android="fa-solid-900.ttf#Font Awesome 5 Free Solid"
+                                                iOS="Font Awesome 5 Free" />
+                                        </Label.FontFamily>
+                                    </Label>
+                                </inputLayout:SfTextInputLayout.LeadingView>
+                            </inputLayout:SfTextInputLayout>
+                            <!-- Celda 2,0 Botón de Ok-->
+                            <button:SfButton
+                            Grid.Row="4"
+                            Grid.Column="0"
+                            BackgroundColor="Green"
+                            BorderColor="{DynamicResource colPrim}"
+                            BorderWidth="2"
+                            Command="{Binding Ok_Command}"
+                            CornerRadius="4"
+                            FontFamily="{StaticResource NunitoRegular}"
+                            HorizontalOptions="FillAndExpand"
+                            Text="OK"
+                            TextColor="White"
+                            VerticalOptions="Center" />
+                            <!-- Celda 2,1 Botón de Cancelar-->
+                            <button:SfButton
+                            Grid.Row="4"
+                            Grid.Column="1"
+                            BackgroundColor="Red"
+                            BorderColor="{DynamicResource colPrim}"
+                            BorderWidth="2"
+                            Command="{Binding Cancel_Command}"
+                            CornerRadius="4"
+                            FontFamily="{StaticResource NunitoRegular}"
+                            HorizontalOptions="FillAndExpand"
+                            Text="{texts:Translate Cancel}"
+                            TextColor="White"
+                            VerticalOptions="Center" />
+                        </Grid>
+                        <customViews:LoadingIndicator
+                Grid.Row="0"
+                HorizontalOptions="Fill"
+                IsRunning="{Binding IsBusy, Mode=TwoWay}"
+                VerticalOptions="Fill" />
+                    </Grid>
+                </StackLayout>
+            </ScrollView>
+        </Frame>
+    </StackLayout>
+    <!--#endregion 2. Contenido-->
+</pages:PopupPage>

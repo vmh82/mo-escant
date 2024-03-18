@@ -1,0 +1,801 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<pages:PopupPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Escant_App.Views.Ventas.PopupActualizaItemOrdenVentasView"
+             xmlns:animations="clr-namespace:Rg.Plugins.Popup.Animations;assembly=Rg.Plugins.Popup"
+    xmlns:button="clr-namespace:Syncfusion.XForms.Buttons;assembly=Syncfusion.Buttons.XForms"
+    xmlns:customViews="clr-namespace:Escant_App.UserControls;assembly=Escant_App"
+                 xmlns:converters="clr-namespace:Escant_App.Converters;assembly=Escant_App"
+                 xmlns:pages="clr-namespace:Rg.Plugins.Popup.Pages;assembly=Rg.Plugins.Popup"
+                 xmlns:combobox="clr-namespace:Syncfusion.XForms.ComboBox;assembly=Syncfusion.SfComboBox.XForms"
+                 xmlns:inputLayout="clr-namespace:Syncfusion.XForms.TextInputLayout;assembly=Syncfusion.Core.XForms"
+    xmlns:texts="clr-namespace:ManijodaServicios.Resources.Texts;assembly=ManijodaServicios"
+    xmlns:viewModelBase="clr-namespace:Escant_App.ViewModels.Base;assembly=Escant_App"
+    xmlns:ffimageloading="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"    
+                 xmlns:system="clr-namespace:System;assembly=mscorlib"
+    xmlns:transformations="clr-namespace:FFImageLoading.Transformations;assembly=FFImageLoading.Transformations" 
+                 xmlns:ventas="clr-namespace:Escant_App.ViewModels.Ventas" x:DataType="ventas:PopupActualizaItemOrdenVentasViewModel"
+                 viewModelBase:ViewModelLocator.AutoWireViewModel="true">
+    <!--#region 0. Recursos-->
+    <pages:PopupPage.Resources>
+        <OnPlatform 
+            x:Key="FontFamilyHeaderName" 
+            x:TypeArguments="x:String" 
+            Android="Nunito-Bold.ttf" 
+            iOS="Nunito-Bold.ttf" />
+        <OnPlatform 
+            x:Key="FontFamilyName" 
+            x:TypeArguments="x:String" 
+            Android="Nunito-Regular.ttf" 
+            iOS="Nunito-Regular.ttf" />
+        <OnPlatform 
+        x:Key="GridFontSize" 
+            x:TypeArguments="x:Double" 
+            Android="13" 
+            iOS="12" />
+        <OnPlatform 
+        x:Key="GridFontSize10" 
+            x:TypeArguments="x:Double" 
+            Android="10" 
+            iOS="12" />
+        <OnPlatform 
+        x:Key="GridFontSizeHeader" 
+            x:TypeArguments="x:Double" 
+            Android="10" 
+            iOS="12" />
+        <ResourceDictionary>
+            <Style TargetType="Grid">
+                <Setter Property="ColumnSpacing" Value="0" />
+                <Setter Property="RowSpacing" Value="0" />
+            </Style>
+            <Style TargetType="inputLayout:SfTextInputLayout">
+                <Setter Property="IsHintAlwaysFloated" Value="True" />
+                <Setter Property="HintLabelStyle">
+                    <Setter.Value>
+                        <inputLayout:LabelStyle FontSize="12" />
+                    </Setter.Value>
+                </Setter>
+                <Setter Property="ContainerType" Value="Outlined" />
+                <Setter Property="Margin" Value="1,0,0,1" />
+            </Style>
+
+            <Style x:Key="PopupItemHeaderStyle_ls" TargetType="{x:Type Label}">
+                <Setter Property="FontFamily" Value="{StaticResource NunitoBold}" />
+                <Setter Property="FontSize" Value="{StaticResource SmallSize}" />
+                <Setter Property="TextColor" Value="{StaticResource BlackColor}" />
+                <Setter Property="HorizontalOptions" Value="StartAndExpand" />
+                <Setter Property="VerticalOptions" Value="Center" />
+                <Setter Property="Margin" Value="0,0,0,0" />
+            </Style>
+            <Style x:Key="PopupLabelHeaderStyle_ls" TargetType="{x:Type Label}">
+                <Setter Property="FontFamily" Value="{StaticResource NunitoRegular}" />
+                <Setter Property="FontSize" Value="{StaticResource SmallSize}" />
+                <Setter Property="TextColor" Value="{StaticResource BlackColor}" />
+                <Setter Property="HorizontalOptions" Value="StartAndExpand" />
+                <Setter Property="VerticalOptions" Value="Center" />
+                <Setter Property="Margin" Value="0,0,0,0" />
+            </Style>
+            <Style x:Key="PopupItemHeaderStyle" TargetType="{x:Type Label}">
+                <Setter Property="FontFamily" Value="{StaticResource NunitoBold}" />
+                <Setter Property="FontSize" Value="{StaticResource LargeSize}" />
+                <Setter Property="TextColor" Value="{StaticResource BlackColor}" />
+                <Setter Property="HorizontalTextAlignment" Value="Start" />
+                <Setter Property="VerticalTextAlignment" Value="Center" />
+                <Setter Property="Margin" Value="0,0,0,0" />
+            </Style>
+            <Style x:Key="PopupLabelHeaderStyle" TargetType="{x:Type Label}">
+                <Setter Property="FontFamily" Value="{StaticResource NunitoRegular}" />
+                <Setter Property="FontSize" Value="{StaticResource MidMediumSize}" />
+                <Setter Property="TextColor" Value="Black" />
+                <Setter Property="HorizontalOptions" Value="StartAndExpand" />
+                <Setter Property="VerticalOptions" Value="Center" />
+                <Setter Property="Margin" Value="10,0,0,0" />
+            </Style>
+
+            <Style x:Key="PopupLabelStyle" TargetType="{x:Type Label}">
+                <Setter Property="FontFamily" Value="{StaticResource NunitoRegular}" />
+                <Setter Property="FontSize" Value="{StaticResource LargeSize}" />
+                <Setter Property="TextColor" Value="Black" />
+                <Setter Property="HorizontalOptions" Value="StartAndExpand" />
+                <Setter Property="VerticalOptions" Value="Center" />
+                <Setter Property="Margin" Value="10,0,0,0" />
+            </Style>
+            <converters:ImageConverter x:Key="ByteArrayToImage"/>
+        </ResourceDictionary>
+    </pages:PopupPage.Resources>
+    <!--#endregion 0. Recursos-->
+    <!--#region 1. Animación-->
+    <pages:PopupPage.Animation>
+        <animations:ScaleAnimation
+            DurationIn="700"
+            EasingIn="SpringOut"
+            PositionIn="Bottom"
+            PositionOut="Center"
+            ScaleIn="1"
+            ScaleOut="0.7" />
+    </pages:PopupPage.Animation>
+    <!--#endregion 1. Animación-->
+    <!--#region 2. Contenido-->
+    <StackLayout HorizontalOptions="Center" VerticalOptions="Center">
+        <Frame
+            x:Name="FrameContainer"
+            Margin="10"
+            BackgroundColor="White"
+            CornerRadius="10"
+            HorizontalOptions="Center">
+            <ScrollView Scrolled="ScrollView_Scrolled">
+            <StackLayout
+                Padding="10,5"
+                IsClippedToBounds="True"
+                Spacing="3">
+                <!--Grid Contenedor con 2 rows 1. Cabecera , 2. Cuerpo -->
+                <Grid RowSpacing="0">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="60" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+                    <!--Row 1. Cabecera-->
+                    <Grid Grid.Row="0" RowSpacing="0">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="55" />
+                            <RowDefinition Height="1" />
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <!--1. Columna 0. Imagen del Ítem-->
+                            <ColumnDefinition Width="0.2*" />
+                            <!--2. Columna 1. Nombre del Ítem-->
+                            <ColumnDefinition Width="0.4*" />
+                            <!--3. Columna 2. Datos Complementarios del Ítem-->
+                            <ColumnDefinition Width="0.4*" />
+                        </Grid.ColumnDefinitions>
+                        <!--1. Columna 0. Imagen del Ítem-->
+                        <ffimageloading:CachedImage
+                                x:Name="clienteImage"                                                    
+                                Grid.Row="0"
+                                Grid.Column="0"
+                                Margin="0,2,0,2"
+                                Aspect="Fill"
+                                CacheType="All"
+                                DownsampleToViewSize="true"
+                                ErrorPlaceholder="picture_icon.png"
+                                HeightRequest="50"
+                                HorizontalOptions="Center"
+                                LoadingPlaceholder="picture_icon.png"
+                                Source="{Binding OrdenDetalleCompraSeleccionado.Imagen, Converter={StaticResource ByteArrayToImage},ConverterParameter=String}"
+                                TransformPlaceholders="True"
+                                WidthRequest="50">
+                            <ffimageloading:CachedImage.Transformations>
+                                <transformations:RoundedTransformation
+                                        BorderHexColor="#000000"
+                                        BorderSize="5"
+                                        Radius="20" />
+                            </ffimageloading:CachedImage.Transformations>
+                        </ffimageloading:CachedImage>
+                        <!--2. Columna 1. Nombre del Ítem-->
+                        <Label
+                            Grid.Row="0"
+                            Grid.Column="1"
+                            LineBreakMode="TailTruncation"
+                            Style="{StaticResource PopupItemHeaderStyle_ls}"
+                            Text="{Binding OrdenDetalleCompraSeleccionado.NombreItem}" />
+                        <!--3. Columna 2. Datos Complementarios del Ítem-->
+                        <Grid Grid.Row="0"
+                            Grid.Column="2"
+                            RowSpacing="0">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="0.5*" />
+                                <RowDefinition Height="0.5*" />
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="0.6*" />
+                                <ColumnDefinition Width="0.4*" />
+                            </Grid.ColumnDefinitions>
+                            <!-- Celda 0,0 Número de Orden-->
+                            <Label
+                            Grid.Row="0"
+                            Grid.Column="0"
+                            HorizontalOptions="Fill"
+                            Style="{StaticResource PopupLabelHeaderStyle_ls}"
+                            Text="{texts:Translate SaldoLabel}" />
+                            <!-- Celda 0,1 Valor de la Orden-->
+                            <Label
+                            Grid.Row="0"
+                            Grid.Column="1"
+                            HorizontalOptions="End"
+                            Style="{StaticResource PopupLabelHeaderStyle_ls}"
+                            Text="{Binding OrdenDetalleCompraSeleccionado.CantidadSaldoFinal, Mode=TwoWay}" />
+                            <!-- Celda 1,0 Estado de la Orden-->
+                            <Label
+                            Grid.Row="1"
+                            Grid.Column="0"
+                            HorizontalOptions="Fill"
+                            Style="{StaticResource PopupLabelHeaderStyle_ls}"
+                            Text="{texts:Translate PrecioLabel}" />
+                            <!-- Celda 1,1 Valor de la Orden-->
+                            <Label
+                            Grid.Row="1"
+                            Grid.Column="1"
+                            HorizontalOptions="End"
+                            Style="{StaticResource PopupLabelHeaderStyle_ls}"
+                            Text="{Binding OrdenDetalleCompraSeleccionado.ValorUnitario, Mode=TwoWay}" />
+                        </Grid>
+                        <BoxView
+                            Grid.Row="1"
+                            Grid.Column="1"
+                            BackgroundColor="Black"
+                            HeightRequest="1" />
+                    </Grid>
+
+                    <Grid Grid.Row="1" ColumnSpacing="8">
+                        <Grid.RowDefinitions>
+                            <!--Celda 0,0-1 Unidad, Celda 0,2 Precio de la Unidad seleccionada para el ítem -->
+                            <RowDefinition Height="Auto" />
+                            <!--Celda 1,0-1 Fecha de Ingreso o Vencimiento, Celda 1,1 Cantidad Existente -->
+                            <RowDefinition Height="Auto" />
+                            <!--Si es Servicio Celda 2,0 Periodo Pago, Celda 2,1 Primer Pago-->
+                            <RowDefinition Height="Auto" />
+                            <!--Si es Servicio Celda 3,0 Cantidad, Celda 3,1 Incremento, Celda 3,2 Valor del subtotal-->
+                            <RowDefinition Height="Auto" />
+                            <!--Celda 4,0 Aplica Impuesto , Celda 4,1 Tipo Impuesto, Celda 4,2 Valor Impuesto -->
+                            <RowDefinition Height="Auto" />
+                            <!--Celda 5,1 Valor Impuesto , Celda 5,2 Valor Final -->
+                            <RowDefinition Height="Auto" />
+                            <!--Celda 6,0-2 Observaciones -->
+                            <RowDefinition Height="Auto" />
+                            <!--Celda 7,0 Botón Guardar, 7,1 Botón Cancelar-->
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="0.34*" />
+                            <ColumnDefinition Width="0.33*" />
+                            <ColumnDefinition Width="0.33*" />
+                        </Grid.ColumnDefinitions>
+
+                        <!--#region Celda 0,0-1 Combo Selección de Unidad disponible para el Ítem-->
+                        <inputLayout:SfTextInputLayout
+                                    Grid.Row="0"
+                                    Grid.Column="0"                            
+                                    Grid.ColumnSpan="2"
+                                    ContainerBackgroundColor="Transparent"                                    
+                                    FocusedColor="{DynamicResource colPrim}"
+                                    Hint="{texts:Translate UnidadHint}"
+                                    IsEnabled="{Binding EsEnableUnidad}"
+                                    HorizontalOptions="Fill"
+                                    LeadingViewPosition="Inside">
+                            <combobox:SfComboBox
+                                        DataSource="{Binding LPrecios}"
+                                        DisplayMemberPath="UnidadConvertida"
+                                        FontFamily="{StaticResource PoppinsRegular}"
+                                        IsEnabled="{Binding EsEnableUnidad}"
+                                        IsEditableMode="true"                                        
+                                        ShowBorder="false"
+                                        ShowSuggestionsOnFocus="true"
+                                        SelectedItem="{Binding PrecioSeleccionado}"
+                                        SelectionChanged="SfComboBox_SelectionChanged"
+                                        TextSize="14">
+                                <combobox:SfComboBox.HeightRequest>
+                                    <OnPlatform x:TypeArguments="x:Double">
+                                        <On Platform="iOS">18</On>
+                                        <On Platform="Android">50</On>
+                                    </OnPlatform>
+                                </combobox:SfComboBox.HeightRequest>
+                            </combobox:SfComboBox>
+                            <inputLayout:SfTextInputLayout.LeadingView>
+                                <Label
+                                            FontSize="18"
+                                            Text="&#xf0e8;"
+                                            TextColor="{DynamicResource colPrim}"
+                                            VerticalTextAlignment="Center">
+                                    <Label.FontFamily>
+                                        <OnPlatform
+                                                    x:TypeArguments="x:String"
+                                                    Android="fa-solid-900.ttf#Font Awesome 5 Free Solid"
+                                                    iOS="Font Awesome 5 Free" />
+                                    </Label.FontFamily>
+                                </Label>
+                            </inputLayout:SfTextInputLayout.LeadingView>
+                        </inputLayout:SfTextInputLayout>
+                        <!--#endregion Celda 0,0-1 Combo Selección de Unidad disponible para el Ítem-->
+
+                        <!--#region Celda 0,2 Valor Precio por Unidad Seleccionada-->
+                        <inputLayout:SfTextInputLayout
+                                    Grid.Row="0"
+                                    Grid.Column="2"                                                                        
+                                    ContainerBackgroundColor="Beige"
+                                    FocusedColor="{DynamicResource colPrim}"                                    
+                                    Hint="{texts:Translate Precio}"                                    
+                                    HorizontalOptions="Fill"
+                                    LeadingViewPosition="Inside">
+                            <customViews:MyCustomEntry                                                  
+                            FontFamily="{StaticResource NunitoRegular}"
+                            MaxLength="100"
+                            Keyboard="Numeric"
+                            BackgroundColor="Beige"
+                            Placeholder="{texts:Translate Precio}"
+                            PlaceholderColor="LightGray"
+                            Text="{Binding PrecioSeleccionado.PrecioVenta}"
+                            IsReadOnly="True"
+                            VerticalOptions="EndAndExpand" 
+                            HorizontalTextAlignment="End"/>
+                        </inputLayout:SfTextInputLayout>
+                        <!--#endregion Celda 0,2 Valor Precio por Unidad Seleccionada-->
+                        
+                        <!--#region Celda 1,0 Combo Selección Periodos Pago-->
+                        <inputLayout:SfTextInputLayout
+                                    Grid.Row="1"
+                                    Grid.Column="0"      
+                                    ContainerBackgroundColor="Transparent"
+                                    FocusedColor="{DynamicResource colPrim}"
+                                    IsVisible="{Binding IsVisibleCondicionesPeriodoPago}"
+                                    Hint="{texts:Translate PeriodoPagoLabelHint}"
+                                    IsEnabled="{Binding EsHabilitadoPeriodoPago}"
+                                    HorizontalOptions="Fill">
+                            <combobox:SfComboBox
+                                        DataSource="{Binding LPeriodoPago}"
+                                        DisplayMemberPath="Nombre"
+                                        FontFamily="{StaticResource PoppinsRegular}"
+                                        IsEditableMode="true"                    
+                                        IsEnabled="{Binding EsHabilitadoPeriodoPago}"
+                                        ShowBorder="false"
+                                        ShowSuggestionsOnFocus="true"
+                                        SelectedItem="{Binding PeriodoPagoSeleccionado}"
+                                        SelectionChanged="SfComboBox_SelectionChanged_2"
+                                        TextSize="14">
+                                <combobox:SfComboBox.HeightRequest>
+                                    <OnPlatform x:TypeArguments="x:Double">
+                                        <On Platform="iOS">18</On>
+                                        <On Platform="Android">50</On>
+                                    </OnPlatform>
+                                </combobox:SfComboBox.HeightRequest>
+                            </combobox:SfComboBox>
+                        </inputLayout:SfTextInputLayout>
+                        <!--#endregion Celda 1,0 Combo Selección Periodos Pago-->
+
+                        <!--#region Celda 1,1 Imagen para cambiar la condición-->
+                        <Image
+                                x:Name="imgPagar"
+                                Margin="4,4,4,4"
+                            Grid.Row="1"
+                            Grid.Column="1"
+                            IsVisible="{Binding IsVisibleCondicionesPeriodoPago}"     
+                            VerticalOptions="Fill"
+                            Source="{Binding FuenteImagenPago}"                            
+                            WidthRequest="15" />
+                        <!--#endregion Celda 1,1 Imagen para cambiar la condición-->
+
+                        <!--#region Celda 1,2. Fecha 1er Pago -->
+                        <inputLayout:SfTextInputLayout
+                                    Grid.Row="1"
+                                    Grid.Column="2"
+                                    ContainerBackgroundColor="Beige"                                    
+                                    IsEnabled="True"
+                                    FocusedColor="{DynamicResource colPrim}"                                    
+                                    Hint="{texts:Translate FechaPagoLabel}"
+                                    IsVisible="{Binding IsVisibleCondicionesPeriodoPago}"
+                                    HorizontalOptions="Fill">
+                            <customViews:MyCustomEntry                                                  
+                            FontFamily="{StaticResource NunitoRegular}"
+                            MaxLength="100"
+                            Keyboard="Text"
+                            Placeholder="{texts:Translate FechaPagoLabel}"
+                            PlaceholderColor="LightGray"
+                            Text="{Binding FechaPrimerPago, Mode=TwoWay}"
+                            IsReadOnly="True"
+                            HorizontalTextAlignment="End" />
+                            <!--<DatePicker
+                                        x:Name="BirthDatePicker"                                        
+                                        Date="{Binding FechaPrimerPago, Mode=TwoWay,StringFormat='dd/MM/yyyy'}"
+                                        FontFamily="{StaticResource PoppinsRegular}"
+                                        FontSize="14"
+                                        Format="dd/MM/yyyy"
+                                        MinimumDate ="{Binding MinimaFechaPago ,StringFormat='dd/MM/yyyy'}"
+                                        MaximumDate = "{Binding MaximaFechaPago,StringFormat='dd/MM/yyyy'}"                                   
+                                        VerticalOptions="CenterAndExpand" />-->
+                        </inputLayout:SfTextInputLayout>
+                        <!--#endregion Celda 1,1. Fecha 1er Pago -->
+                        <!--#region Celda 2,0 Combo Selección Fecha de Ingreso o Fecha de Vencimiento-->
+                        <inputLayout:SfTextInputLayout
+                                    Grid.Row="2"
+                                    Grid.Column="0"      
+                                    Grid.ColumnSpan="2"
+                                    ContainerBackgroundColor="Transparent"                                    
+                                    FocusedColor="{DynamicResource colPrim}"
+                                    Hint="{Binding FechaLabel}"
+                                    HorizontalOptions="Fill">
+                            <combobox:SfComboBox
+                                        DataSource="{Binding LFecha}"
+                                        DisplayMemberPath="Fecha"
+                                        FontFamily="{StaticResource PoppinsRegular}"
+                                        IsEditableMode="true"                                        
+                                        ShowBorder="false"
+                                        ShowSuggestionsOnFocus="true"
+                                        SelectedItem="{Binding FechaSeleccionado}"
+                                        SelectionChanged="SfComboBox_SelectionChanged_1"
+                                        TextSize="14">
+                                <combobox:SfComboBox.HeightRequest>
+                                    <OnPlatform x:TypeArguments="x:Double">
+                                        <On Platform="iOS">18</On>
+                                        <On Platform="Android">50</On>
+                                    </OnPlatform>
+                                </combobox:SfComboBox.HeightRequest>
+                            </combobox:SfComboBox>
+                        </inputLayout:SfTextInputLayout>
+                        <!--#endregion Celda 2,0 Combo Selección Fecha de Ingreso o Fecha de Vencimiento-->
+
+                        <!--#region Celda 2,1 Cantidad Existente del tipo-->
+                        <inputLayout:SfTextInputLayout
+                                    Grid.Row="2"
+                                    Grid.Column="2"                                    
+                                    ContainerBackgroundColor="Beige"                                    
+                                    FocusedColor="{DynamicResource colPrim}"
+                                    Hint="{texts:Translate Existente}"                                    
+                                    HorizontalOptions="Fill"
+                                    LeadingViewPosition="Inside">
+                            <customViews:MyCustomEntry                                                  
+                            FontFamily="{StaticResource NunitoRegular}"
+                            MaxLength="100"
+                            Keyboard="Numeric"
+                            Placeholder="{texts:Translate CantidadLabel}"
+                            PlaceholderColor="LightGray"
+                            Text="{Binding ExistenteFecha}"
+                            IsReadOnly="True"
+                            HorizontalTextAlignment="End" />
+                        </inputLayout:SfTextInputLayout>
+                        <!--#endregion Celda 2,1 Cantidad Existente del tipo-->
+
+                        <!--#region Celda 3,0 Cantidad solicitada del ítem-->
+                        <inputLayout:SfTextInputLayout
+                                    Grid.Row="3"
+                                    Grid.Column="0"                                    
+                                    ContainerBackgroundColor="Transparent"
+                                    ContainerType="Outlined"
+                                    FocusedColor="{DynamicResource colPrim}"
+                                    Hint="{texts:Translate Quantity}"                                    
+                                    HorizontalOptions="Fill"
+                                    LeadingViewPosition="Inside">
+                            <customViews:MyCustomEntry                                                           
+                            FontFamily="{StaticResource NunitoRegular}"
+                            MaxLength="100"
+                            Keyboard="Numeric"
+                            Placeholder="{texts:Translate CantidadLabel}"
+                            PlaceholderColor="LightGray"
+                            Text="{Binding Cantidad,Mode=TwoWay}"
+                            Unfocused="MyCustomEntry_Unfocused"
+                            Focused="MyCustomEntry_Focused"
+                            VerticalOptions="EndAndExpand"
+                                HorizontalTextAlignment="End"/>
+                        </inputLayout:SfTextInputLayout>
+                        <!--#endregion Celda 3,0 Cantidad solicitada del ítem-->
+
+                        
+                        <!--#region Celda 3,1 Valor del incremento del ítem-->
+                        <inputLayout:SfTextInputLayout
+                                    Grid.Row="3"
+                                    Grid.Column="1"                                    
+                                    ContainerBackgroundColor="Beige"                                    
+                                    FocusedColor="{DynamicResource colPrim}"
+                                    Hint="{texts:Translate Incremento}"                                    
+                                    HorizontalOptions="Fill"
+                                    LeadingViewPosition="Inside">
+                            <customViews:MyCustomEntry                                                  
+                            FontFamily="{StaticResource NunitoRegular}"
+                            MaxLength="100"
+                            Keyboard="Numeric"
+                            BackgroundColor="Aquamarine"
+                            Placeholder="{texts:Translate Incremento}"
+                            PlaceholderColor="LightGray"
+                            Text="{Binding OrdenDetalleCompraSeleccionado.ValorIncremento}"
+                            IsReadOnly="True"
+                            VerticalOptions="EndAndExpand" 
+                            HorizontalTextAlignment="End"/>
+                        </inputLayout:SfTextInputLayout>
+                        <!--#endregion Celda 3,1 Valor del incremento del ítem-->                       
+                        
+                        <!--#region Celda 3,2 Subtotal-->
+                        <inputLayout:SfTextInputLayout
+                                    Grid.Row="3"
+                                    Grid.Column="2"                                    
+                                    ContainerBackgroundColor="Transparent"                                    
+                                    FocusedColor="{DynamicResource colPrim}"
+                                    Hint="{texts:Translate ItemCost}"                                    
+                                    HorizontalOptions="Fill"
+                                    LeadingViewPosition="Inside">
+                            <!--<customViews:MyCustomEntry                                                 
+                            FontFamily="{StaticResource NunitoRegular}"
+                            MaxLength="100"
+                            Keyboard="Numeric"
+                            Placeholder="{texts:Translate ValorCompradoLabel}"
+                            PlaceholderColor="LightGray"
+                            Text="{Binding Costo,Mode=TwoWay}"
+                            IsReadOnly="{Binding EsEditableCosto}"
+                            Unfocused="MyCustomEntry_Unfocused_1"
+                            VerticalOptions="EndAndExpand"
+                                HorizontalTextAlignment="End"/>-->
+                                <customViews:CustomSfNumericTextBox
+                                        Grid.Row="0"
+                                        Grid.Column="1"                    
+                                        BorderColor="Transparent"
+                                        FormatString="c"
+                                        MaximumNumberDecimalDigits="2"
+                                        SelectAllOnFocus="True"
+                                        TextAlignment="End"
+                                        Culture="{Binding Cultura}"
+                                        IsReadOnly="{Binding EsEditableCosto}"
+                                        TextColor="{DynamicResource colSec}"
+                                        Unfocused="CustomSfNumericTextBox_Unfocused"
+                                        Value="{Binding Costo,Mode=TwoWay}" 
+                                 />
+
+
+
+                            </inputLayout:SfTextInputLayout>
+                        <!--#endregion Celda 3,2 Subtotal-->
+
+                        <!--#region Celda 4.0. Aplica Descuento-->
+                        <inputLayout:SfTextInputLayout
+                                    Grid.Row="4"
+                                    Grid.Column="0"                                    
+                                    ContainerBackgroundColor="Transparent"                                                                        
+                                    HorizontalOptions="Center"
+                                    VerticalOptions="Center"
+                                    LeadingViewPosition="Inside">
+                            <button:SfSwitch
+                                        Grid.Row="1"
+                                        Grid.Column="2"                                    
+                                        Margin="4,4,4,4"                                        
+                                        AllowIndeterminateState="False"                                        
+                                        HorizontalOptions="Center"
+                                        Orientation="Horizontal"
+                                        VerticalOptions="Center"
+                                        IsOn="{Binding AplicaDescuento}"                            
+                                        VisualType="Cupertino">
+                                <VisualStateManager.VisualStateGroups>
+                                    <VisualStateGroup x:Name="CommonStates">
+                                        <VisualState x:Name="On">
+                                            <VisualState.Setters>
+                                                <Setter Property="SwitchSettings">
+                                                    <Setter.Value>
+                                                        <button:CupertinoSwitchSettings
+                                                        x:TypeArguments="button:OnState"
+                                                        ThumbBorderColor="{DynamicResource Gray-500}"
+                                                        ThumbColor="{DynamicResource Gray-White}"
+                                                        TrackBorderColor="{DynamicResource Gray-200}"
+                                                        TrackColor="{DynamicResource RedColor}" />
+                                                    </Setter.Value>
+                                                </Setter>
+                                            </VisualState.Setters>
+                                        </VisualState>
+                                        <VisualState x:Name="Off">
+                                            <VisualState.Setters>
+                                                <Setter Property="SwitchSettings">
+                                                    <Setter.Value>
+                                                        <button:CupertinoSwitchSettings
+                                                        x:TypeArguments="button:OffState"
+                                                        ThumbBorderColor="{DynamicResource Gray-200}"
+                                                        ThumbColor="{DynamicResource Gray-White}"
+                                                        TrackBorderColor="{DynamicResource Gray-200}"
+                                                        TrackColor="{DynamicResource Gray-500}" />
+                                                    </Setter.Value>
+                                                </Setter>
+                                            </VisualState.Setters>
+                                        </VisualState>
+                                    </VisualStateGroup>
+                                </VisualStateManager.VisualStateGroups>
+                            </button:SfSwitch>
+                            <inputLayout:SfTextInputLayout.LeadingView>
+                                <Label
+                                            FontSize="18"
+                                            Text="&#xf541;"
+                                            TextColor="{DynamicResource colPrim}"
+                                            VerticalTextAlignment="Center">
+                                    <Label.FontFamily>
+                                        <OnPlatform
+                                                    x:TypeArguments="x:String"
+                                                    Android="fa-solid-900.ttf#Font Awesome 5 Free Solid"
+                                                    iOS="Font Awesome 5 Free" />
+                                    </Label.FontFamily>
+                                </Label>
+                                <!--<Image
+                                        Margin="0,0,4,0"
+                                        Source="descuento.png"                                        
+                                        HorizontalOptions="FillAndExpand"
+                                        VerticalOptions="FillAndExpand" />-->
+                            </inputLayout:SfTextInputLayout.LeadingView>
+                        </inputLayout:SfTextInputLayout>
+                        <!--#endregion Celda 4.0. Aplica Descuento-->
+
+                        <!--#region Celda 4,1 Tipo Descuento-->
+                        <inputLayout:SfTextInputLayout
+                                    Grid.Row="4"
+                                    Grid.Column="1"
+                                    Grid.ColumnSpan="2"
+                                    ContainerBackgroundColor="Transparent"                                    
+                                    FocusedColor="{DynamicResource colPrim}"
+                                    Hint="{texts:Translate TipoDescuentoVentaHint}"                                    
+                                    IsEnabled="{Binding IsVisibleCondicionesDescuento}"
+                                    HorizontalOptions="Fill"
+                                    LeadingViewPosition="Inside">
+                            <combobox:SfComboBox
+                                        DataSource="{Binding LTipoDescuentoVenta}"
+                                        DisplayMemberPath="Nombre"
+                                        FontFamily="{StaticResource PoppinsRegular}"
+                                        IsEditableMode="true"
+                                        IsEnabled="{Binding IsVisibleCondicionesDescuento}"
+                                        ShowBorder="false"
+                                        ShowSuggestionsOnFocus="true"
+                                        SelectedItem="{Binding TipoDescuentoSeleccionado}"
+                                        SelectionChanged="SfComboBox_SelectionChanged_3"
+                                        TextSize="14">
+                                <combobox:SfComboBox.HeightRequest>
+                                    <OnPlatform x:TypeArguments="x:Double">
+                                        <On Platform="iOS">18</On>
+                                        <On Platform="Android">50</On>
+                                    </OnPlatform>
+                                </combobox:SfComboBox.HeightRequest>
+                            </combobox:SfComboBox>
+                            <inputLayout:SfTextInputLayout.LeadingView>
+                                <Label
+                                            FontSize="18"
+                                            Text="&#xf541;"
+                                            TextColor="{DynamicResource colPrim}"
+                                            VerticalTextAlignment="Center">
+                                    <Label.FontFamily>
+                                        <OnPlatform
+                                                    x:TypeArguments="x:String"
+                                                    Android="fa-solid-900.ttf#Font Awesome 5 Free Solid"
+                                                    iOS="Font Awesome 5 Free" />
+                                    </Label.FontFamily>
+                                </Label>
+                            </inputLayout:SfTextInputLayout.LeadingView>
+                        </inputLayout:SfTextInputLayout>
+                        <!--#endregion Celda 4,1 Tipo Descuento-->
+
+                        <!--#region Celda 5,0 Valor de Descuento-->
+                        <inputLayout:SfTextInputLayout
+                                    Grid.Row="5"
+                                    Grid.Column="0"
+                                    ContainerBackgroundColor="Transparent"
+                                    FocusedColor="{DynamicResource colPrim}"
+                                    Hint="{texts:Translate ValorDescuentoHint}"
+                                    IsEnabled="{Binding EsEnableValorDescuento}"
+                                    HorizontalOptions="Fill"
+                                    LeadingViewPosition="Inside">
+                            <!--<customViews:MyCustomEntry                                                  
+                            FontFamily="{StaticResource NunitoRegular}"
+                            MaxLength="100"
+                            Keyboard="Numeric"
+                            Placeholder="{texts:Translate ValorDescuentoHint}"
+                            PlaceholderColor="LightGray"
+                            Text="{Binding ValorDescuento,Mode=TwoWay}"                                                        
+                            VerticalOptions="EndAndExpand"
+                            IsEnabled="{Binding EsEnableValorDescuento}"
+                                    Completed="MyCustomEntry_Completed"
+                            HorizontalTextAlignment="End"/>-->
+                                <customViews:CustomSfNumericTextBox
+                                        BorderColor="Transparent"
+                                        FormatString="c"
+                                        MaximumNumberDecimalDigits="2"
+                                        SelectAllOnFocus="True"
+                                        TextAlignment="End"
+                                        Culture="{Binding Cultura}"
+                                        IsEnabled="{Binding EsEnableValorDescuento}"
+                                        TextColor="{DynamicResource colSec}"
+                                        Unfocused="CustomSfNumericTextBox_Unfocused"
+                                        Value="{Binding ValorDescuento,Mode=TwoWay}" 
+                                 />
+                            </inputLayout:SfTextInputLayout>
+                        <!--#endregion Celda 4,2 Valor de Descuento-->
+
+                        <!--#region Celda 5,1 Valor del impuesto del ítem-->
+                        <inputLayout:SfTextInputLayout
+                                    Grid.Row="5"
+                                    Grid.Column="1"                                    
+                                    ContainerBackgroundColor="Beige"
+                                    ContainerType="Outlined"
+                                    FocusedColor="{DynamicResource colPrim}"
+                                    Hint="{Binding ImpuestoLabel}"                                    
+                                    HorizontalOptions="Fill"
+                                    LeadingViewPosition="Inside">
+                            <customViews:MyCustomEntry                                                  
+                            FontFamily="{StaticResource NunitoRegular}"
+                            MaxLength="100"
+                            Keyboard="Numeric"
+                            Placeholder="{Binding ImpuestoLabel}"
+                            PlaceholderColor="LightGray"
+                            Text="{Binding OrdenDetalleCompraSeleccionado.ValorImpuesto}"
+                            IsReadOnly="True"
+                            VerticalOptions="EndAndExpand" 
+                            HorizontalTextAlignment="End"/>
+                        </inputLayout:SfTextInputLayout>
+                        <!--#endregion Celda 5,1 Valor del impuesto del ítem-->
+
+                        <!--#region Celda 5,2 Valor Final ítem-->
+                        <inputLayout:SfTextInputLayout
+                                    Grid.Row="5"
+                                    Grid.Column="2"                                    
+                                    ContainerBackgroundColor="Beige"
+                                    ContainerType="Outlined"
+                                    FocusedColor="{DynamicResource colPrim}"
+                                    Hint="{texts:Translate ValorFinal}"
+                                    HorizontalOptions="Fill"
+                                    LeadingViewPosition="Inside">
+                            <customViews:MyCustomEntry                                                  
+                            FontFamily="{StaticResource NunitoRegular}"
+                            MaxLength="100"
+                            Keyboard="Numeric"
+                            Placeholder="{texts:Translate ValorFinal}"
+                            PlaceholderColor="LightGray"
+                            Text="{Binding OrdenDetalleCompraSeleccionado.ValorFinal}"
+                            IsReadOnly="True"
+                            VerticalOptions="EndAndExpand" 
+                            HorizontalTextAlignment="End"/>
+                        </inputLayout:SfTextInputLayout>
+                        <!--#endregion Celda 5,2 Valor Final ítem-->                        
+
+                        <!--#region Celda 6,0-2 Notas observaciones-->
+                        <inputLayout:SfTextInputLayout
+                                Grid.Row="6"
+                                Grid.ColumnSpan="3"
+                                ContainerBackgroundColor="Transparent"
+                                FocusedColor="{DynamicResource colPrim}"
+                                Hint="{texts:Translate NoteHint}"
+                                HorizontalOptions="Fill"
+                                LeadingViewPosition="Inside">
+                            <Editor Margin="0,0,0,10" HeightRequest="100" Text="{Binding OrdenDetalleCompraSeleccionado.Observaciones, Mode=TwoWay}" />
+                            <inputLayout:SfTextInputLayout.LeadingView>
+                                <Label
+                                        FontSize="18"
+                                        Text="&#xf044;"
+                                        TextColor="{DynamicResource colPrim}"
+                                        VerticalTextAlignment="Center">
+                                    <Label.FontFamily>
+                                        <OnPlatform
+                                                x:TypeArguments="x:String"
+                                                Android="fa-solid-900.ttf#Font Awesome 5 Free Solid"
+                                                iOS="Font Awesome 5 Free" />
+                                    </Label.FontFamily>
+                                </Label>
+                            </inputLayout:SfTextInputLayout.LeadingView>
+                        </inputLayout:SfTextInputLayout>
+                        <!--#endregion Celda 6,0-2 Notas observaciones-->
+
+                        <!--#region Celda 7,0 Botón Guardar-->
+                        <button:SfButton
+                            Grid.Row="7"
+                            Grid.Column="0"
+                            BackgroundColor="Green"
+                            BorderColor="{DynamicResource colPrim}"
+                            BorderWidth="2"
+                            Command="{Binding Ok_Command}"
+                            CornerRadius="4"
+                            FontFamily="{StaticResource NunitoRegular}"
+                            HorizontalOptions="FillAndExpand"
+                            Text="OK"
+                            TextColor="White"
+                            VerticalOptions="Center" />
+                        <!--#endregion Celda 7,0 Botón Guardar-->
+                        
+                        <!--#region Celda 7,2 Botón Cancelar-->
+                        <button:SfButton
+                            Grid.Row="7"
+                            Grid.Column="2"
+                            BackgroundColor="Red"
+                            BorderColor="{DynamicResource colPrim}"
+                            BorderWidth="2"
+                            Command="{Binding Cancel_Command}"
+                            CornerRadius="4"
+                            FontFamily="{StaticResource NunitoRegular}"
+                            HorizontalOptions="FillAndExpand"
+                            Text="{texts:Translate Cancel}"
+                            TextColor="White"
+                            VerticalOptions="Center" />
+                        <!--#endregion Celda 6,2 Botón Cancelar-->
+                        
+                    </Grid>
+                </Grid>
+            </StackLayout>
+            </ScrollView>
+        </Frame>
+    </StackLayout>
+    <!--#endregion 2. Contenido-->
+</pages:PopupPage>

@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="Escant_App.Views.Reportes.ReportSummaryView"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:local="clr-namespace:Escant_App.UserControls;assembly=Escant_App"
+    xmlns:texts="clr-namespace:ManijodaServicios.Resources.Texts;assembly=ManijodaServicios"
+    xmlns:viewModelBase="clr-namespace:Escant_App.ViewModels.Base;assembly=Escant_App"
+    xmlns:views="clr-namespace:Escant_App.Views;assembly=Escant_App"
+    Title="{texts:Translate ReportSummaryTitle}"
+    viewModelBase:ViewModelLocator.AutoWireViewModel="true"
+    BackgroundColor="{DynamicResource MainWrapperBackgroundColor}">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+
+            <Style x:Key="SummaryHeaderLabelStyle" TargetType="{x:Type Label}">
+                <Setter Property="FontFamily" Value="{StaticResource NunitoBold}" />
+                <Setter Property="FontSize" Value="{StaticResource MediumSize}" />
+                <Setter Property="TextColor" Value="{StaticResource BlackColor}" />
+                <Setter Property="HorizontalOptions" Value="Start" />
+                <Setter Property="VerticalOptions" Value="Center" />
+                <Setter Property="Margin" Value="16,0,0,0" />
+            </Style>
+
+            <Style x:Key="SummarySubInfoLabelStyle" TargetType="{x:Type Label}">
+                <Setter Property="FontFamily" Value="{StaticResource NunitoRegular}" />
+                <Setter Property="FontSize" Value="{StaticResource MediumSize}" />
+                <Setter Property="TextColor" Value="Gray" />
+                <Setter Property="HorizontalOptions" Value="Start" />
+                <Setter Property="VerticalOptions" Value="Center" />
+                <Setter Property="Margin" Value="32,0,0,0" />
+            </Style>
+
+            <Style x:Key="ListedItemLabelStyle" TargetType="{x:Type Label}">
+                <Setter Property="FontFamily" Value="{StaticResource PoppinsRegular}" />
+                <Setter Property="FontSize" Value="{StaticResource MediumSize}" />
+                <Setter Property="TextColor" Value="Black" />
+                <Setter Property="HorizontalOptions" Value="Start" />
+                <Setter Property="VerticalOptions" Value="Center" />
+                <Setter Property="Margin" Value="10,0,0,0" />
+            </Style>
+
+            <Style x:Key="MainPriceLabelStyle" TargetType="{x:Type Label}">
+                <Setter Property="FontFamily" Value="{StaticResource NunitoBold}" />
+                <Setter Property="FontSize" Value="{StaticResource MediumSize}" />
+                <Setter Property="HorizontalOptions" Value="End" />
+                <Setter Property="VerticalOptions" Value="Center" />
+                <Setter Property="Margin" Value="0,0,0,0" />
+            </Style>
+
+            <Style x:Key="SubPriceLabelStyle" TargetType="{x:Type Label}">
+                <Setter Property="FontFamily" Value="{StaticResource NunitoBold}" />
+                <Setter Property="FontSize" Value="{StaticResource MediumSize}" />
+                <Setter Property="TextColor" Value="Gray" />
+                <Setter Property="HorizontalOptions" Value="End" />
+                <Setter Property="VerticalOptions" Value="Center" />
+                <Setter Property="Margin" Value="0,0,0,0" />
+            </Style>
+
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <ContentPage.Content>
+        <Grid RowSpacing="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+
+            <Grid Grid.Row="0" RowSpacing="0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="60" />
+                    <RowDefinition Height="0.5" />
+                    <RowDefinition Height="50" />
+                    <RowDefinition Height="0.5" />
+                    <RowDefinition Height="50" />
+                    <RowDefinition Height="0.5" />
+                    <RowDefinition Height="60" />
+                    <RowDefinition Height="0.5" />
+                    <RowDefinition Height="60" />
+                    <RowDefinition Height="0.5" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                
+
+                <BoxView Grid.Row="1" BackgroundColor="LightGray" />
+
+                <Grid Grid.Row="2">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="0.5*" />
+                        <ColumnDefinition Width="0.4*" />
+                        <ColumnDefinition Width="0.1*" />
+                    </Grid.ColumnDefinitions>
+
+                    <Label
+                        Grid.Column="0"
+                        Style="{StaticResource SummarySubInfoLabelStyle}"
+                        Text="{texts:Translate TotalSales}" />
+                    <Label
+                        Grid.Column="1"
+                        Style="{StaticResource SubPriceLabelStyle}"
+                        Text="{Binding TotalMoneyOnSaleOrderStr}" />
+
+                </Grid>
+
+                <BoxView Grid.Row="3" BackgroundColor="LightGray" />
+
+                <Grid Grid.Row="4">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="0.5*" />
+                        <ColumnDefinition Width="0.4*" />
+                        <ColumnDefinition Width="0.1*" />
+                    </Grid.ColumnDefinitions>
+
+                    <Label
+                        Grid.Column="0"
+                        Style="{StaticResource SummarySubInfoLabelStyle}"
+                        Text="{texts:Translate TotalDiscounts}" />
+                    <Label
+                        Grid.Column="1"
+                        Style="{StaticResource SubPriceLabelStyle}"
+                        Text="{Binding DeductMoneyOnSaleOrderStr}" />
+
+                </Grid>
+
+                <BoxView Grid.Row="5" BackgroundColor="LightGray" />
+
+                
+                <BoxView Grid.Row="7" BackgroundColor="LightGray" />
+
+                <Grid Grid.Row="8">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="0.5*" />
+                        <ColumnDefinition Width="0.4*" />
+                        <ColumnDefinition Width="0.1*" />
+                    </Grid.ColumnDefinitions>
+
+                    <Label
+                        Grid.Column="0"
+                        Style="{StaticResource SummaryHeaderLabelStyle}"
+                        Text="{texts:Translate Profits}" />
+                    <Label
+                        Grid.Column="1"
+                        Style="{StaticResource MainPriceLabelStyle}"
+                        Text="{Binding ProfitStr}"
+                        TextColor="{StaticResource colAcc}" />
+
+                </Grid>
+
+                <BoxView Grid.Row="9" BackgroundColor="LightGray" />
+            </Grid>
+
+            <StackLayout
+                Grid.Row="1"
+                Padding="0"
+                BackgroundColor="{DynamicResource Gray-900}">
+                <!--<local:AdBanner Size="Standardbanner" VerticalOptions="Fill" />-->
+                <local:AdmobControl BackgroundColor="Transparent" />
+            </StackLayout>
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

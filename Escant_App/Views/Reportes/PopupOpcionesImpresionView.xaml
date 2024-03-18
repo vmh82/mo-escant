@@ -1,0 +1,129 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<pages:PopupPage
+    x:Class="Escant_App.Views.Reportes.PopupOpcionesImpresionView"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:animations="clr-namespace:Rg.Plugins.Popup.Animations;assembly=Rg.Plugins.Popup"
+    xmlns:pages="clr-namespace:Rg.Plugins.Popup.Pages;assembly=Rg.Plugins.Popup"
+    xmlns:syncfusion="clr-namespace:Syncfusion.XForms.TreeView;assembly=Syncfusion.SfTreeView.XForms"
+    xmlns:viewModelBase="clr-namespace:Escant_App.ViewModels.Base;assembly=Escant_App"
+    xmlns:local="clr-namespace:Escant_App.UserControls;assembly=Escant_App"
+    viewModelBase:ViewModelLocator.AutoWireViewModel="true">
+    <pages:PopupPage.Resources>
+        <ResourceDictionary>
+            <Style x:Key="PopupItemHeaderStyle" TargetType="{x:Type Label}">
+                <Setter Property="FontFamily" Value="{StaticResource NunitoBold}" />
+                <Setter Property="FontSize" Value="{StaticResource LargeSize}" />
+                <Setter Property="TextColor" Value="{StaticResource BlackColor}" />
+                <Setter Property="HorizontalTextAlignment" Value="Start" />
+                <Setter Property="VerticalTextAlignment" Value="Center" />
+                <Setter Property="Margin" Value="0,0,0,0" />
+            </Style>
+
+            <Style x:Key="PopupLabelStyle" TargetType="{x:Type Label}">
+                <Setter Property="FontFamily" Value="{StaticResource NunitoRegular}" />
+                <Setter Property="FontSize" Value="{StaticResource MidMediumSize}" />
+                <Setter Property="TextColor" Value="Black" />
+                <Setter Property="HorizontalOptions" Value="Center" />
+                <Setter Property="VerticalTextAlignment" Value="Center" />
+                <Setter Property="Margin" Value="0,0,0,0" />
+            </Style>
+        </ResourceDictionary>
+    </pages:PopupPage.Resources>
+    <pages:PopupPage.Animation>
+        <animations:ScaleAnimation
+            DurationIn="700"
+            EasingIn="SpringOut"
+            PositionIn="Bottom"
+            PositionOut="Center"
+            ScaleIn="1"
+            ScaleOut="0.7" />
+    </pages:PopupPage.Animation>
+    <StackLayout HorizontalOptions="Center" VerticalOptions="Center">
+        <Frame
+            x:Name="FrameContainer"
+            Margin="10"
+            BackgroundColor="White"
+            CornerRadius="10"
+            HorizontalOptions="Center"
+            WidthRequest="300"
+            HeightRequest="450">
+            <ScrollView Scrolled="ScrollView_Scrolled">
+    <StackLayout HorizontalOptions="Center" VerticalOptions="Center">
+        <Grid x:Name="grid">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <StackLayout Grid.Row="0" Orientation="Vertical" Padding="5" x:Name="contentPage">
+            <Grid Margin="15,10,15,10">
+                <Grid.RowSpacing>
+                    <OnPlatform
+                                x:TypeArguments="x:Double"
+                                Android="-5"
+                                iOS="10" />
+                </Grid.RowSpacing>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <ScrollView Orientation="Vertical" Grid.Row="0">
+                    <syncfusion:SfTreeView x:Name="treeView" NotificationSubscriptionMode="CollectionChange,PropertyChange"  
+                                 ItemHeight="40"                                             
+                                 Indentation="15"
+                                 ExpanderWidth="40"
+                                 ChildPropertyName="subCatalogos"
+                                 ItemsSource="{Binding OpcionesImpresionInfo}"
+                                 SelectedItem="{Binding ItemSeleccionado}"                                   
+                                 AutoExpandMode="AllNodesExpanded"   
+                                 ItemDoubleTapped="treeView_ItemDoubleTapped"
+                                 IsScrollBarVisible="True"
+                                 NodePopulationMode="Instant">
+                        <!--<syncfusion:SfTreeView.Behaviors>
+                            <localb:BehaviorTreeView/>
+                        </syncfusion:SfTreeView.Behaviors>-->
+                        <syncfusion:SfTreeView.ItemTemplate>
+                            <DataTemplate>
+                                <ViewCell>
+                                    <ViewCell.View>
+                                        <Grid x:Name="grid" RowSpacing="0" BackgroundColor="Transparent">
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="*" />
+                                                <RowDefinition Height="1" />
+                                            </Grid.RowDefinitions>
+                                            <Grid RowSpacing="0" Grid.Row="0">
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="Auto" />
+                                                </Grid.ColumnDefinitions>
+                                                    <Grid Grid.Column="0"
+                                                  RowSpacing="1"
+                                                  Padding="1,0,0,0"
+                                                  VerticalOptions="Center">
+                                                        <Label LineBreakMode="NoWrap" TextColor="Black"
+                                                       Text="{Binding Nombre}"
+                                                       VerticalOptions="StartAndExpand"    
+                                                       VerticalTextAlignment="Center">
+                                                        </Label>
+                                                    </Grid>
+                                                </Grid>
+                                            <StackLayout Grid.Row="1" HeightRequest="1"/>
+                                        </Grid>
+                                    </ViewCell.View>
+                                </ViewCell>
+                            </DataTemplate>
+                        </syncfusion:SfTreeView.ItemTemplate>
+                    </syncfusion:SfTreeView>
+                </ScrollView>
+            </Grid>
+        </StackLayout>
+            <local:LoadingIndicator
+                Grid.Row="0"
+                Grid.RowSpan="2"
+                HorizontalOptions="Fill"
+                IsRunning="{Binding IsBusy, Mode=TwoWay}"
+                VerticalOptions="Fill" />
+        </Grid>
+    </StackLayout>
+            </ScrollView>
+        </Frame>
+    </StackLayout>
+</pages:PopupPage>

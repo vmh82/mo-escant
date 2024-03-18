@@ -1,0 +1,778 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage x:Class="Escant_App.Views.Administracion.AddEmpresaView"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:button="clr-namespace:Syncfusion.XForms.Buttons;assembly=Syncfusion.Buttons.XForms"
+    xmlns:ctrls="clr-namespace:Escant_App.UserControls;assembly=Escant_App"
+    xmlns:customViews="clr-namespace:Escant_App.UserControls;assembly=Escant_App"
+    xmlns:toolkit="http://xamarin.com/schemas/2020/toolkit"
+    xmlns:effects="clr-namespace:Escant_App.Effects;assembly=Escant_App"
+    xmlns:inputLayout="clr-namespace:Syncfusion.XForms.TextInputLayout;assembly=Syncfusion.Core.XForms"
+    xmlns:combobox="clr-namespace:Syncfusion.XForms.ComboBox;assembly=Syncfusion.SfComboBox.XForms"
+    xmlns:texts="clr-namespace:ManijodaServicios.Resources.Texts;assembly=ManijodaServicios"
+    xmlns:viewModelBase="clr-namespace:Escant_App.ViewModels.Base;assembly=Escant_App"
+    xmlns:yummy="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView"   
+    xmlns:ffimageloading="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+    xmlns:buttons="clr-namespace:Syncfusion.XForms.Buttons;assembly=Syncfusion.Buttons.XForms"
+    xmlns:transformations="clr-namespace:FFImageLoading.Transformations;assembly=FFImageLoading.Transformations"
+    Title="{texts:Translate AddEmpresaAdministracionTitle}"
+    viewModelBase:ViewModelLocator.AutoWireViewModel="true">
+    <!--  ESTILOS PARA LA PANTALLA  -->
+    <ContentPage.Resources>
+        <ResourceDictionary>
+
+            <Style
+                x:Key="TitleLabelStyle"
+                BasedOn="{StaticResource SpectralRegularLabelStyle}"
+                TargetType="Label">
+                <Setter Property="TextColor" Value="{StaticResource BlueColor}" />
+                <Setter Property="HorizontalOptions" Value="FillAndExpand" />
+                <Setter Property="FontSize" Value="{StaticResource LittleSize}" />
+                <Setter Property="Margin" Value="0,10,0,0" />
+            </Style>
+
+            <Style x:Key="AddSupplierHeaderStyle" TargetType="{x:Type Label}">
+                <Setter Property="FontFamily" Value="{StaticResource NunitoRegular}" />
+                <Setter Property="FontSize" Value="{StaticResource MidMediumSize}" />
+                <!--<Setter Property="TextColor"
+                        Value="Gray" />-->
+                <Setter Property="HorizontalOptions" Value="FillAndExpand" />
+                <Setter Property="VerticalOptions" Value="End" />
+                <Setter Property="Margin" Value="0,0,0,0" />
+            </Style>
+
+            <Style x:Key="AddSupplierLabelStyle" TargetType="{x:Type Label}">
+                <Setter Property="FontFamily" Value="{StaticResource NunitoRegular}" />
+                <Setter Property="FontSize" Value="{StaticResource LargeSize}" />
+                <Setter Property="TextColor" Value="{StaticResource BlackTextColor}" />
+                <Setter Property="HorizontalOptions" Value="FillAndExpand" />
+                <Setter Property="VerticalOptions" Value="Center" />
+                <Setter Property="Margin" Value="0,10,0,0" />
+            </Style>
+            <Style x:Key="AppSettingCheckItemLabelStyle" TargetType="{x:Type Label}">
+                <Setter Property="FontFamily" Value="{StaticResource NunitoRegular}" />
+                <Setter Property="FontSize" Value="{StaticResource MediumSize}" />
+                <Setter Property="HorizontalOptions" Value="Start" />
+                <Setter Property="VerticalOptions" Value="Center" />
+                <Setter Property="Margin" Value="0, 0" />
+                <Setter Property="TextColor" Value="{StaticResource BlackTextColor}" />
+            </Style>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <!--  TOOLBAR ITEMS  -->
+    <ContentPage.ToolbarItems>
+        <ToolbarItem
+            Command="{Binding Cancel_Command}"
+            Order="Primary"
+            Priority="0"
+            Text="{texts:Translate Cancel}">
+            <ToolbarItem.Icon>
+                <OnPlatform x:TypeArguments="FileImageSource">
+                    <On Platform="Android" Value="cross_512.png" />
+                </OnPlatform>
+            </ToolbarItem.Icon>
+        </ToolbarItem>
+
+        <ToolbarItem
+            Command="{Binding Ok_Command}"
+            Order="Primary"
+            Priority="1"
+            Text="{texts:Translate Save}">
+            <ToolbarItem.Icon>
+                <OnPlatform x:TypeArguments="FileImageSource">
+                    <On Platform="Android" Value="save.png" />
+                </OnPlatform>
+            </ToolbarItem.Icon>
+        </ToolbarItem>
+    </ContentPage.ToolbarItems>
+    <!--  CONTENIDO  -->
+    <ContentPage.Content>
+        <Grid>
+            <ScrollView Margin="0,0,0,0">
+                <Grid RowSpacing="0">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+                    <Grid
+                        Grid.Row="0"
+                        Padding="5,0,5,25"
+                        BackgroundColor="{StaticResource colPrim}"
+                        HeightRequest="{OnPlatform Android='5',
+                                                   iOS='5'}" />
+                    <yummy:PancakeView
+                        Grid.Row="1"
+                        Margin="0,-15,0,0"
+                        Padding="10,10"
+                        BackgroundColor="#F6F7F8"
+                        CornerRadius="20,20,0,0"
+                        VerticalOptions="FillAndExpand">
+                        <ScrollView VerticalScrollBarVisibility="Never">
+                            <Grid Margin="10,15,10,15">
+                                <Grid.RowSpacing>
+                                    <OnPlatform
+                                        x:TypeArguments="x:Double"
+                                        Android="-5"
+                                        iOS="10" />
+                                </Grid.RowSpacing>
+                                <Grid.RowDefinitions>
+                                    <!--Administración de la imagen-->
+                                    <RowDefinition Height="Auto" />
+                                    <!--Código y Descripción-->
+                                    <RowDefinition Height="Auto" />
+                                    <!--Identificación-->
+                                    <RowDefinition Height="Auto" />
+                                    <!--Representante-->                                    
+                                    <RowDefinition Height="Auto" />
+                                    <!--Dirección-->                                    
+                                    <RowDefinition Height="Auto" />
+                                    <!--Celular-->                                    
+                                    <RowDefinition Height="Auto" />
+                                    <!--Correo-->                                    
+                                    <RowDefinition Height="Auto" />
+                                    <!--Teléfono Fijo-->
+                                    <RowDefinition Height="Auto" />
+                                    <!--EsProveedor-->
+                                    <RowDefinition Height="Auto" />
+                                    <!--TipoProveedor-->
+                                    <RowDefinition Height="Auto" />
+                                    <!--EsContribuyenteEspecial-->
+                                    <RowDefinition Height="Auto" />
+                                    <!--PoseeFacturaciónElectrónica-->
+                                    <RowDefinition Height="Auto" />
+                                    <!--Por Defecto-->
+                                    <RowDefinition Height="Auto" />
+                                </Grid.RowDefinitions>
+
+                                <Grid Grid.Row="0">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="130" />
+                                        <ColumnDefinition Width="50" />
+                                        <ColumnDefinition Width="50" />
+                                        <ColumnDefinition Width="50" />
+                                        <ColumnDefinition Width="50" />
+                                    </Grid.ColumnDefinitions>
+
+
+                                    <ffimageloading:CachedImage
+                                x:Name="clienteImage"
+                                Grid.Column="0"
+                                Margin="0,8,0,15"
+                                Aspect="Fill"
+                                CacheType="All"
+                                DownsampleToViewSize="true"
+                                ErrorPlaceholder="picture_icon.png"
+                                HeightRequest="128"
+                                HorizontalOptions="Center"
+                                LoadingPlaceholder="picture_icon.png"
+                                Source="{Binding FuenteImagenRegistro}"
+                                TransformPlaceholders="True"
+                                WidthRequest="128">
+                                        <ffimageloading:CachedImage.Transformations>
+                                            <transformations:RoundedTransformation
+                                        BorderHexColor="#000000"
+                                        BorderSize="5"
+                                        Radius="20" />
+                                        </ffimageloading:CachedImage.Transformations>
+                                    </ffimageloading:CachedImage>
+
+                                    <buttons:SfButton
+                                Grid.Column="1"
+                                Padding="8"
+                                BackgroundColor="{StaticResource Gray-White}"
+                                BorderColor="{StaticResource colPrim}"
+                                BorderWidth="1"
+                                Command="{Binding OpenCameraCommand}"
+                                CornerRadius="20"
+                                HeightRequest="40"
+                                HorizontalOptions="Center"
+                                VerticalOptions="Center"
+                                WidthRequest="40">
+                                        <buttons:SfButton.Content>
+                                            <Image HeightRequest="15" Source="photo_camera.png">
+                                                <Image.GestureRecognizers>
+                                                    <TapGestureRecognizer Command="{Binding OpenCameraCommand}" />
+                                                </Image.GestureRecognizers>
+                                            </Image>
+                                        </buttons:SfButton.Content>
+                                    </buttons:SfButton>
+
+                                    <buttons:SfButton
+                                Grid.Column="2"
+                                Padding="8"
+                                BackgroundColor="{StaticResource Gray-White}"
+                                BorderColor="{StaticResource colPrim}"
+                                BorderWidth="1"
+                                Command="{Binding BrowseGalleryCommand}"
+                                CornerRadius="20"
+                                HeightRequest="40"
+                                HorizontalOptions="Center"
+                                VerticalOptions="Center"
+                                WidthRequest="40">
+                                        <buttons:SfButton.Content>
+                                            <Image
+                                        HeightRequest="32"
+                                        HorizontalOptions="Center"
+                                        Source="picture_black.png"
+                                        WidthRequest="32">
+                                                <Image.GestureRecognizers>
+                                                    <TapGestureRecognizer Command="{Binding BrowseGalleryCommand}" />
+                                                </Image.GestureRecognizers>
+                                            </Image>
+                                        </buttons:SfButton.Content>
+                                    </buttons:SfButton>
+
+                                    <buttons:SfButton
+                                Grid.Column="3"
+                                Padding="8"
+                                BackgroundColor="{StaticResource Gray-White}"
+                                BorderColor="{StaticResource RedColor}"
+                                BorderWidth="1"
+                                Command="{Binding RemoveImageCommand}"
+                                CornerRadius="20"
+                                HeightRequest="40"
+                                HorizontalOptions="Center"
+                                VerticalOptions="Center"
+                                WidthRequest="40">
+                                        <buttons:SfButton.Content>
+                                            <Image
+                                        HeightRequest="32"
+                                        HorizontalOptions="Start"
+                                        Source="remove_512.png"
+                                        WidthRequest="32">
+                                                <Image.GestureRecognizers>
+                                                    <TapGestureRecognizer Command="{Binding RemoveImageCommand}" />
+                                                </Image.GestureRecognizers>
+                                            </Image>
+                                        </buttons:SfButton.Content>
+                                    </buttons:SfButton>
+                                    <buttons:SfButton
+                                Grid.Column="4"
+                                Padding="8"
+                                BackgroundColor="{StaticResource Gray-White}"
+                                BorderColor="{StaticResource BlueColor}"
+                                BorderWidth="1"                 
+                                Command="{Binding AddRegistro_ContactCommand}"
+                                CornerRadius="20"
+                                HeightRequest="40"
+                                HorizontalOptions="Center"
+                                VerticalOptions="Center"
+                                WidthRequest="40">
+                                        <buttons:SfButton.Content>
+                                            <Image
+                                        HeightRequest="32"
+                                        HorizontalOptions="Start"
+                                        Source="staff_black.png"
+                                        WidthRequest="32">
+                                                <Image.GestureRecognizers>
+                                                    <TapGestureRecognizer Command="{Binding AddRegistro_ContactCommand}" />
+                                                </Image.GestureRecognizers>
+                                            </Image>
+                                        </buttons:SfButton.Content>
+                                    </buttons:SfButton>
+
+                                </Grid>
+
+
+                                <Grid Grid.Row="1">
+                                    <Grid.RowSpacing>
+                                        <OnPlatform
+                                            x:TypeArguments="x:Double"
+                                            Android="-5"
+                                            iOS="10" />
+                                    </Grid.RowSpacing>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto" />
+                                        <RowDefinition Height="Auto" />
+                                    </Grid.RowDefinitions>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="0.3*" />
+                                        <ColumnDefinition Width="0.7*" />
+                                    </Grid.ColumnDefinitions>
+
+                                    <customViews:SfCircleView
+                                        Grid.Row="0"
+                                        Grid.RowSpan="2"
+                                        Grid.Column="0"
+                                        AbbrText="{Binding Descripcion.Value}"
+                                        BackgroundColor="LightSteelBlue"
+                                        BorderColor="{DynamicResource Gray-800}"
+                                        CornerRadius="50"
+                                        FontSize="20"
+                                        HeightRequest="100"
+                                        WidthRequest="100" />
+                                    <inputLayout:SfTextInputLayout
+                                        Grid.Row="0"
+                                        Grid.Column="1"
+                                        ContainerBackgroundColor="Transparent"
+                                        ContainerType="Outlined"
+                                        FocusedColor="{DynamicResource colPrim}"
+                                        HasError="{Binding IsDescripcionValid}"
+                                        Hint="{texts:Translate DescripcionHint}"
+                                        HorizontalOptions="Fill"
+                                        LeadingViewPosition="Inside">
+                                        <Entry
+                                            FontFamily="{StaticResource PoppinsRegular}"
+                                            FontSize="14"
+                                            MaxLength="80"
+                                            Text="{Binding Descripcion.Value}" >
+                                            <Entry.Behaviors>
+                                                <toolkit:EventToCommandBehavior
+                                                EventName="Unfocused"
+                                                Command="{Binding NombreUnfocused}" />
+                                            </Entry.Behaviors>
+                                        </Entry>
+                                        <inputLayout:SfTextInputLayout.LeadingView>
+                                            <Label
+                                                FontSize="18"
+                                                Text="&#xf406;"
+                                                TextColor="{StaticResource colPrim}"
+                                                VerticalTextAlignment="Center">
+                                                <Label.FontFamily>
+                                                    <OnPlatform
+                                                        x:TypeArguments="x:String"
+                                                        Android="fa-solid-900.ttf#Font Awesome 5 Free Solid"
+                                                        iOS="Font Awesome 5 Free" />
+                                                </Label.FontFamily>
+                                            </Label>
+                                        </inputLayout:SfTextInputLayout.LeadingView>
+                                    </inputLayout:SfTextInputLayout>
+
+                                    <inputLayout:SfTextInputLayout
+                                        Grid.Row="1"
+                                        Grid.Column="1"
+                                        ContainerBackgroundColor="Transparent"
+                                        ContainerType="Outlined"
+                                        FocusedColor="{StaticResource colPrim}"
+                                        HasError="{Binding IsCodigoValid}"
+                                        Hint="{texts:Translate CodigoHint}"
+                                        HorizontalOptions="Fill"
+                                        LeadingViewPosition="Inside">
+                                        <Entry
+                                            FontFamily="{StaticResource PoppinsRegular}"
+                                            FontSize="14"
+                                            IsEnabled="{Binding AllowEdit}"
+                                            Text="{Binding Codigo.Value}" />
+                                        <inputLayout:SfTextInputLayout.LeadingView>
+                                            <Label
+                                                FontSize="18"
+                                                Text="&#xf121;"
+                                                TextColor="{StaticResource colPrim}"
+                                                VerticalTextAlignment="Center">
+                                                <Label.FontFamily>
+                                                    <OnPlatform
+                                                        x:TypeArguments="x:String"
+                                                        Android="fa-solid-900.ttf#Font Awesome 5 Free Solid"
+                                                        iOS="Font Awesome 5 Free" />
+                                                </Label.FontFamily>
+                                            </Label>
+                                        </inputLayout:SfTextInputLayout.LeadingView>
+                                    </inputLayout:SfTextInputLayout>
+                                </Grid>
+
+                                <inputLayout:SfTextInputLayout
+                                    Grid.Row="2"
+                                    ContainerBackgroundColor="Transparent"
+                                    ContainerType="Outlined"
+                                    FocusedColor="{StaticResource colPrim}"
+                                    HasError="{Binding IsIdentificacionValid}"
+                                    Hint="{texts:Translate IdentificacionHint}"
+                                    HorizontalOptions="Fill"
+                                    LeadingViewPosition="Inside">
+                                    <Entry
+                                        FontFamily="{StaticResource PoppinsRegular}"
+                                        FontSize="14"
+                                        Keyboard="Telephone"
+                                        Text="{Binding Identificacion.Value}" />
+                                    <inputLayout:SfTextInputLayout.LeadingView>
+                                        <Label
+                                            FontSize="18"
+                                            Text="&#xf3cd;"
+                                            TextColor="{StaticResource colPrim}"
+                                            VerticalTextAlignment="Center">
+                                            <Label.FontFamily>
+                                                <OnPlatform
+                                                    x:TypeArguments="x:String"
+                                                    Android="fa-solid-900.ttf#Font Awesome 5 Free Solid"
+                                                    iOS="Font Awesome 5 Free" />
+                                            </Label.FontFamily>
+                                        </Label>
+                                    </inputLayout:SfTextInputLayout.LeadingView>
+                                </inputLayout:SfTextInputLayout>
+                                <inputLayout:SfTextInputLayout
+                                    Grid.Row="3"
+                                    ContainerBackgroundColor="Transparent"
+                                    ContainerType="Outlined"
+                                    FocusedColor="{StaticResource colPrim}"
+                                    HasError="{Binding IsRepresentanteValid}"
+                                    Hint="{texts:Translate RepresentanteHint}"
+                                    HorizontalOptions="Fill"
+                                    LeadingViewPosition="Inside">
+                                    <Entry
+                                        FontFamily="{StaticResource PoppinsRegular}"
+                                        FontSize="14"
+                                        Text="{Binding Representante.Value}" />
+                                    <inputLayout:SfTextInputLayout.LeadingView>
+                                        <Label
+                                            FontSize="18"
+                                            Text="&#xf044;"
+                                            TextColor="{StaticResource colPrim}"
+                                            VerticalTextAlignment="Center">
+                                            <Label.FontFamily>
+                                                <OnPlatform
+                                                    x:TypeArguments="x:String"
+                                                    Android="fa-solid-900.ttf#Font Awesome 5 Free Solid"
+                                                    iOS="Font Awesome 5 Free" />
+                                            </Label.FontFamily>
+                                        </Label>
+                                    </inputLayout:SfTextInputLayout.LeadingView>
+                                </inputLayout:SfTextInputLayout>
+                                
+                                <inputLayout:SfTextInputLayout
+                                    Grid.Row="4"
+                                    ContainerBackgroundColor="Transparent"
+                                    ContainerType="Outlined"
+                                    FocusedColor="{StaticResource colPrim}"
+                                    HasError="{Binding IsDireccionValid}"
+                                    Hint="{texts:Translate DireccionHint}"
+                                    HorizontalOptions="Fill"
+                                    LeadingViewPosition="Inside">
+                                    <Entry
+                                        FontFamily="{StaticResource PoppinsRegular}"
+                                        FontSize="14"
+                                        MaxLength="250"
+                                        Text="{Binding Direccion.Value}" />
+                                    <inputLayout:SfTextInputLayout.LeadingView>
+                                        <Label
+                                            FontSize="18"
+                                            Text="&#xf3c5;"
+                                            TextColor="{StaticResource colPrim}"
+                                            VerticalTextAlignment="Center">
+                                            <Label.FontFamily>
+                                                <OnPlatform
+                                                    x:TypeArguments="x:String"
+                                                    Android="fa-solid-900.ttf#Font Awesome 5 Free Solid"
+                                                    iOS="Font Awesome 5 Free" />
+                                            </Label.FontFamily>
+                                        </Label>
+                                    </inputLayout:SfTextInputLayout.LeadingView>
+                                </inputLayout:SfTextInputLayout>
+
+                                <inputLayout:SfTextInputLayout
+                                    Grid.Row="5"
+                                    ContainerBackgroundColor="Transparent"
+                                    ContainerType="Outlined"
+                                    FocusedColor="{StaticResource colPrim}"
+                                    HasError="{Binding IsCelularValid}"
+                                    Hint="{texts:Translate CelularHint}"
+                                    HorizontalOptions="Fill"
+                                    LeadingViewPosition="Inside">
+                                    <Entry
+                                        FontFamily="{StaticResource PoppinsRegular}"
+                                        FontSize="14"
+                                        Keyboard="Telephone"
+                                        Text="{Binding Celular.Value}" />
+                                    <inputLayout:SfTextInputLayout.LeadingView>
+                                        <Label
+                                            FontSize="18"
+                                            Text="&#xf3cd;"
+                                            TextColor="{StaticResource colPrim}"
+                                            VerticalTextAlignment="Center">
+                                            <Label.FontFamily>
+                                                <OnPlatform
+                                                    x:TypeArguments="x:String"
+                                                    Android="fa-solid-900.ttf#Font Awesome 5 Free Solid"
+                                                    iOS="Font Awesome 5 Free" />
+                                            </Label.FontFamily>
+                                        </Label>
+                                    </inputLayout:SfTextInputLayout.LeadingView>
+                                </inputLayout:SfTextInputLayout>
+                                
+                                <inputLayout:SfTextInputLayout
+                                    Grid.Row="6"
+                                    ContainerBackgroundColor="Transparent"
+                                    ContainerType="Outlined"
+                                    FocusedColor="{StaticResource colPrim}"
+                                    HasError="{Binding IsEmailValid}"
+                                    Hint="{texts:Translate EmailHint}"
+                                    HorizontalOptions="Fill"
+                                    LeadingViewPosition="Inside">
+                                    <Entry
+                                        FontFamily="{StaticResource PoppinsRegular}"
+                                        FontSize="14"
+                                        Keyboard="Email"
+                                        Text="{Binding Email.Value}" />
+                                    <inputLayout:SfTextInputLayout.LeadingView>
+                                        <Label
+                                            FontSize="18"
+                                            Text="&#xf0e0;"
+                                            TextColor="{StaticResource colPrim}"
+                                            VerticalTextAlignment="Center">
+                                            <Label.FontFamily>
+                                                <OnPlatform
+                                                    x:TypeArguments="x:String"
+                                                    Android="fa-solid-900.ttf#Font Awesome 5 Free Solid"
+                                                    iOS="Font Awesome 5 Free" />
+                                            </Label.FontFamily>
+                                        </Label>
+                                    </inputLayout:SfTextInputLayout.LeadingView>
+                                </inputLayout:SfTextInputLayout>
+
+                                <inputLayout:SfTextInputLayout
+                                    Grid.Row="7"
+                                    ContainerBackgroundColor="Transparent"
+                                    ContainerType="Outlined"
+                                    FocusedColor="{StaticResource colPrim}"
+                                    Hint="{texts:Translate TelefonoFijoHint}"
+                                    HorizontalOptions="Fill"
+                                    LeadingViewPosition="Inside">
+                                    <Entry
+                                        FontFamily="{StaticResource PoppinsRegular}"
+                                        FontSize="14"
+                                        Keyboard="Telephone"
+                                        Text="{Binding TelefonoFijo.Value}" />
+                                    <inputLayout:SfTextInputLayout.LeadingView>
+                                        <Label
+                                            FontSize="18"
+                                            Text="&#xf044;"
+                                            TextColor="{StaticResource colPrim}"
+                                            VerticalTextAlignment="Center">
+                                            <Label.FontFamily>
+                                                <OnPlatform
+                                                    x:TypeArguments="x:String"
+                                                    Android="fa-solid-900.ttf#Font Awesome 5 Free Solid"
+                                                    iOS="Font Awesome 5 Free" />
+                                            </Label.FontFamily>
+                                        </Label>
+                                    </inputLayout:SfTextInputLayout.LeadingView>
+                                </inputLayout:SfTextInputLayout>
+
+                                <StackLayout Margin="10,0,0,10" Orientation="Horizontal" Grid.Row="8" >
+                                    <Label Style="{StaticResource AppSettingCheckItemLabelStyle}" Text="{texts:Translate EsProveedorHint}" />
+                                    <button:SfSwitch
+                                        Margin="8,0"
+                                        AllowIndeterminateState="True"
+                                        HeightRequest="28"
+                                        HorizontalOptions="EndAndExpand"
+                                        IsOn="{Binding EsProveedor}"                            
+                                        VisualType="Cupertino"> 
+                                        <VisualStateManager.VisualStateGroups>
+                                            <VisualStateGroup x:Name="CommonStates">
+                                                <VisualState x:Name="On">
+                                                    <VisualState.Setters>
+                                                        <Setter Property="SwitchSettings">
+                                                            <Setter.Value>
+                                                                <button:CupertinoSwitchSettings
+                                                        x:TypeArguments="button:OnState"
+                                                        ThumbBorderColor="{DynamicResource Gray-500}"
+                                                        ThumbColor="{DynamicResource Gray-White}"
+                                                        TrackBorderColor="{DynamicResource Gray-200}"
+                                                        TrackColor="{DynamicResource RedColor}" />
+                                                            </Setter.Value>
+                                                        </Setter>
+                                                    </VisualState.Setters>
+                                                </VisualState>
+                                                <VisualState x:Name="Off">
+                                                    <VisualState.Setters>
+                                                        <Setter Property="SwitchSettings">
+                                                            <Setter.Value>
+                                                                <button:CupertinoSwitchSettings
+                                                        x:TypeArguments="button:OffState"
+                                                        ThumbBorderColor="{DynamicResource Gray-200}"
+                                                        ThumbColor="{DynamicResource Gray-White}"
+                                                        TrackBorderColor="{DynamicResource Gray-200}"
+                                                        TrackColor="{DynamicResource Gray-500}" />
+                                                            </Setter.Value>
+                                                        </Setter>
+                                                    </VisualState.Setters>
+                                                </VisualState>
+                                            </VisualStateGroup>
+                                        </VisualStateManager.VisualStateGroups>
+                                    </button:SfSwitch>
+                                </StackLayout>
+                                <inputLayout:SfTextInputLayout
+                            Grid.Row="9"
+                            ContainerBackgroundColor="Transparent"
+                            ContainerType="Outlined"
+                            FocusedColor="{DynamicResource colPrim}"
+                            HasError="{Binding IsTipoProveedorValid}"
+                            Hint="{texts:Translate TipoProveedorHint}"
+                            IsVisible="{Binding IsVisibleTipoProveedor}"        
+                            HorizontalOptions="Fill"
+                            LeadingViewPosition="Inside"
+                            TrailingViewPosition="Inside">
+                                    <inputLayout:SfTextInputLayout.GestureRecognizers>
+                                        <TapGestureRecognizer Command="{Binding OpenTipoProveedorCommand}" />
+                                    </inputLayout:SfTextInputLayout.GestureRecognizers>
+                                    <Entry Focused="OnTipoProveedor_Focused" Text="{Binding TipoProveedorSeleccionado.Nombre}" />
+                                    <inputLayout:SfTextInputLayout.LeadingView>
+                                        <Label
+                                    FontSize="18"
+                                    Text="&#xf03a;"
+                                    TextColor="{DynamicResource colPrim}"
+                                    VerticalTextAlignment="Center">
+                                            <Label.FontFamily>
+                                                <OnPlatform
+                                            x:TypeArguments="x:String"
+                                            Android="fa-solid-900.ttf#Font Awesome 5 Free Solid"
+                                            iOS="Font Awesome 5 Free" />
+                                            </Label.FontFamily>
+                                        </Label>
+                                    </inputLayout:SfTextInputLayout.LeadingView>
+                                    <inputLayout:SfTextInputLayout.TrailingView>
+                                        <Label
+                                    FontSize="18"
+                                    Text="&#xf0dd;"
+                                    TextColor="{DynamicResource colPrim}"
+                                    VerticalTextAlignment="Center">
+                                            <Label.FontFamily>
+                                                <OnPlatform
+                                            x:TypeArguments="x:String"
+                                            Android="fa-solid-900.ttf#Font Awesome 5 Free Solid"
+                                            iOS="Font Awesome 5 Free" />
+                                            </Label.FontFamily>
+                                        </Label>
+                                    </inputLayout:SfTextInputLayout.TrailingView>
+                                </inputLayout:SfTextInputLayout>
+                                <StackLayout Margin="10,0,0,10" Orientation="Horizontal" Grid.Row="10" IsVisible="{Binding IsVisibleEsContribuyenteEspecial}"        >
+                                    <Label Style="{StaticResource AppSettingCheckItemLabelStyle}" Text="{texts:Translate EsContribuyenteEspecialHint}" />
+                                    <button:SfSwitch
+                                        Margin="8,0"
+                                        AllowIndeterminateState="True"
+                                        HeightRequest="28"
+                                        HorizontalOptions="EndAndExpand"
+                                        IsOn="{Binding EsContribuyenteEspecial}"                            
+                                        VisualType="Cupertino">
+                                        <VisualStateManager.VisualStateGroups>
+                                            <VisualStateGroup x:Name="CommonStates">
+                                                <VisualState x:Name="On">
+                                                    <VisualState.Setters>
+                                                        <Setter Property="SwitchSettings">
+                                                            <Setter.Value>
+                                                                <button:CupertinoSwitchSettings
+                                                        x:TypeArguments="button:OnState"
+                                                        ThumbBorderColor="{DynamicResource Gray-500}"
+                                                        ThumbColor="{DynamicResource Gray-White}"
+                                                        TrackBorderColor="{DynamicResource Gray-200}"
+                                                        TrackColor="{DynamicResource RedColor}" />
+                                                            </Setter.Value>
+                                                        </Setter>
+                                                    </VisualState.Setters>
+                                                </VisualState>
+                                                <VisualState x:Name="Off">
+                                                    <VisualState.Setters>
+                                                        <Setter Property="SwitchSettings">
+                                                            <Setter.Value>
+                                                                <button:CupertinoSwitchSettings
+                                                        x:TypeArguments="button:OffState"
+                                                        ThumbBorderColor="{DynamicResource Gray-200}"
+                                                        ThumbColor="{DynamicResource Gray-White}"
+                                                        TrackBorderColor="{DynamicResource Gray-200}"
+                                                        TrackColor="{DynamicResource Gray-500}" />
+                                                            </Setter.Value>
+                                                        </Setter>
+                                                    </VisualState.Setters>
+                                                </VisualState>
+                                            </VisualStateGroup>
+                                        </VisualStateManager.VisualStateGroups>
+                                    </button:SfSwitch>
+                                </StackLayout>
+                                <StackLayout Margin="10,0,0,10" Orientation="Horizontal" Grid.Row="11" IsVisible="{Binding IsVisiblePoseeFacturacionElectronica}">
+                                    <Label Style="{StaticResource AppSettingCheckItemLabelStyle}" Text="{texts:Translate PoseeFacturacionElectronicaHint}" />
+                                    <button:SfSwitch
+                                        Margin="8,0"
+                                        AllowIndeterminateState="True"
+                                        HeightRequest="28"
+                                        HorizontalOptions="EndAndExpand"
+                                        IsOn="{Binding PoseeFacturacionElectronica}"                            
+                                        VisualType="Cupertino">
+                                        <VisualStateManager.VisualStateGroups>
+                                            <VisualStateGroup x:Name="CommonStates">
+                                                <VisualState x:Name="On">
+                                                    <VisualState.Setters>
+                                                        <Setter Property="SwitchSettings">
+                                                            <Setter.Value>
+                                                                <button:CupertinoSwitchSettings
+                                                        x:TypeArguments="button:OnState"
+                                                        ThumbBorderColor="{DynamicResource Gray-500}"
+                                                        ThumbColor="{DynamicResource Gray-White}"
+                                                        TrackBorderColor="{DynamicResource Gray-200}"
+                                                        TrackColor="{DynamicResource RedColor}" />
+                                                            </Setter.Value>
+                                                        </Setter>
+                                                    </VisualState.Setters>
+                                                </VisualState>
+                                                <VisualState x:Name="Off">
+                                                    <VisualState.Setters>
+                                                        <Setter Property="SwitchSettings">
+                                                            <Setter.Value>
+                                                                <button:CupertinoSwitchSettings
+                                                        x:TypeArguments="button:OffState"
+                                                        ThumbBorderColor="{DynamicResource Gray-200}"
+                                                        ThumbColor="{DynamicResource Gray-White}"
+                                                        TrackBorderColor="{DynamicResource Gray-200}"
+                                                        TrackColor="{DynamicResource Gray-500}" />
+                                                            </Setter.Value>
+                                                        </Setter>
+                                                    </VisualState.Setters>
+                                                </VisualState>
+                                            </VisualStateGroup>
+                                        </VisualStateManager.VisualStateGroups>
+                                    </button:SfSwitch>
+                                </StackLayout>
+                                <StackLayout Margin="10,0,0,10" Orientation="Horizontal" Grid.Row="12" >
+                                    <Label Style="{StaticResource AppSettingCheckItemLabelStyle}" Text="{texts:Translate PorDefectoHint}" />
+                                    <button:SfSwitch
+                                        Margin="8,0"
+                                        AllowIndeterminateState="True"
+                                        HeightRequest="28"
+                                        HorizontalOptions="EndAndExpand"
+                                        IsOn="{Binding PorDefecto}"                            
+                                        VisualType="Cupertino">
+                                        <VisualStateManager.VisualStateGroups>
+                                            <VisualStateGroup x:Name="CommonStates">
+                                                <VisualState x:Name="On">
+                                                    <VisualState.Setters>
+                                                        <Setter Property="SwitchSettings">
+                                                            <Setter.Value>
+                                                                <button:CupertinoSwitchSettings
+                                                        x:TypeArguments="button:OnState"
+                                                        ThumbBorderColor="{DynamicResource Gray-500}"
+                                                        ThumbColor="{DynamicResource Gray-White}"
+                                                        TrackBorderColor="{DynamicResource Gray-200}"
+                                                        TrackColor="{DynamicResource RedColor}" />
+                                                            </Setter.Value>
+                                                        </Setter>
+                                                    </VisualState.Setters>
+                                                </VisualState>
+                                                <VisualState x:Name="Off">
+                                                    <VisualState.Setters>
+                                                        <Setter Property="SwitchSettings">
+                                                            <Setter.Value>
+                                                                <button:CupertinoSwitchSettings
+                                                        x:TypeArguments="button:OffState"
+                                                        ThumbBorderColor="{DynamicResource Gray-200}"
+                                                        ThumbColor="{DynamicResource Gray-White}"
+                                                        TrackBorderColor="{DynamicResource Gray-200}"
+                                                        TrackColor="{DynamicResource Gray-500}" />
+                                                            </Setter.Value>
+                                                        </Setter>
+                                                    </VisualState.Setters>
+                                                </VisualState>
+                                            </VisualStateGroup>
+                                        </VisualStateManager.VisualStateGroups>
+                                    </button:SfSwitch>
+                                </StackLayout>
+                            </Grid>
+                        </ScrollView>
+                    </yummy:PancakeView>
+                </Grid>
+            </ScrollView>
+            <customViews:LoadingIndicator
+                Grid.Row="0"
+                HorizontalOptions="Fill"
+                IsRunning="{Binding IsBusy, Mode=TwoWay}"
+                VerticalOptions="Fill" />
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

@@ -1,0 +1,51 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<ContentView
+    x:Class="Escant_App.UserControls.NumericUpDown"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+    <ContentView.Content>
+        <StackLayout
+            HorizontalOptions="StartAndExpand"
+            Orientation="Horizontal"
+            Spacing="10">
+
+            <Label
+                x:Name="MinusButton"
+                Margin="0,0,0,0"
+                FontFamily="{StaticResource FontAwesome}"
+                FontSize="25"
+                HorizontalOptions="EndAndExpand"
+                Text="&#xf056;"
+                TextColor="{DynamicResource RedColor}"
+                VerticalOptions="Center">
+                <Label.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="MinusTapped" />
+                </Label.GestureRecognizers>
+            </Label>
+
+            <Label
+                x:Name="ValueText"
+                HorizontalOptions="CenterAndExpand"
+                HorizontalTextAlignment="Center"
+                VerticalOptions="Center"
+                WidthRequest="25" />
+
+            <Label
+                x:Name="PlusButton"
+                Margin="0,0,0,0"
+                FontFamily="{StaticResource FontAwesome}"
+                FontSize="25"
+                HorizontalOptions="EndAndExpand"
+                Text="&#xf055;"
+                TextColor="{DynamicResource colPrim}"
+                VerticalOptions="Center">
+                <Label.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="PlusTapped" />
+                </Label.GestureRecognizers>
+            </Label>
+        </StackLayout>
+    </ContentView.Content>
+</ContentView>

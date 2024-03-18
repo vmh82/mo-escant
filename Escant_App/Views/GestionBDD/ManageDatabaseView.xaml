@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="Escant_App.Views.GestionBDD.ManageDatabaseView"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:customViews="clr-namespace:Escant_App.UserControls;assembly=Escant_App"
+    xmlns:local="clr-namespace:Escant_App.UserControls;assembly=Escant_App"
+    xmlns:texts="clr-namespace:ManijodaServicios.Resources.Texts;assembly=ManijodaServicios"
+    xmlns:viewModelBase="clr-namespace:Escant_App.ViewModels.Base;assembly=Escant_App"
+    Title="{texts:Translate DBManagementTitle}"
+    viewModelBase:ViewModelLocator.AutoWireViewModel="true"
+    BackgroundColor="{DynamicResource MainWrapperBackgroundColor}">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Style x:Key="ManageDBTitleStyle" TargetType="{x:Type Label}">
+                <Setter Property="FontFamily" Value="{StaticResource NunitoBold}" />
+                <Setter Property="FontSize" Value="{StaticResource LargeSize}" />
+                <Setter Property="HorizontalOptions" Value="Start" />
+                <Setter Property="VerticalOptions" Value="Center" />
+                <Setter Property="Margin" Value="12, 0" />
+                <Setter Property="TextColor" Value="{DynamicResource colPrim}" />
+            </Style>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <ContentPage.Content>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <ScrollView Margin="15,10,15,10">
+                <StackLayout>
+                    <StackLayout
+                        Padding="0,8,8,8"
+                        HeightRequest="40"
+                        Orientation="Horizontal">
+                        <StackLayout.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding BackupDbCommand}" />
+                        </StackLayout.GestureRecognizers>
+                        <Image
+                            HeightRequest="30"
+                            Opacity="0.8"
+                            Source="database_64.png"
+                            VerticalOptions="Center"
+                            WidthRequest="30" />
+                        <Label Style="{StaticResource ManageDBTitleStyle}" Text="{texts:Translate DBBackup}" />
+                    </StackLayout>
+
+                    <StackLayout
+                        Padding="0,8,8,8"
+                        HeightRequest="40"
+                        Orientation="Horizontal">
+                        <StackLayout.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding RestoreDbCommand}" />
+                        </StackLayout.GestureRecognizers>
+                        <Image
+                            HeightRequest="30"
+                            Opacity="0.8"
+                            Source="database_restore_64.png"
+                            VerticalOptions="Center"
+                            WidthRequest="30" />
+                        <Label Style="{StaticResource ManageDBTitleStyle}" Text="{texts:Translate DBRestore}" />
+                    </StackLayout>
+
+                </StackLayout>
+            </ScrollView>
+            <StackLayout
+                Grid.Row="1"
+                Padding="0"
+                BackgroundColor="{DynamicResource Gray-900}">
+                <!--<local:AdBanner Size="Standardbanner" VerticalOptions="EndAndExpand" />-->
+                <local:AdmobControl BackgroundColor="Transparent" />
+            </StackLayout>
+            <local:LoadingIndicator
+                Grid.RowSpan="2"
+                HorizontalOptions="Fill"
+                IsRunning="{Binding IsBusy, Mode=TwoWay}"
+                VerticalOptions="Fill" />
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

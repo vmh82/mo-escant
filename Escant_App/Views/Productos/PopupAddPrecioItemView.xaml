@@ -1,0 +1,399 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<pages:PopupPage
+    x:Class="Escant_App.Views.Productos.PopupAddPrecioItemView"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:animations="clr-namespace:Rg.Plugins.Popup.Animations;assembly=Rg.Plugins.Popup"
+    xmlns:customViews="clr-namespace:Escant_App.UserControls;assembly=Escant_App"
+    xmlns:pages="clr-namespace:Rg.Plugins.Popup.Pages;assembly=Rg.Plugins.Popup"
+    xmlns:pancake="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView"
+    xmlns:texts="clr-namespace:ManijodaServicios.Resources.Texts;assembly=ManijodaServicios"
+    xmlns:vcell="clr-namespace:Escant_App.UserControls;assembly=Escant_App"
+    xmlns:combobox="clr-namespace:Syncfusion.XForms.ComboBox;assembly=Syncfusion.SfComboBox.XForms"
+    xmlns:inputLayout="clr-namespace:Syncfusion.XForms.TextInputLayout;assembly=Syncfusion.Core.XForms"
+    xmlns:viewModelBase="clr-namespace:Escant_App.ViewModels.Base;assembly=Escant_App"
+    xmlns:button="clr-namespace:Syncfusion.XForms.Buttons;assembly=Syncfusion.Buttons.XForms"
+    xmlns:local="clr-namespace:Escant_App.UserControls"
+    viewModelBase:ViewModelLocator.AutoWireViewModel="true">
+    <!--#region 0. Recursos-->
+    <pages:PopupPage.Resources>
+        <ResourceDictionary>
+            <Style x:Key="PopupItemHeaderStyle" TargetType="{x:Type Label}">
+                <Setter Property="FontFamily" Value="{StaticResource NunitoBold}" />
+                <Setter Property="FontSize" Value="{StaticResource LargerSize}" />
+                <Setter Property="TextColor" Value="{StaticResource colPrim}" />
+                <Setter Property="HorizontalTextAlignment" Value="Start" />
+                <Setter Property="VerticalTextAlignment" Value="Center" />
+                <Setter Property="Margin" Value="0,0,0,0" />
+            </Style>
+
+            <Style x:Key="PopupLabelStyle" TargetType="{x:Type Label}">
+                <Setter Property="FontFamily" Value="{StaticResource NunitoRegular}" />
+                <Setter Property="FontSize" Value="{StaticResource LargeSize}" />
+                <Setter Property="TextColor" Value="{StaticResource Gray-900}" />
+                <Setter Property="HorizontalOptions" Value="StartAndExpand" />
+                <Setter Property="VerticalOptions" Value="Center" />
+                <Setter Property="Margin" Value="10,0,0,0" />
+            </Style>
+            <Style x:Key="AppSettingCheckItemLabelStyle" TargetType="{x:Type Label}">
+                <Setter Property="FontFamily" Value="{StaticResource NunitoRegular}" />
+                <Setter Property="FontSize" Value="{StaticResource MediumSize}" />
+                <Setter Property="HorizontalOptions" Value="Start" />
+                <Setter Property="VerticalOptions" Value="Center" />
+                <Setter Property="Margin" Value="0, 0" />
+                <Setter Property="TextColor" Value="{StaticResource BlackTextColor}" />
+            </Style>
+        </ResourceDictionary>
+    </pages:PopupPage.Resources>
+    <!--#endregion 0. Recursos-->
+    <!--#region 1. Animación-->
+    <pages:PopupPage.Animation>
+        <animations:ScaleAnimation           
+            DurationIn="700"
+            EasingIn="BounceOut"
+            PositionIn="Bottom"
+            PositionOut="Center"
+            ScaleIn="1"
+            ScaleOut="0.7"            
+            />
+    </pages:PopupPage.Animation>
+    <!--#endregion 1. Animación-->
+    <!--#region 2. Contenido-->
+    <Frame
+        x:Name="FrameContainer"
+        Margin="15"
+        Padding="15"
+        BackgroundColor="White"
+        CornerRadius="10"
+        HorizontalOptions="Center"
+        VerticalOptions="Center">
+        <Grid RowSpacing="{OnPlatform Android='0', iOS='20'}">
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+
+            <Grid Grid.Row="0" RowSpacing="5">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="1" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <!--<Image
+                    Grid.Row="0"
+                    Grid.RowSpan="2"
+                    Grid.Column="0"
+                    HeightRequest="44"
+                    HorizontalOptions="Start"
+                    Source="calpad"
+                    VerticalOptions="Center"
+                    WidthRequest="40" />-->
+                <Label
+                    Grid.Row="0"
+                    Grid.RowSpan="2"
+                    Grid.Column="0"
+                    FontFamily="{StaticResource FontAwesome}"
+                    FontSize="26"
+                    HorizontalOptions="Center"
+                    Text="&#xf1ec;"
+                    TextColor="{DynamicResource colPrim}"
+                    VerticalOptions="Center" />
+                <Label
+                    Grid.Row="0"
+                    Grid.Column="1"
+                    LineBreakMode="TailTruncation"
+                    Style="{StaticResource PopupItemHeaderStyle}"
+                    Text="{Binding PageTitle}" />
+                <BoxView
+                    Grid.Row="1"
+                    Grid.Column="1"
+                    BackgroundColor="{StaticResource Gray-700}"
+                    HeightRequest="1" />
+            </Grid>
+
+            <Grid
+                Grid.Row="1"
+                ColumnSpacing="8"
+                RowSpacing="{OnPlatform Android='5',
+                                        iOS='20'}">
+                <Grid.RowDefinitions>
+                    <!--0. Unidad Original -->
+                    <RowDefinition Height="50" />
+                    <!--1. Unidad Convertida -->
+                    <RowDefinition Height="70" />
+                    <!--2. Valor Conversión -->
+                    <RowDefinition Height="50" />
+                    <!--3. Precio Venta Sugerido 1 -->
+                    <RowDefinition Height="50" />
+                    <!--4. Precio Venta Sugerido 2 -->
+                    <RowDefinition Height="50" />
+                    <!--5. Precio Venta -->
+                    <RowDefinition Height="50" />
+                    <!--6. Está Activo -->
+                    <RowDefinition Height="50" />
+                    <!--7. Botones -->
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="0.5*" />
+                    <ColumnDefinition Width="0.5*" />
+                </Grid.ColumnDefinitions>
+                <!--0. Unidad Original -->
+                <Label
+                    Grid.Row="0"
+                    Grid.Column="0"
+                    HorizontalOptions="Fill"
+                    IsVisible="True"
+                    Style="{StaticResource PopupLabelStyle}"
+                    Text="{texts:Translate UnidadHint}" />
+                <Entry
+                            Grid.Row="0"
+                            Grid.Column="1"
+                            FontFamily="{StaticResource NunitoRegular}"
+                            MaxLength="100"                            
+                            PlaceholderColor="LightGray"
+                            IsReadOnly="True"
+                            Text="{Binding PrecioSeleccionado.Unidad}"
+                            VerticalOptions="EndAndExpand" />
+                <!--0. Unidad Original -->
+                <!--1. Unidad Convertida -->
+                <Label
+                    Grid.Row="1"
+                    Grid.Column="0"
+                    HorizontalOptions="Fill"
+                    IsVisible="True"
+                    Style="{StaticResource PopupLabelStyle}"
+                    Text="{texts:Translate UnidadConvertidaHint}" />
+                <Entry
+                            Grid.Row="1"
+                            Grid.Column="1"
+                            FontFamily="{StaticResource NunitoRegular}"
+                            MaxLength="100"                            
+                            PlaceholderColor="LightGray"
+                            IsReadOnly="True"
+                            Text="{Binding PrecioSeleccionado.UnidadConvertida}"
+                            VerticalOptions="EndAndExpand" />
+                <!--1. Unidad Convertida -->
+                <!--2. Valor Conversión -->
+                <Label
+                    Grid.Row="2"
+                    Grid.Column="0"
+                    HorizontalOptions="Fill"
+                    IsVisible="True"
+                    Style="{StaticResource PopupLabelStyle}"
+                    Text="{texts:Translate ValorConversionHint}" />
+                <inputLayout:SfTextInputLayout
+                            Grid.Row="2"
+                            Grid.Column="1"
+                            Margin="0,4,0,0"
+                            ContainerBackgroundColor="Transparent"
+                            ContainerType="Outlined"                            
+                            FocusedColor="{DynamicResource colPrim}"                            
+                            HorizontalOptions="Fill"
+                            LeadingViewPosition="Inside"
+                            TrailingViewPosition="Inside">
+                    <local:CustomSfNumericTextBox                                        
+                                        Grid.Row="0"
+                                        Grid.Column="1"                    
+                                        BorderColor="Transparent"
+                                        FormatString="n"
+                                        Culture="{Binding Cultura}"
+                                        MaximumNumberDecimalDigits="2"
+                                        TextAlignment="End"
+                                        TextColor="{DynamicResource colSec}"
+                                        IsReadOnly="true"
+                                        Value="{Binding PrecioSeleccionado.ValorConversion}" 
+                                 />
+                </inputLayout:SfTextInputLayout>
+                <!--2. Valor Conversión -->
+                <!--3. Precio Venta Sugerido 1 -->
+                <Label
+                    Grid.Row="3"
+                    Grid.Column="0"
+                    HorizontalOptions="Fill"
+                    IsVisible="True"
+                    Style="{StaticResource PopupLabelStyle}"
+                    Text="{texts:Translate PrecioVentaSugerido1Hint}" />
+                <inputLayout:SfTextInputLayout
+                            Grid.Row="3"
+                            Grid.Column="1"
+                            Margin="0,4,0,0"
+                            ContainerBackgroundColor="Transparent"
+                            ContainerType="Outlined"                            
+                            FocusedColor="{DynamicResource colPrim}"                            
+                            HorizontalOptions="Fill"
+                            LeadingViewPosition="Inside"
+                            TrailingViewPosition="Inside">
+                    <local:CustomSfNumericTextBox                                        
+                                        Grid.Row="0"
+                                        Grid.Column="1"                    
+                                        BorderColor="Transparent"
+                                        FormatString="c"
+                                        Culture="{Binding Cultura}"
+                                        MaximumNumberDecimalDigits="2"
+                                        TextAlignment="End"
+                                        TextColor="{DynamicResource colSec}"
+                                        IsReadOnly="true"
+                                        Value="{Binding PrecioSeleccionado.PrecioVentaSugerido1}" 
+                                 />
+                </inputLayout:SfTextInputLayout>
+                <!--3. Precio Venta Sugerido 1 -->
+                <!--4. Precio Venta Sugerido 2 -->
+                <Label
+                    Grid.Row="4"
+                    Grid.Column="0"
+                    HorizontalOptions="Fill"
+                    IsVisible="True"
+                    Style="{StaticResource PopupLabelStyle}"
+                    Text="{texts:Translate PrecioVentaSugerido2Hint}" />
+                <inputLayout:SfTextInputLayout
+                            Grid.Row="4"
+                            Grid.Column="1"
+                            Margin="0,4,0,0"
+                            ContainerBackgroundColor="Transparent"
+                            ContainerType="Outlined"                            
+                            FocusedColor="{DynamicResource colPrim}"                            
+                            HorizontalOptions="Fill"
+                            LeadingViewPosition="Inside"
+                            TrailingViewPosition="Inside">
+                    <local:CustomSfNumericTextBox                                        
+                                        Grid.Row="0"
+                                        Grid.Column="1"                    
+                                        BorderColor="Transparent"
+                                        FormatString="c"
+                                        Culture="{Binding Cultura}"
+                                        MaximumNumberDecimalDigits="2"
+                                        TextAlignment="End"
+                                        TextColor="{DynamicResource colSec}"
+                                        IsReadOnly="true"
+                                        Value="{Binding PrecioSeleccionado.PrecioVentaSugerido2}" 
+                                 />
+                </inputLayout:SfTextInputLayout>
+                <!--4. Precio Venta Sugerido 2 -->
+                <!--5. Precio Venta -->
+                <Label
+                    Grid.Row="5"
+                    Grid.Column="0"
+                    HorizontalOptions="Fill"
+                    IsVisible="True"
+                    Style="{StaticResource PopupLabelStyle}"
+                    Text="{texts:Translate PrecioVentaHint}" />
+                <inputLayout:SfTextInputLayout
+                            Grid.Row="5"
+                            Grid.Column="1"
+                            Margin="0,4,0,0"
+                            ContainerBackgroundColor="Transparent"
+                            ContainerType="Outlined"                            
+                            FocusedColor="{DynamicResource colPrim}"                            
+                            HorizontalOptions="Fill"
+                            LeadingViewPosition="Inside"
+                            TrailingViewPosition="Inside">
+                    <local:CustomSfNumericTextBox                                        
+                                        Grid.Row="0"
+                                        Grid.Column="1"                    
+                                        BorderColor="Transparent"
+                                        FormatString="c"
+                                        SelectAllOnFocus="True"
+                                        Culture="{Binding Cultura}"
+                                        MaximumNumberDecimalDigits="2"
+                                        TextAlignment="End"
+                                        TextColor="{DynamicResource colSec}"
+                                        Value="{Binding PrecioSeleccionado.PrecioVenta, Mode=TwoWay}" 
+                                 />
+                </inputLayout:SfTextInputLayout>
+                <!--5. Precio Venta -->
+                <!--6. EstaActivo-->
+                <StackLayout Margin="10,5,0,10" Orientation="Horizontal" Grid.Row="6" Grid.ColumnSpan="2" >
+                    <Label Style="{StaticResource AppSettingCheckItemLabelStyle}" Text="{texts:Translate EstaActivoHint}" />
+                    <button:SfSwitch
+                                        Margin="8,0"
+                                        AllowIndeterminateState="True"
+                                        HeightRequest="28"
+                                        HorizontalOptions="EndAndExpand"
+                                        IsOn="{Binding EstaActivo}"                            
+                                        VisualType="Cupertino">
+                        <VisualStateManager.VisualStateGroups>
+                            <VisualStateGroup x:Name="CommonStates">
+                                <VisualState x:Name="On">
+                                    <VisualState.Setters>
+                                        <Setter Property="SwitchSettings">
+                                            <Setter.Value>
+                                                <button:CupertinoSwitchSettings
+                                                        x:TypeArguments="button:OnState"
+                                                        ThumbBorderColor="{DynamicResource Gray-500}"
+                                                        ThumbColor="{DynamicResource Gray-White}"
+                                                        TrackBorderColor="{DynamicResource Gray-200}"
+                                                        TrackColor="{DynamicResource RedColor}" />
+                                            </Setter.Value>
+                                        </Setter>
+                                    </VisualState.Setters>
+                                </VisualState>
+                                <VisualState x:Name="Off">
+                                    <VisualState.Setters>
+                                        <Setter Property="SwitchSettings">
+                                            <Setter.Value>
+                                                <button:CupertinoSwitchSettings
+                                                        x:TypeArguments="button:OffState"
+                                                        ThumbBorderColor="{DynamicResource Gray-200}"
+                                                        ThumbColor="{DynamicResource Gray-White}"
+                                                        TrackBorderColor="{DynamicResource Gray-200}"
+                                                        TrackColor="{DynamicResource Gray-500}" />
+                                            </Setter.Value>
+                                        </Setter>
+                                    </VisualState.Setters>
+                                </VisualState>
+                            </VisualStateGroup>
+                        </VisualStateManager.VisualStateGroups>
+                    </button:SfSwitch>
+                </StackLayout>
+                <!--7. Botones-->
+                <pancake:PancakeView
+                    Grid.Row="7"
+                    Grid.Column="0"
+                    Margin="5,8,0,8"
+                    Padding="0"
+                    BackgroundGradientAngle="90"
+                    BackgroundGradientEndColor="{DynamicResource GradientEndColor}"
+                    BackgroundGradientStartColor="{DynamicResource GradientStartColor}"
+                    CornerRadius="20,0,20,0"
+                    HeightRequest="40">
+                    <pancake:PancakeView.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding Ok_Command}" />
+                    </pancake:PancakeView.GestureRecognizers>
+                    <Label
+                        FontFamily="{StaticResource NunitoBold}"
+                        FontSize="16"
+                        HorizontalOptions="Center"
+                        Text="{texts:Translate Ok}"
+                        TextColor="White"
+                        VerticalOptions="Center" />
+                </pancake:PancakeView>
+                
+                <pancake:PancakeView
+                    Grid.Row="7"
+                    Grid.Column="1"
+                    Margin="0,8,5,8"
+                    Padding="0"
+                    BackgroundColor="Red"
+                    CornerRadius="0,20,0,20"
+                    HeightRequest="40">
+                    <pancake:PancakeView.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding Cancel_Command}" />
+                    </pancake:PancakeView.GestureRecognizers>
+                    <Label
+                        FontFamily="{StaticResource NunitoBold}"
+                        FontSize="16"
+                        HorizontalOptions="Center"
+                        Text="{texts:Translate Cancel}"
+                        TextColor="White"
+                        VerticalOptions="Center" />
+                </pancake:PancakeView>
+            </Grid>
+        </Grid>
+    </Frame>
+    <!--#endregion 2. Contenido-->
+</pages:PopupPage>

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ContentView
+    x:Class="Escant_App.UserControls.LoadingIndicator"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:busyIndicator="clr-namespace:Syncfusion.SfBusyIndicator.XForms;assembly=Syncfusion.SfBusyIndicator.XForms"
+    x:Name="ContentView"
+    IsVisible="{Binding Source={x:Reference Name=ContentView}, Path=IsRunning}">
+    <ContentView.Content>
+        <AbsoluteLayout
+            x:Name="Layout"
+            HorizontalOptions="Center"
+            VerticalOptions="Center">
+            <busyIndicator:SfBusyIndicator
+                x:Name="busyIndicator"
+                Title="Loading..."
+                AbsoluteLayout.LayoutBounds="0.5,0.5,50,50"
+                AbsoluteLayout.LayoutFlags="XProportional,YProportional"
+                AnimationType="DoubleCircle"
+                BindingContext="{x:Reference ContentView}"
+                IsBusy="{Binding IsRunning, Mode=TwoWay}"
+                TextColor="{DynamicResource Orange}"
+                TitlePlacement="Bottom"
+                ViewBoxHeight="70"
+                ViewBoxWidth="70" />
+        </AbsoluteLayout>
+    </ContentView.Content>
+</ContentView>

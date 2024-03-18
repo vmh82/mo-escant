@@ -1,0 +1,662 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="Escant_App.Views.Reportes.DailySaleReportView"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:local="clr-namespace:Escant_App.UserControls;assembly=Escant_App"
+    xmlns:syncListView="clr-namespace:Syncfusion.ListView.XForms;assembly=Syncfusion.SfListView.XForms"
+    xmlns:texts="clr-namespace:ManijodaServicios.Resources.Texts;assembly=ManijodaServicios"
+    xmlns:viewModelBase="clr-namespace:Escant_App.ViewModels.Base;assembly=Escant_App"
+    Title="{texts:Translate DailySaleReport}"
+    viewModelBase:ViewModelLocator.AutoWireViewModel="true"
+    BackgroundColor="{DynamicResource MainWrapperBackgroundColor}">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Style x:Key="HeaderLabelStyle" TargetType="{x:Type Label}">
+                <Setter Property="FontFamily" Value="{StaticResource PoppinsBold}" />
+                <Setter Property="FontSize" Value="{StaticResource MidMediumSize}" />
+                <Setter Property="TextColor" Value="{StaticResource Gray-900}" />
+                <Setter Property="HorizontalOptions" Value="Center" />
+                <Setter Property="VerticalOptions" Value="Center" />
+                <Setter Property="Margin" Value="0,10,0,0" />
+            </Style>
+
+            <Style x:Key="DetailSubInfoLabelStyle" TargetType="{x:Type Label}">
+                <Setter Property="FontFamily" Value="{StaticResource PoppinsRegular}" />
+                <Setter Property="FontSize" Value="{StaticResource MidMediumSize}" />
+                <Setter Property="TextColor" Value="Gray" />
+                <Setter Property="HorizontalOptions" Value="End" />
+                <Setter Property="VerticalOptions" Value="Center" />
+                <Setter Property="Margin" Value="0,0,16,0" />
+            </Style>
+
+            <Style x:Key="ReceiptSummaryLabelStyle" TargetType="{x:Type Label}">
+                <Setter Property="FontFamily" Value="{StaticResource PoppinsRegular}" />
+                <Setter Property="FontSize" Value="{StaticResource MediumSize}" />
+                <Setter Property="TextColor" Value="{StaticResource Gray-900}" />
+                <Setter Property="HorizontalOptions" Value="End" />
+                <Setter Property="VerticalOptions" Value="Center" />
+                <Setter Property="Margin" Value="0,0,16,0" />
+            </Style>
+
+            <Style x:Key="ListedItemLabelStyle" TargetType="{x:Type Label}">
+                <Setter Property="FontFamily" Value="{StaticResource PoppinsRegular}" />
+                <Setter Property="FontSize" Value="{StaticResource MidMediumSize}" />
+                <Setter Property="TextColor" Value="{DynamicResource Gray-800}" />
+                <Setter Property="HorizontalOptions" Value="Start" />
+                <Setter Property="VerticalOptions" Value="Center" />
+                <Setter Property="Margin" Value="0,0,0,0" />
+            </Style>
+
+            <Style x:Key="MainPriceLabelStyle" TargetType="{x:Type Label}">
+                <Setter Property="FontFamily" Value="{StaticResource NunitoRegular}" />
+                <Setter Property="FontSize" Value="{StaticResource LargeSize}" />
+                <Setter Property="HorizontalOptions" Value="End" />
+                <Setter Property="VerticalOptions" Value="Center" />
+                <Setter Property="Margin" Value="0,0,0,0" />
+            </Style>
+
+            <Style x:Key="SubPriceLabelStyle" TargetType="{x:Type Label}">
+                <Setter Property="FontFamily" Value="{StaticResource NunitoRegular}" />
+                <Setter Property="FontSize" Value="{StaticResource MediumSize}" />
+                <Setter Property="TextColor" Value="Gray" />
+                <Setter Property="HorizontalOptions" Value="End" />
+                <Setter Property="VerticalOptions" Value="Center" />
+                <Setter Property="Margin" Value="0,0,0,0" />
+            </Style>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <ContentPage.ToolbarItems>
+        <ToolbarItem
+            Name="MenuItemPrint"
+            Order="Primary"
+            Priority="0"
+            Text="Print">
+            <ToolbarItem.Icon>
+                <OnPlatform x:TypeArguments="FileImageSource">
+                    <On Platform="iOS, Android" Value="print.png" />
+                </OnPlatform>
+            </ToolbarItem.Icon>
+        </ToolbarItem>
+    </ContentPage.ToolbarItems>
+
+    <ContentPage.Content>
+        <Grid RowSpacing="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <ScrollView>
+                <StackLayout Padding="10,10,10,10" Spacing="10">
+                    <Label
+                        FontFamily="{StaticResource PoppinsRegular}"
+                        FontSize="{StaticResource MidMediumSize}"
+                        HorizontalOptions="StartAndExpand"
+                        Text="{Binding SelectDate, StringFormat='{0:dd/MM/yyyy}'}"
+                        TextColor="{DynamicResource colSec}"
+                        VerticalOptions="CenterAndExpand" />
+                    <BoxView BackgroundColor="{DynamicResource Gray-300}" HeightRequest="1" />
+
+                    <Label Style="{StaticResource HeaderLabelStyle}" Text="{texts:Translate SalesAndTaxesSummary}" />
+                    <BoxView BackgroundColor="Gray" HeightRequest="1" />
+                    <Grid ColumnSpacing="0" RowSpacing="5">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="1" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="0.5*" />
+                            <ColumnDefinition Width="0.5*" />
+                        </Grid.ColumnDefinitions>
+                        <Label
+                            Grid.Row="0"
+                            Grid.Column="0"
+                            HorizontalOptions="StartAndExpand"
+                            Style="{StaticResource ListedItemLabelStyle}"
+                            Text="{texts:Translate TotalNetSales}"
+                            VerticalOptions="Center" />
+                        <Label
+                            Grid.Row="1"
+                            Grid.Column="0"
+                            HorizontalOptions="StartAndExpand"
+                            Style="{StaticResource ListedItemLabelStyle}"
+                            Text="{texts:Translate Tax}"
+                            VerticalOptions="Center" />
+                        <Label
+                            Grid.Row="0"
+                            Grid.Column="1"
+                            HorizontalOptions="EndAndExpand"
+                            Style="{StaticResource ListedItemLabelStyle}"
+                            Text="{Binding ZReportData.TotalNetSalesStr}"
+                            VerticalOptions="Center" />
+                        <Label
+                            Grid.Row="1"
+                            Grid.Column="1"
+                            HorizontalOptions="EndAndExpand"
+                            Style="{StaticResource ListedItemLabelStyle}"
+                            Text="{Binding ZReportData.TaxStr}"
+                            VerticalOptions="Center" />
+
+                        <BoxView
+                            Grid.Row="2"
+                            Grid.Column="0"
+                            Grid.ColumnSpan="2"
+                            BackgroundColor="{DynamicResource Gray-300}"
+                            HeightRequest="1" />
+
+                        <Label
+                            Grid.Row="3"
+                            Grid.Column="0"
+                            FontFamily="{StaticResource PoppinsSemiBold}"
+                            HorizontalOptions="StartAndExpand"
+                            Style="{StaticResource ListedItemLabelStyle}"
+                            Text="{texts:Translate TotalSales}"
+                            VerticalOptions="Center" />
+                        <Label
+                            Grid.Row="3"
+                            Grid.Column="1"
+                            FontFamily="{StaticResource PoppinsSemiBold}"
+                            HorizontalOptions="EndAndExpand"
+                            Style="{StaticResource ListedItemLabelStyle}"
+                            Text="{Binding ZReportData.TotalSalesStr}"
+                            TextColor="{DynamicResource colAcc}"
+                            VerticalOptions="Center" />
+                    </Grid>
+
+                    <Label Style="{StaticResource HeaderLabelStyle}" Text="{texts:Translate SalesCategories}" />
+
+                    <Grid ColumnSpacing="0" RowSpacing="5">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="1" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="1" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="0.5*" />
+                            <ColumnDefinition Width="0.15*" />
+                            <ColumnDefinition Width="0.35*" />
+                        </Grid.ColumnDefinitions>
+                        <Label
+                            Grid.Row="0"
+                            Grid.Column="0"
+                            HorizontalOptions="StartAndExpand"
+                            Style="{StaticResource ListedItemLabelStyle}"
+                            Text="{texts:Translate Product}"
+                            TextColor="{DynamicResource colSec}"
+                            VerticalOptions="Center" />
+                        <Label
+                            Grid.Row="0"
+                            Grid.Column="1"
+                            HorizontalOptions="EndAndExpand"
+                            Style="{StaticResource ListedItemLabelStyle}"
+                            Text="Q.ty"
+                            TextColor="{DynamicResource colSec}"
+                            VerticalOptions="Center" />
+                        <Label
+                            Grid.Row="0"
+                            Grid.Column="2"
+                            HorizontalOptions="EndAndExpand"
+                            Style="{StaticResource ListedItemLabelStyle}"
+                            Text="{texts:Translate NetSales}"
+                            TextColor="{DynamicResource colSec}"
+                            VerticalOptions="Center" />
+
+                        <BoxView
+                            Grid.Row="1"
+                            Grid.Column="0"
+                            Grid.ColumnSpan="3"
+                            BackgroundColor="{DynamicResource Gray-300}"
+                            HeightRequest="0.5"
+                            VerticalOptions="FillAndExpand" />
+
+                        <!--  CATEGORY WISE REPORT LIST  -->
+                        <syncListView:SfListView
+                            x:Name="listView"
+                            Grid.Row="2"
+                            Grid.ColumnSpan="3"
+                            HeightRequest="{Binding ProductSaleListViewHeight}"
+                            IsScrollBarVisible="false"
+                            ItemsSource="{Binding ZReportData.SaleProducts}"
+                            SelectionMode="None">
+                            <syncListView:SfListView.ItemSize>
+                                <OnIdiom
+                                    x:TypeArguments="x:Double"
+                                    Desktop="40"
+                                    Phone="30"
+                                    Tablet="40" />
+                            </syncListView:SfListView.ItemSize>
+                            <syncListView:SfListView.ItemTemplate>
+                                <DataTemplate>
+                                    <Grid BindingContext="{x:Reference listView}">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="0.5*" />
+                                            <ColumnDefinition Width="0.15*" />
+                                            <ColumnDefinition Width="0.35*" />
+                                        </Grid.ColumnDefinitions>
+                                        <Label
+                                            Grid.Column="0"
+                                            HorizontalOptions="StartAndExpand"
+                                            Style="{StaticResource ListedItemLabelStyle}"
+                                            Text="{Binding ProductName}"
+                                            VerticalOptions="Center" />
+                                        <Label
+                                            Grid.Column="1"
+                                            HorizontalOptions="EndAndExpand"
+                                            Style="{StaticResource ListedItemLabelStyle}"
+                                            Text="{Binding Quantity, StringFormat='({0:D})'}"
+                                            VerticalOptions="Center" />
+                                        <Label
+                                            Grid.Column="2"
+                                            HorizontalOptions="EndAndExpand"
+                                            Style="{StaticResource ListedItemLabelStyle}"
+                                            Text="{Binding TotalPriceStr}"
+                                            VerticalOptions="Center" />
+                                    </Grid>
+                                </DataTemplate>
+                            </syncListView:SfListView.ItemTemplate>
+                        </syncListView:SfListView>
+                        <BoxView
+                            Grid.Row="3"
+                            Grid.Column="0"
+                            Grid.ColumnSpan="3"
+                            BackgroundColor="{DynamicResource Gray-400}"
+                            HeightRequest="1" />
+
+                        <Label
+                            Grid.Row="4"
+                            Grid.Column="0"
+                            FontAttributes="Bold"
+                            FontFamily="{StaticResource PoppinsSemiBold}"
+                            HorizontalOptions="StartAndExpand"
+                            Style="{StaticResource ListedItemLabelStyle}"
+                            Text="{texts:Translate TotalNetSales}"
+                            VerticalOptions="Center" />
+                        <Label
+                            Grid.Row="4"
+                            Grid.Column="2"
+                            FontFamily="{StaticResource PoppinsMedium}"
+                            HorizontalOptions="EndAndExpand"
+                            Text="{Binding ZReportData.TotalNetSalesStr}"
+                            TextColor="{DynamicResource colAcc}"
+                            VerticalOptions="Center" />
+                    </Grid>
+
+                    <Label Style="{StaticResource HeaderLabelStyle}" Text="{texts:Translate PaymentDetails}" />
+                    <BoxView BackgroundColor="{DynamicResource Gray-400}" HeightRequest="1" />
+                    <Grid ColumnSpacing="0" RowSpacing="5">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="1" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="0.5*" />
+                            <ColumnDefinition Width="0.5*" />
+                        </Grid.ColumnDefinitions>
+                        <Label
+                            Grid.Row="0"
+                            Grid.Column="0"
+                            HorizontalOptions="StartAndExpand"
+                            Style="{StaticResource ListedItemLabelStyle}"
+                            Text="{texts:Translate Cash}"
+                            VerticalOptions="Center" />
+                        <Label
+                            Grid.Row="1"
+                            Grid.Column="0"
+                            HorizontalOptions="StartAndExpand"
+                            Style="{StaticResource ListedItemLabelStyle}"
+                            Text="{texts:Translate Credit}"
+                            VerticalOptions="Center" />
+                        <Label
+                            Grid.Row="0"
+                            Grid.Column="1"
+                            HorizontalOptions="EndAndExpand"
+                            Style="{StaticResource ListedItemLabelStyle}"
+                            Text="{Binding ZReportData.TotalNetSalesStr}"
+                            VerticalOptions="Center" />
+                        <Label
+                            Grid.Row="1"
+                            Grid.Column="1"
+                            HorizontalOptions="EndAndExpand"
+                            Text="0"
+                            VerticalOptions="Center" />
+
+                        <BoxView
+                            Grid.Row="2"
+                            Grid.Column="0"
+                            Grid.ColumnSpan="2"
+                            BackgroundColor="LightGray"
+                            HeightRequest="1" />
+
+                        <Label
+                            Grid.Row="3"
+                            Grid.Column="0"
+                            FontAttributes="Bold"
+                            FontFamily="{StaticResource PoppinsSemiBold}"
+                            HorizontalOptions="StartAndExpand"
+                            Style="{StaticResource ListedItemLabelStyle}"
+                            Text="{texts:Translate TotalPayments}"
+                            VerticalOptions="Center" />
+                        <Label
+                            Grid.Row="3"
+                            Grid.Column="1"
+                            FontFamily="{StaticResource PoppinsSemiBold}"
+                            HorizontalOptions="EndAndExpand"
+                            Style="{StaticResource ListedItemLabelStyle}"
+                            Text="{Binding ZReportData.TotalNetSalesStr}"
+                            TextColor="{DynamicResource colAcc}"
+                            VerticalOptions="Center" />
+
+                        <Label
+                            Grid.Row="4"
+                            Grid.Column="0"
+                            FontAttributes="Bold"
+                            HorizontalOptions="StartAndExpand"
+                            Style="{StaticResource ListedItemLabelStyle}"
+                            Text="{texts:Translate TotalPayments-TotalSales}"
+                            VerticalOptions="Center" />
+                        <Label
+                            Grid.Row="4"
+                            Grid.Column="1"
+                            FontAttributes="Bold"
+                            HorizontalOptions="EndAndExpand"
+                            Text="0"
+                            VerticalOptions="Center" />
+                    </Grid>
+
+                    <Label Style="{StaticResource HeaderLabelStyle}" Text="{texts:Translate ServerTipouts}" />
+                    <BoxView BackgroundColor="{DynamicResource Gray-300}" HeightRequest="1" />
+                    <Grid ColumnSpacing="0" RowSpacing="5">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="1" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="0.5*" />
+                            <ColumnDefinition Width="0.5*" />
+                        </Grid.ColumnDefinitions>
+                        <Label
+                            Grid.Row="0"
+                            Grid.Column="0"
+                            HorizontalOptions="StartAndExpand"
+                            Style="{StaticResource ListedItemLabelStyle}"
+                            Text="{texts:Translate TotalCashPayments}"
+                            VerticalOptions="Center" />
+                        <Label
+                            Grid.Row="1"
+                            Grid.Column="0"
+                            HorizontalOptions="StartAndExpand"
+                            Style="{StaticResource ListedItemLabelStyle}"
+                            Text="{texts:Translate CashAdjustments}"
+                            VerticalOptions="Center" />
+                        <Label
+                            Grid.Row="2"
+                            Grid.Column="0"
+                            HorizontalOptions="StartAndExpand"
+                            Style="{StaticResource ListedItemLabelStyle}"
+                            Text="{texts:Translate CashBeforeTipouts}"
+                            VerticalOptions="Center" />
+                        <Label
+                            Grid.Row="3"
+                            Grid.Column="0"
+                            HorizontalOptions="StartAndExpand"
+                            Style="{StaticResource ListedItemLabelStyle}"
+                            Text="{texts:Translate CashGratuity}"
+                            VerticalOptions="Center" />
+                        <Label
+                            Grid.Row="4"
+                            Grid.Column="0"
+                            HorizontalOptions="StartAndExpand"
+                            Style="{StaticResource ListedItemLabelStyle}"
+                            Text="{texts:Translate Credit/Non-CashGratuity}"
+                            VerticalOptions="Center" />
+                        <Label
+                            Grid.Row="5"
+                            Grid.Column="0"
+                            HorizontalOptions="StartAndExpand"
+                            Style="{StaticResource ListedItemLabelStyle}"
+                            Text="{texts:Translate Credit/Non-CashTips}"
+                            VerticalOptions="Center" />
+                        <Label
+                            Grid.Row="6"
+                            Grid.Column="0"
+                            HorizontalOptions="StartAndExpand"
+                            Style="{StaticResource ListedItemLabelStyle}"
+                            Text="{texts:Translate TotalNon-CashTipsAndTotalGratuity}"
+                            VerticalOptions="Center" />
+
+                        <Label
+                            Grid.Row="0"
+                            Grid.Column="1"
+                            HorizontalOptions="EndAndExpand"
+                            Style="{StaticResource ListedItemLabelStyle}"
+                            Text="{Binding ZReportData.TotalNetSalesStr}"
+                            VerticalOptions="Center" />
+                        <Label
+                            Grid.Row="1"
+                            Grid.Column="1"
+                            HorizontalOptions="EndAndExpand"
+                            Text="0"
+                            VerticalOptions="Center" />
+                        <Label
+                            Grid.Row="2"
+                            Grid.Column="1"
+                            HorizontalOptions="EndAndExpand"
+                            Text="0"
+                            VerticalOptions="Center" />
+                        <Label
+                            Grid.Row="3"
+                            Grid.Column="1"
+                            HorizontalOptions="EndAndExpand"
+                            Text="0"
+                            VerticalOptions="Center" />
+                        <Label
+                            Grid.Row="4"
+                            Grid.Column="1"
+                            HorizontalOptions="EndAndExpand"
+                            Text="0"
+                            VerticalOptions="Center" />
+                        <Label
+                            Grid.Row="5"
+                            Grid.Column="1"
+                            HorizontalOptions="EndAndExpand"
+                            Text="0"
+                            VerticalOptions="Center" />
+
+                        <BoxView
+                            Grid.Row="7"
+                            Grid.Column="0"
+                            Grid.ColumnSpan="2"
+                            BackgroundColor="{DynamicResource Gray-300}"
+                            HeightRequest="1" />
+
+                        <Label
+                            Grid.Row="8"
+                            Grid.Column="0"
+                            FontFamily="{StaticResource PoppinsSemiBold}"
+                            HorizontalOptions="StartAndExpand"
+                            Style="{StaticResource ListedItemLabelStyle}"
+                            Text="{texts:Translate TotalCash}"
+                            VerticalOptions="Center" />
+                        <Label
+                            Grid.Row="8"
+                            Grid.Column="1"
+                            FontFamily="{StaticResource PoppinsSemiBold}"
+                            HorizontalOptions="EndAndExpand"
+                            Style="{StaticResource ListedItemLabelStyle}"
+                            Text="{Binding ZReportData.TotalNetSalesStr}"
+                            TextColor="{DynamicResource colAcc}"
+                            VerticalOptions="Center" />
+
+                    </Grid>
+
+                    <Label Style="{StaticResource HeaderLabelStyle}" Text="{texts:Translate TotalDiscounts}" />
+                    <Grid ColumnSpacing="0" RowSpacing="5">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="1" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="0.5*" />
+                            <ColumnDefinition Width="0.25*" />
+                            <ColumnDefinition Width="0.25*" />
+                        </Grid.ColumnDefinitions>
+                        <Label
+                            Grid.Row="0"
+                            Grid.Column="0"
+                            HorizontalOptions="StartAndExpand"
+                            Style="{StaticResource ListedItemLabelStyle}"
+                            Text="{texts:Translate DiscountName}"
+                            TextColor="{DynamicResource colSec}"
+                            VerticalOptions="Center" />
+                        <Label
+                            Grid.Row="0"
+                            Grid.Column="1"
+                            HorizontalOptions="EndAndExpand"
+                            Style="{StaticResource ListedItemLabelStyle}"
+                            Text="Count"
+                            TextColor="{DynamicResource colSec}"
+                            VerticalOptions="Center" />
+                        <Label
+                            Grid.Row="0"
+                            Grid.Column="2"
+                            HorizontalOptions="EndAndExpand"
+                            Style="{StaticResource ListedItemLabelStyle}"
+                            Text="Amount"
+                            TextColor="{DynamicResource colSec}"
+                            VerticalOptions="Center" />
+
+                        <BoxView
+                            Grid.Row="1"
+                            Grid.Column="0"
+                            Grid.ColumnSpan="3"
+                            BackgroundColor="{DynamicResource Gray-400}"
+                            HeightRequest="1" />
+
+                        <!--  DISCOUNTS REPORT LIST  -->
+                        <Label
+                            Grid.Row="2"
+                            Grid.Column="0"
+                            HorizontalOptions="StartAndExpand"
+                            IsVisible="{Binding ZReportData.DiscountReport.HasDiscount}"
+                            Style="{StaticResource ListedItemLabelStyle}"
+                            Text="{texts:Translate OrderDiscount}"
+                            VerticalOptions="Center" />
+                        <Label
+                            Grid.Row="2"
+                            Grid.Column="1"
+                            HorizontalOptions="EndAndExpand"
+                            IsVisible="{Binding ZReportData.DiscountReport.HasDiscount}"
+                            Style="{StaticResource ListedItemLabelStyle}"
+                            Text="{Binding ZReportData.DiscountReport.Quantity}"
+                            VerticalOptions="Center" />
+                        <Label
+                            Grid.Row="2"
+                            Grid.Column="2"
+                            HorizontalOptions="EndAndExpand"
+                            IsVisible="{Binding ZReportData.DiscountReport.HasDiscount}"
+                            Style="{StaticResource ListedItemLabelStyle}"
+                            Text="{Binding ZReportData.DiscountReport.TotalStr}"
+                            VerticalOptions="Center" />
+
+                    </Grid>
+
+                    <Label Style="{StaticResource HeaderLabelStyle}" Text="{texts:Translate CreditCardBreakdown}" />
+                    <BoxView BackgroundColor="{DynamicResource Gray-400}" HeightRequest="1" />
+                    <Grid ColumnSpacing="0" RowSpacing="5">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="1" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="0.5*" />
+                            <ColumnDefinition Width="0.5*" />
+                        </Grid.ColumnDefinitions>
+                        <Label
+                            Grid.Row="0"
+                            Grid.Column="0"
+                            HorizontalOptions="StartAndExpand"
+                            Style="{StaticResource ListedItemLabelStyle}"
+                            Text="Master Card"
+                            VerticalOptions="Center" />
+                        <Label
+                            Grid.Row="1"
+                            Grid.Column="0"
+                            HorizontalOptions="StartAndExpand"
+                            Style="{StaticResource ListedItemLabelStyle}"
+                            Text="Visa"
+                            VerticalOptions="Center" />
+                        <Label
+                            Grid.Row="0"
+                            Grid.Column="1"
+                            HorizontalOptions="EndAndExpand"
+                            Text="0"
+                            VerticalOptions="Center" />
+                        <Label
+                            Grid.Row="1"
+                            Grid.Column="1"
+                            HorizontalOptions="EndAndExpand"
+                            Text="0"
+                            VerticalOptions="Center" />
+
+                        <BoxView
+                            Grid.Row="2"
+                            Grid.Column="0"
+                            Grid.ColumnSpan="2"
+                            BackgroundColor="{DynamicResource Gray-300}"
+                            HeightRequest="1" />
+
+                        <Label
+                            Grid.Row="3"
+                            Grid.Column="0"
+                            FontAttributes="Bold"
+                            FontFamily="{StaticResource PoppinsSemiBold}"
+                            HorizontalOptions="StartAndExpand"
+                            Style="{StaticResource ListedItemLabelStyle}"
+                            Text="Total"
+                            VerticalOptions="Center" />
+                        <Label
+                            Grid.Row="3"
+                            Grid.Column="1"
+                            FontFamily="{StaticResource PoppinsSemiBold}"
+                            HorizontalOptions="EndAndExpand"
+                            Text="0"
+                            TextColor="{DynamicResource colAcc}"
+                            VerticalOptions="Center" />
+                    </Grid>
+                </StackLayout>
+            </ScrollView>
+            <StackLayout
+                Grid.Row="1"
+                Padding="0"
+                BackgroundColor="{DynamicResource Gray-900}">
+                <!--<local:AdBanner Size="Standardbanner" VerticalOptions="Fill" />-->
+                <local:AdmobControl BackgroundColor="Transparent" />
+            </StackLayout>
+
+            <local:LoadingIndicator
+                Grid.RowSpan="2"
+                HorizontalOptions="Fill"
+                IsRunning="{Binding IsBusy, Mode=TwoWay}"
+                VerticalOptions="Fill" />
+        </Grid>
+
+    </ContentPage.Content>
+</ContentPage>

@@ -1,0 +1,1041 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="AboutAppDescriptions" xml:space="preserve">
+    <value>Feedback, comunidade, verificar atualizações</value>
+  </data>
+  <data name="AboutAppTitle" xml:space="preserve">
+    <value>Sobre Escant_App</value>
+  </data>
+  <data name="ActiveDevices" xml:space="preserve">
+    <value>Lista de impressoras ativas</value>
+  </data>
+  <data name="AddCategoryTitle" xml:space="preserve">
+    <value>Adicionar categoria</value>
+  </data>
+  <data name="AddCustomerTitle" xml:space="preserve">
+    <value>Adicionar Cliente</value>
+  </data>
+  <data name="AddProduct" xml:space="preserve">
+    <value>Adicionar Produto</value>
+  </data>
+  <data name="AddressHint" xml:space="preserve">
+    <value>Endereço</value>
+  </data>
+  <data name="AddSupplierTitle" xml:space="preserve">
+    <value>Adicionar fornecedor</value>
+  </data>
+  <data name="AddUnitTitle" xml:space="preserve">
+    <value>Adicionar Unidade</value>
+  </data>
+  <data name="AllCategories" xml:space="preserve">
+    <value>Todas as categorias</value>
+  </data>
+  <data name="AllCustomers" xml:space="preserve">
+    <value>Todos os clientes</value>
+  </data>
+  <data name="AllUnits" xml:space="preserve">
+    <value>Todas as unidades</value>
+  </data>
+  <data name="AppliedDiscountHint" xml:space="preserve">
+    <value>Desconto aplicado</value>
+  </data>
+  <data name="AppSettingDescriptions" xml:space="preserve">
+    <value>Personalize a tela de pagamento, o menu de visualização do produto, etc.</value>
+  </data>
+  <data name="AppSettingTitle" xml:space="preserve">
+    <value>Configurações do aplicativo</value>
+  </data>
+  <data name="AskForPrinting" xml:space="preserve">
+    <value>Pergunte antes de imprimir</value>
+  </data>
+  <data name="AutoBackup" xml:space="preserve">
+    <value>Backup automático</value>
+  </data>
+  <data name="BackupError" xml:space="preserve">
+    <value>Erro de backup! Por favor, tente novamente</value>
+  </data>
+  <data name="BackupSuccess" xml:space="preserve">
+    <value>Backup do banco de dados com sucesso!</value>
+  </data>
+  <data name="Balanced" xml:space="preserve">
+    <value>Balanceado</value>
+  </data>
+  <data name="BirthdayHint" xml:space="preserve">
+    <value>Aniversário</value>
+  </data>
+  <data name="ByQuantity" xml:space="preserve">
+    <value>Por quantidade</value>
+  </data>
+  <data name="BySale" xml:space="preserve">
+    <value>À venda</value>
+  </data>
+  <data name="CamNotReady" xml:space="preserve">
+    <value>Câmera não está disponível</value>
+  </data>
+  <data name="Cancel" xml:space="preserve">
+    <value>Cancelar</value>
+  </data>
+  <data name="Categories" xml:space="preserve">
+    <value>Categorias</value>
+  </data>
+  <data name="CategoriesTitle" xml:space="preserve">
+    <value>Categorias</value>
+  </data>
+  <data name="CategoryDeleted" xml:space="preserve">
+    <value>Categoria {0} excluída!</value>
+  </data>
+  <data name="CategoryDeleteWarning" xml:space="preserve">
+    <value>Tem certeza que deseja excluir {0}?</value>
+  </data>
+  <data name="CategoryFilter" xml:space="preserve">
+    <value>CATEGORIA</value>
+  </data>
+  <data name="CategoryHint" xml:space="preserve">
+    <value>Categoria</value>
+  </data>
+  <data name="CategoryManagementDescriptions" xml:space="preserve">
+    <value>Ver lista, editar, criar nova ou excluir categoria de produto</value>
+  </data>
+  <data name="CategoryNameLabel" xml:space="preserve">
+    <value>Nome da Categoria</value>
+  </data>
+  <data name="CategoryNameWarning" xml:space="preserve">
+    <value>Digite o nome da categoria!</value>
+  </data>
+  <data name="CategorySearchPlaceHolder" xml:space="preserve">
+    <value>Insira o nome da categoria</value>
+  </data>
+  <data name="CategoryWarning" xml:space="preserve">
+    <value>Selecione a categoria do produto</value>
+  </data>
+  <data name="CheckStockLost" xml:space="preserve">
+    <value>Fácil de rastrear saldos de estoque, perda de produto</value>
+  </data>
+  <data name="CleanAllConfirmation" xml:space="preserve">
+    <value>Tem certeza de que deseja limpar todos os dados?</value>
+  </data>
+  <data name="CleanTransactionConfirmation" xml:space="preserve">
+    <value>Tem certeza de que deseja limpar todas as transações?</value>
+  </data>
+  <data name="ClearAll" xml:space="preserve">
+    <value>Limpe todos os dados</value>
+  </data>
+  <data name="ClearTransactions" xml:space="preserve">
+    <value>Limpar todas as transações</value>
+  </data>
+  <data name="Community" xml:space="preserve">
+    <value>Comunidade</value>
+  </data>
+  <data name="CommunityDescriptions" xml:space="preserve">
+    <value>Compartilhe conosco suas dúvidas ou problemas que você tem</value>
+  </data>
+  <data name="ConfirmDiscardPurchase" xml:space="preserve">
+    <value>Tem certeza que quer descartar esta compra?</value>
+  </data>
+  <data name="ConfirmDiscardSale" xml:space="preserve">
+    <value>Tem certeza de que deseja descartar esta venda?</value>
+  </data>
+  <data name="ConfirmPrintOut" xml:space="preserve">
+    <value>Tem certeza de que deseja imprimir o recibo?</value>
+  </data>
+  <data name="ConfirmRemoveItem" xml:space="preserve">
+    <value>Tem certeza que deseja remover {0}?</value>
+  </data>
+  <data name="ConfirmReset" xml:space="preserve">
+    <value>Tem certeza de que deseja redefinir o ajuste? Isso não pode ser desfeito.</value>
+  </data>
+  <data name="ConnectType" xml:space="preserve">
+    <value>Tipo de conexão:</value>
+  </data>
+  <data name="ContactUs" xml:space="preserve">
+    <value>Você deve ter alguma pergunta?
+Contate-nos diretamente via</value>
+  </data>
+  <data name="CopyPrint" xml:space="preserve">
+    <value>Imprima uma cópia</value>
+  </data>
+  <data name="Custom" xml:space="preserve">
+    <value>Costume</value>
+  </data>
+  <data name="CustomCurrencySymbol" xml:space="preserve">
+    <value>Símbolo monetário personalizado</value>
+  </data>
+  <data name="CustomerCodeHint" xml:space="preserve">
+    <value>Código do Consumidor</value>
+  </data>
+  <data name="CustomerDeleted" xml:space="preserve">
+    <value>Customer {0} deleted !</value>
+  </data>
+  <data name="CustomerDeleteWarning" xml:space="preserve">
+    <value>Tem certeza que deseja excluir {0}?</value>
+  </data>
+  <data name="CustomerFilter" xml:space="preserve">
+    <value>CLIENTE</value>
+  </data>
+  <data name="CustomerLabel" xml:space="preserve">
+    <value>Cliente:</value>
+  </data>
+  <data name="CustomerManagementDescriptions" xml:space="preserve">
+    <value>Visualize a lista, edite, crie novas ou exclua informações do cliente</value>
+  </data>
+  <data name="CustomerNameHint" xml:space="preserve">
+    <value>Nome do cliente</value>
+  </data>
+  <data name="CustomerSaved" xml:space="preserve">
+    <value>Contato salvo!</value>
+  </data>
+  <data name="CustomerSearchPlaceHolder" xml:space="preserve">
+    <value>Insira o nome / código do cliente</value>
+  </data>
+  <data name="CustomerSelectWarning" xml:space="preserve">
+    <value>Selecione o cliente</value>
+  </data>
+  <data name="CustomersTitle" xml:space="preserve">
+    <value>Clientes</value>
+  </data>
+  <data name="CustomPeriod" xml:space="preserve">
+    <value>Personalizado {0} - {1}</value>
+  </data>
+  <data name="DailySaleReport" xml:space="preserve">
+    <value>Relatório de venda diária</value>
+  </data>
+  <data name="DatabaseManagementDescriptions" xml:space="preserve">
+    <value>Backup / Restauração, Importar / Exportar banco de dados, Excluir, Dados de amostra</value>
+  </data>
+  <data name="DatabaseManagementTitle" xml:space="preserve">
+    <value>Gerenciamento de banco de dados</value>
+  </data>
+  <data name="DataCleanSuccess" xml:space="preserve">
+    <value>Todos os dados foram limpos com sucesso!</value>
+  </data>
+  <data name="DBBackup" xml:space="preserve">
+    <value>Banco de dados de backup</value>
+  </data>
+  <data name="DBManagementTitle" xml:space="preserve">
+    <value>Gerenciamento de banco de dados</value>
+  </data>
+  <data name="DBRestore" xml:space="preserve">
+    <value>Restaurar banco de dados</value>
+  </data>
+  <data name="Default" xml:space="preserve">
+    <value>É padrão</value>
+  </data>
+  <data name="DefaultCurrencyFormat" xml:space="preserve">
+    <value>Use o formato de moeda padrão</value>
+  </data>
+  <data name="DescriptionsHint" xml:space="preserve">
+    <value>Descrições</value>
+  </data>
+  <data name="DialogOk" xml:space="preserve">
+    <value>Ok</value>
+  </data>
+  <data name="Discard" xml:space="preserve">
+    <value>Descartar</value>
+  </data>
+  <data name="Discount" xml:space="preserve">
+    <value>Desconto:</value>
+  </data>
+  <data name="DontHaveAccount" xml:space="preserve">
+    <value>Não tem conta?</value>
+  </data>
+  <data name="Due" xml:space="preserve">
+    <value>Vencimento:</value>
+  </data>
+  <data name="DuplicatedProductCode" xml:space="preserve">
+    <value>Código de produto duplicado !!</value>
+  </data>
+  <data name="EasyToSale" xml:space="preserve">
+    <value>Agora é fácil vender com Escant_App</value>
+  </data>
+  <data name="EditCategoryTitle" xml:space="preserve">
+    <value>Editar categoria</value>
+  </data>
+  <data name="EditCustomerTitle" xml:space="preserve">
+    <value>Editar Cliente</value>
+  </data>
+  <data name="EditProduct" xml:space="preserve">
+    <value>Ver / Editar Produto</value>
+  </data>
+  <data name="EditSupplierTitle" xml:space="preserve">
+    <value>Editar fornecedor</value>
+  </data>
+  <data name="EditUnitTitle" xml:space="preserve">
+    <value>Editar Unidade</value>
+  </data>
+  <data name="EnablePrinter" xml:space="preserve">
+    <value>Conectar à impressora</value>
+  </data>
+  <data name="EnablePrinterDescriptions" xml:space="preserve">
+    <value>Ligue para permitir que o aplicativo conecte a impressora e as configurações</value>
+  </data>
+  <data name="ExcelError" xml:space="preserve">
+    <value>Há um erro (s) no arquivo Excel Por favor cheque novamente !.</value>
+  </data>
+  <data name="ExcelValidationFail" xml:space="preserve">
+    <value>Os dados não são válidos. Por favor, verifique novamente!</value>
+  </data>
+  <data name="ExceptionMessage" xml:space="preserve">
+    <value>Ocorreu um erro, tente novamente</value>
+  </data>
+  <data name="ExceptionTitle" xml:space="preserve">
+    <value>Erro</value>
+  </data>
+  <data name="ExportExcel" xml:space="preserve">
+    <value>Exportar dados para Excel</value>
+  </data>
+  <data name="FeatureIsNotAvaible" xml:space="preserve">
+    <value>Atualize para a versão Pro para usar este recurso!</value>
+  </data>
+  <data name="FeedbackContent" xml:space="preserve">
+    <value>Conteúdo</value>
+  </data>
+  <data name="FeedbackTitle" xml:space="preserve">
+    <value>Feedback para o aplicativo Escant_App</value>
+  </data>
+  <data name="Female" xml:space="preserve">
+    <value>Feminino</value>
+  </data>
+  <data name="Fixed" xml:space="preserve">
+    <value>Fixado</value>
+  </data>
+  <data name="ForgotPassword" xml:space="preserve">
+    <value>Esqueceu a senha?</value>
+  </data>
+  <data name="FreeUpgrade" xml:space="preserve">
+    <value>Atualização gratuita e atualização automática</value>
+  </data>
+  <data name="GenderHint" xml:space="preserve">
+    <value>Gênero</value>
+  </data>
+  <data name="Group" xml:space="preserve">
+    <value>Grupo</value>
+  </data>
+  <data name="HelpTitle" xml:space="preserve">
+    <value>Socorro</value>
+  </data>
+  <data name="HttpRequestExceptionMessage" xml:space="preserve">
+    <value>Erro de comunicação: {0}</value>
+  </data>
+  <data name="HttpRequestExceptionTitle" xml:space="preserve">
+    <value>Erro</value>
+  </data>
+  <data name="ImportError" xml:space="preserve">
+    <value>Erro de importação do Excel! Por favor, tente novamente</value>
+  </data>
+  <data name="ImportExcel" xml:space="preserve">
+    <value>Importar dados do Excel</value>
+  </data>
+  <data name="ImportSuccess" xml:space="preserve">
+    <value>Excel importado com sucesso!</value>
+  </data>
+  <data name="InitSampleData" xml:space="preserve">
+    <value>Todos os dados existentes serão excluídos. Você realmente deseja iniciar os dados de amostra?</value>
+  </data>
+  <data name="InitSuccess" xml:space="preserve">
+    <value>Os dados foram iniciados com sucesso!</value>
+  </data>
+  <data name="InvalidCategory" xml:space="preserve">
+    <value>A categoria não é válida!</value>
+  </data>
+  <data name="InvalidCategoryDelete" xml:space="preserve">
+    <value>Esta categoria já é usada por um ou mais produtos na lista de produtos! Por favor cheque novamente.</value>
+  </data>
+  <data name="InvalidCustomerDelete" xml:space="preserve">
+    <value>Este cliente já tem venda registrada, não pode deletar !!</value>
+  </data>
+  <data name="InvalidExcelFile" xml:space="preserve">
+    <value>Arquivo Excel inválido! Verifique e tente novamente.</value>
+  </data>
+  <data name="InvalidSupplier" xml:space="preserve">
+    <value>O fornecedor não é válido!</value>
+  </data>
+  <data name="InvalidSupplierDelete" xml:space="preserve">
+    <value>Este fornecedor já tem compra registrada, não pode deletar !!</value>
+  </data>
+  <data name="InvalidUnit" xml:space="preserve">
+    <value>A unidade não é válida!</value>
+  </data>
+  <data name="InvalidUnitDelete" xml:space="preserve">
+    <value>Esta unidade já está sendo usada por produtos na lista de produtos! Por favor cheque novamente.</value>
+  </data>
+  <data name="InventoryTitle" xml:space="preserve">
+    <value>Inventário</value>
+  </data>
+  <data name="ItemAdded" xml:space="preserve">
+    <value>{0} itens = {1}</value>
+  </data>
+  <data name="ItemCost" xml:space="preserve">
+    <value>Custo</value>
+  </data>
+  <data name="ItemPrice" xml:space="preserve">
+    <value>Preço</value>
+  </data>
+  <data name="Items" xml:space="preserve">
+    <value>Itens</value>
+  </data>
+  <data name="LanguageLabel" xml:space="preserve">
+    <value>Idioma de exibição</value>
+  </data>
+  <data name="Lastmonth" xml:space="preserve">
+    <value>Mês passado</value>
+  </data>
+  <data name="Lastweek" xml:space="preserve">
+    <value>Semana Anterior</value>
+  </data>
+  <data name="LegalInfo" xml:space="preserve">
+    <value>Em formação</value>
+  </data>
+  <data name="LoadSamples" xml:space="preserve">
+    <value>Carregar dados de amostras</value>
+  </data>
+  <data name="LoginTitle" xml:space="preserve">
+    <value>Conecte-se</value>
+  </data>
+  <data name="LogoutTitle" xml:space="preserve">
+    <value>Sair</value>
+  </data>
+  <data name="MainViewPageTitle" xml:space="preserve">
+    <value>Terminal POS</value>
+  </data>
+  <data name="Male" xml:space="preserve">
+    <value>Macho</value>
+  </data>
+  <data name="ManageBetter" xml:space="preserve">
+    <value>Gerencie melhor sua empresa</value>
+  </data>
+  <data name="ManageContacts" xml:space="preserve">
+    <value>Função para gerenciar seus clientes e fornecedores</value>
+  </data>
+  <data name="ManagementsHelpTitle" xml:space="preserve">
+    <value>Gerências</value>
+  </data>
+  <data name="ManagementsTitle" xml:space="preserve">
+    <value>Gerências</value>
+  </data>
+  <data name="MinStockHint" xml:space="preserve">
+    <value>Quantidade mínima de estoque</value>
+  </data>
+  <data name="MiscSetting" xml:space="preserve">
+    <value>Variado</value>
+  </data>
+  <data name="NoInternetConnection" xml:space="preserve">
+    <value>Não há conexão com a Internet, tente novamente mais tarde.</value>
+  </data>
+  <data name="NoItemAdded" xml:space="preserve">
+    <value>Nenhum item = $ 0,00</value>
+  </data>
+  <data name="NoOfReceipt" xml:space="preserve">
+    <value>Total de {0} recibo (s)</value>
+  </data>
+  <data name="NoteHint" xml:space="preserve">
+    <value>Nota</value>
+  </data>
+  <data name="Notes" xml:space="preserve">
+    <value>Nota:</value>
+  </data>
+  <data name="NumericKeyboard" xml:space="preserve">
+    <value>Use o teclado numérico ao pesquisar um item</value>
+  </data>
+  <data name="OrganizationHint" xml:space="preserve">
+    <value>Organização</value>
+  </data>
+  <data name="OtherSettings" xml:space="preserve">
+    <value>Outros ajustes</value>
+  </data>
+  <data name="Overall" xml:space="preserve">
+    <value>Relatório geral</value>
+  </data>
+  <data name="OwnerHint" xml:space="preserve">
+    <value>Nome do proprietário</value>
+  </data>
+  <data name="Paid" xml:space="preserve">
+    <value>Pago</value>
+  </data>
+  <data name="PaidAmount" xml:space="preserve">
+    <value>Quantidade paga:</value>
+  </data>
+  <data name="PaperSize" xml:space="preserve">
+    <value>Tamanho do papel:</value>
+  </data>
+  <data name="Password" xml:space="preserve">
+    <value>Senha</value>
+  </data>
+  <data name="PasswordDescriptions" xml:space="preserve">
+    <value>Configurações de senha, exigir senha ao fazer login no aplicativo</value>
+  </data>
+  <data name="PasswordPld" xml:space="preserve">
+    <value>Senha</value>
+  </data>
+  <data name="PasswordSettingTitle" xml:space="preserve">
+    <value>Configuração de senha</value>
+  </data>
+  <data name="PasswordTitle" xml:space="preserve">
+    <value>Senha</value>
+  </data>
+  <data name="PayableAmountExcludeTax" xml:space="preserve">
+    <value>O valor a pagar exclui o imposto</value>
+  </data>
+  <data name="Percentage" xml:space="preserve">
+    <value>Percentagem</value>
+  </data>
+  <data name="Person" xml:space="preserve">
+    <value>Pessoa</value>
+  </data>
+  <data name="Phone" xml:space="preserve">
+    <value>Celular: {0}</value>
+  </data>
+  <data name="PhoneHint" xml:space="preserve">
+    <value>Telefone</value>
+  </data>
+  <data name="PolicyTitle" xml:space="preserve">
+    <value>Política de Privacidade</value>
+  </data>
+  <data name="POSMobile" xml:space="preserve">
+    <value>Um sistema de ponto de venda diretamente no seu smartphone</value>
+  </data>
+  <data name="POSScreen" xml:space="preserve">
+    <value>Tela de pagamento / PDV</value>
+  </data>
+  <data name="PreventNegative" xml:space="preserve">
+    <value>Evitar itens de venda quando negativos em estoque</value>
+  </data>
+  <data name="PrinterConfig" xml:space="preserve">
+    <value>Configuração da impressora</value>
+  </data>
+  <data name="PrintError" xml:space="preserve">
+    <value>Não é possível conectar à impressora. Verifique novamente as configurações da impressora!</value>
+  </data>
+  <data name="PrintExcludeTax" xml:space="preserve">
+    <value>Imprimir recibo excluindo imposto</value>
+  </data>
+  <data name="PrintReceipt" xml:space="preserve">
+    <value>Imprimir recibo:</value>
+  </data>
+  <data name="PrintReceiptEasy" xml:space="preserve">
+    <value>Imprimir recibos mesmo sem eletricidade</value>
+  </data>
+  <data name="PrivacyPolicy" xml:space="preserve">
+    <value>Política de Privacidade</value>
+  </data>
+  <data name="Product" xml:space="preserve">
+    <value>Item</value>
+  </data>
+  <data name="ProductCodeHint" xml:space="preserve">
+    <value>Código do item</value>
+  </data>
+  <data name="ProductCostHint" xml:space="preserve">
+    <value>Preço de custo do item</value>
+  </data>
+  <data name="ProductDeleted" xml:space="preserve">
+    <value>Produto {0} excluído!</value>
+  </data>
+  <data name="ProductDeleteFailed" xml:space="preserve">
+    <value>O produto {0} já possui venda / compra registrada. Você não pode deletar este produto !!</value>
+  </data>
+  <data name="ProductDeleteWarning" xml:space="preserve">
+    <value>Tem certeza que deseja excluir {0}?</value>
+  </data>
+  <data name="ProductManagementDescriptions" xml:space="preserve">
+    <value>Visualize listas, edite, crie novos ou exclua produtos</value>
+  </data>
+  <data name="ProductNameHint" xml:space="preserve">
+    <value>Nome do item</value>
+  </data>
+  <data name="ProductNameWarning" xml:space="preserve">
+    <value>Insira o nome do produto</value>
+  </data>
+  <data name="Products" xml:space="preserve">
+    <value>Produtos</value>
+  </data>
+  <data name="ProductSaved" xml:space="preserve">
+    <value>Produto salvo na categoria {0}!</value>
+  </data>
+  <data name="ProductSearchPlaceHolder" xml:space="preserve">
+    <value>Insira o nome / código do produto</value>
+  </data>
+  <data name="ProductsTitle" xml:space="preserve">
+    <value>Produtos</value>
+  </data>
+  <data name="ProductUpdateSuccess" xml:space="preserve">
+    <value>Produto atualizado com sucesso!</value>
+  </data>
+  <data name="ProffessionalManagement" xml:space="preserve">
+    <value>Estilo de gestão profissional</value>
+  </data>
+  <data name="Profits" xml:space="preserve">
+    <value>Lucros</value>
+  </data>
+  <data name="PurchaseOrderTitle" xml:space="preserve">
+    <value>Estoque no recebimento</value>
+  </data>
+  <data name="PurchaseReceipt" xml:space="preserve">
+    <value>Recibo de compra</value>
+  </data>
+  <data name="PurchaseReceiptHeader" xml:space="preserve">
+    <value>COMPRA</value>
+  </data>
+  <data name="PurchaseReceiptReport" xml:space="preserve">
+    <value>Relatório de recibos de compra</value>
+  </data>
+  <data name="PurchaseSuccess" xml:space="preserve">
+    <value>Compra criada com sucesso!</value>
+  </data>
+  <data name="Quantity" xml:space="preserve">
+    <value>Q.ty</value>
+  </data>
+  <data name="ReceiptPrinterSettingDescriptions" xml:space="preserve">
+    <value>Configurações da impressora, tamanho do papel, layout do recibo</value>
+  </data>
+  <data name="ReceiptPrinterSettingTitle" xml:space="preserve">
+    <value>Impressora de recibos</value>
+  </data>
+  <data name="ReportsTitle" xml:space="preserve">
+    <value>Relatórios</value>
+  </data>
+  <data name="ReportSummaryTitle" xml:space="preserve">
+    <value>Resumo</value>
+  </data>
+  <data name="Reset" xml:space="preserve">
+    <value>REDEFINIR</value>
+  </data>
+  <data name="RestoreError" xml:space="preserve">
+    <value>Ocorreu um erro! Por favor, tente novamente.</value>
+  </data>
+  <data name="RestoreSucess" xml:space="preserve">
+    <value>Banco de dados restaurado com sucesso!</value>
+  </data>
+  <data name="SafeAndSecure" xml:space="preserve">
+    <value>Mantenha todos os seus dados seguros e protegidos</value>
+  </data>
+  <data name="SaleMore" xml:space="preserve">
+    <value>Venda Mais Produtos</value>
+  </data>
+  <data name="SaleOrderTitle" xml:space="preserve">
+    <value>Recibo de venda</value>
+  </data>
+  <data name="SalePriceHint" xml:space="preserve">
+    <value>Preço de venda</value>
+  </data>
+  <data name="SaleReceipt" xml:space="preserve">
+    <value>Recibo de venda</value>
+  </data>
+  <data name="SaleReceiptFooter" xml:space="preserve">
+    <value>Obrigado. Por favor, volte!</value>
+  </data>
+  <data name="SaleReceiptHeader" xml:space="preserve">
+    <value>Recibo de venda</value>
+  </data>
+  <data name="SaleReceiptQty" xml:space="preserve">
+    <value>Recibo (s) de venda</value>
+  </data>
+  <data name="SaleReceiptReport" xml:space="preserve">
+    <value>Relatório de recibos de venda</value>
+  </data>
+  <data name="SalesApplication" xml:space="preserve">
+    <value>Um aplicativo de venda inteligente
+apenas para você</value>
+  </data>
+  <data name="SaleSolutionForMobile" xml:space="preserve">
+    <value>A maneira mais fácil de soluções de gerenciamento de vendas em seu smartphone</value>
+  </data>
+  <data name="SaleStaff" xml:space="preserve">
+    <value>Equipe de vendas:</value>
+  </data>
+  <data name="SaleSuccess" xml:space="preserve">
+    <value>Venda criada com sucesso!</value>
+  </data>
+  <data name="SaleSummary" xml:space="preserve">
+    <value>Resumo de Venda</value>
+  </data>
+  <data name="Save" xml:space="preserve">
+    <value>Salve</value>
+  </data>
+  <data name="Saved" xml:space="preserve">
+    <value>Salvou</value>
+  </data>
+  <data name="Scanner" xml:space="preserve">
+    <value>Scanner</value>
+  </data>
+  <data name="ScannerTitle" xml:space="preserve">
+    <value>Barcode Scanner</value>
+  </data>
+  <data name="SelectBackup" xml:space="preserve">
+    <value>Selecione o arquivo de backup para restaurar</value>
+  </data>
+  <data name="SelectCurrencyCustomFormat" xml:space="preserve">
+    <value>Formato de moeda personalizado</value>
+  </data>
+  <data name="SelectDateRange" xml:space="preserve">
+    <value>Selecione o período</value>
+  </data>
+  <data name="SelectDevice" xml:space="preserve">
+    <value>Selecione a impressora:</value>
+  </data>
+  <data name="SelectExportTable" xml:space="preserve">
+    <value>Selecionar tabela de dados para exportar</value>
+  </data>
+  <data name="SelectLanguage" xml:space="preserve">
+    <value>Selecione o idioma de exibição</value>
+  </data>
+  <data name="SelectPeriod" xml:space="preserve">
+    <value>Selecione o período</value>
+  </data>
+  <data name="SendFeedback" xml:space="preserve">
+    <value>Enviar comentários</value>
+  </data>
+  <data name="SendFeedbackDescriptions" xml:space="preserve">
+    <value>Sempre bem-vindo e aprecio seu feedback</value>
+  </data>
+  <data name="SettingSaved" xml:space="preserve">
+    <value>Configuração salva com sucesso!</value>
+  </data>
+  <data name="SettingsTitle" xml:space="preserve">
+    <value>Configurações</value>
+  </data>
+  <data name="SettingUpdatedSuccess" xml:space="preserve">
+    <value>Configuração atualizada com sucesso!</value>
+  </data>
+  <data name="ShareApp" xml:space="preserve">
+    <value>Compartilhar aplicativo</value>
+  </data>
+  <data name="ShareAppDescriptions" xml:space="preserve">
+    <value>Compartilhe Escant_App com seus amigos</value>
+  </data>
+  <data name="ShareAppPos" xml:space="preserve">
+    <value>Compartilhar Escant_App de aplicativo</value>
+  </data>
+  <data name="ShareAppVia" xml:space="preserve">
+    <value>Compartilhar aplicativo via</value>
+  </data>
+  <data name="ShareLink" xml:space="preserve">
+    <value>Compartilhar link de instalação do aplicativo</value>
+  </data>
+  <data name="ShowAddress" xml:space="preserve">
+    <value>Mostrar endereço da loja</value>
+  </data>
+  <data name="ShowDate" xml:space="preserve">
+    <value>Mostrar data de recebimento</value>
+  </data>
+  <data name="ShowPhoneNumber" xml:space="preserve">
+    <value>Mostrar número de telefone</value>
+  </data>
+  <data name="ShowReceiptBarcode" xml:space="preserve">
+    <value>Mostrar código de barras do recibo</value>
+  </data>
+  <data name="ShowStockBalanced" xml:space="preserve">
+    <value>Mostrar estoque equilibrado</value>
+  </data>
+  <data name="SignIn" xml:space="preserve">
+    <value>Assinar em</value>
+  </data>
+  <data name="SignUp" xml:space="preserve">
+    <value>Inscrever-se</value>
+  </data>
+  <data name="StockBalances" xml:space="preserve">
+    <value>Saldos de estoque</value>
+  </data>
+  <data name="StockinTitle" xml:space="preserve">
+    <value>Em estoque</value>
+  </data>
+  <data name="StoreInfoSaved" xml:space="preserve">
+    <value>As informações da loja foram salvas!</value>
+  </data>
+  <data name="StoreNameHint" xml:space="preserve">
+    <value>Nome da loja</value>
+  </data>
+  <data name="StoreSettingDescriptions" xml:space="preserve">
+    <value>Nome da loja, endereço, contato, idioma e impostos</value>
+  </data>
+  <data name="StoreSettingTitle" xml:space="preserve">
+    <value>Configurações da loja</value>
+  </data>
+  <data name="StoreUpdateSuccess" xml:space="preserve">
+    <value>Informações da loja atualizadas com sucesso!</value>
+  </data>
+  <data name="String" xml:space="preserve">
+    <value>Portuguese</value>
+  </data>
+  <data name="SubTotal" xml:space="preserve">
+    <value>Subtotal:</value>
+  </data>
+  <data name="SupplierCodeHint" xml:space="preserve">
+    <value>Código de fornecedor</value>
+  </data>
+  <data name="SupplierDeleted" xml:space="preserve">
+    <value>Fornecedor {0} excluído!</value>
+  </data>
+  <data name="SupplierDeleteWarning" xml:space="preserve">
+    <value>Tem certeza que deseja excluir {0}?</value>
+  </data>
+  <data name="SupplierFilter" xml:space="preserve">
+    <value>SELECIONE O FORNECEDOR</value>
+  </data>
+  <data name="SupplierHint" xml:space="preserve">
+    <value>Selecione o fornecedor</value>
+  </data>
+  <data name="SupplierLabel" xml:space="preserve">
+    <value>Fornecedor:</value>
+  </data>
+  <data name="SupplierManagementDescriptions" xml:space="preserve">
+    <value>Ver lista, editar, criar ou excluir informações do fornecedor</value>
+  </data>
+  <data name="SupplierNameHint" xml:space="preserve">
+    <value>Nome do fornecedor</value>
+  </data>
+  <data name="Suppliers" xml:space="preserve">
+    <value>Fornecedores</value>
+  </data>
+  <data name="SupplierSaved" xml:space="preserve">
+    <value>Contato salvo!</value>
+  </data>
+  <data name="SupplierSearchPlaceHolder" xml:space="preserve">
+    <value>Insira o nome / código do fornecedor</value>
+  </data>
+  <data name="SupplierSelectWarning" xml:space="preserve">
+    <value>Por favor selecione o fornecedor</value>
+  </data>
+  <data name="SuppliersTitle" xml:space="preserve">
+    <value>Fornecedores</value>
+  </data>
+  <data name="Sure" xml:space="preserve">
+    <value>Sim claro</value>
+  </data>
+  <data name="SwipeEdit" xml:space="preserve">
+    <value>Deslize para editar</value>
+  </data>
+  <data name="TaxHint" xml:space="preserve">
+    <value>CPF</value>
+  </data>
+  <data name="TaxRateHint" xml:space="preserve">
+    <value>Taxa de imposto</value>
+  </data>
+  <data name="TermsOfUse" xml:space="preserve">
+    <value>Termos de uso</value>
+  </data>
+  <data name="TermsTitle" xml:space="preserve">
+    <value>Termos de uso</value>
+  </data>
+  <data name="Thismonth" xml:space="preserve">
+    <value>Este mês</value>
+  </data>
+  <data name="To" xml:space="preserve">
+    <value>para</value>
+  </data>
+  <data name="Today" xml:space="preserve">
+    <value>Hoje</value>
+  </data>
+  <data name="Total" xml:space="preserve">
+    <value>Total:</value>
+  </data>
+  <data name="TotalDiscounts" xml:space="preserve">
+    <value>Descontos totais</value>
+  </data>
+  <data name="TotalPurchases" xml:space="preserve">
+    <value>Total de Compras</value>
+  </data>
+  <data name="TotalRevenue" xml:space="preserve">
+    <value>Receita</value>
+  </data>
+  <data name="TotalSaleCurrencyUnit" xml:space="preserve">
+    <value>K</value>
+  </data>
+  <data name="TotalSales" xml:space="preserve">
+    <value>Vendas totais</value>
+  </data>
+  <data name="TransactionCleanSuccess" xml:space="preserve">
+    <value>Transações limpas com sucesso!</value>
+  </data>
+  <data name="TrendingProduct" xml:space="preserve">
+    <value>Produtos em alta</value>
+  </data>
+  <data name="TwoStepsSale" xml:space="preserve">
+    <value>Conclua a venda rapidamente em 2 etapas</value>
+  </data>
+  <data name="Unit" xml:space="preserve">
+    <value>Unidade:</value>
+  </data>
+  <data name="UnitDeleted" xml:space="preserve">
+    <value>Unidade {0} excluída!</value>
+  </data>
+  <data name="UnitDeleteWarning" xml:space="preserve">
+    <value>Tem certeza que deseja excluir {0}?</value>
+  </data>
+  <data name="UnitFilter" xml:space="preserve">
+    <value>UNIDADE</value>
+  </data>
+  <data name="UnitHint" xml:space="preserve">
+    <value>Unidade</value>
+  </data>
+  <data name="UnitManagementDescriptions" xml:space="preserve">
+    <value>Visualize a lista, edite, crie uma nova unidade de produto ou exclua</value>
+  </data>
+  <data name="UnitNameLabel" xml:space="preserve">
+    <value>Nome da unidade</value>
+  </data>
+  <data name="UnitNameWarning" xml:space="preserve">
+    <value>Digite o nome da unidade</value>
+  </data>
+  <data name="Units" xml:space="preserve">
+    <value>Unidades</value>
+  </data>
+  <data name="UnitSearchPlaceHolder" xml:space="preserve">
+    <value>Insira o nome da unidade</value>
+  </data>
+  <data name="UnitsTitle" xml:space="preserve">
+    <value>Unidades</value>
+  </data>
+  <data name="Update" xml:space="preserve">
+    <value>ATUALIZAR</value>
+  </data>
+  <data name="UpdateCheck" xml:space="preserve">
+    <value>Verifique se há atualizações</value>
+  </data>
+  <data name="UpdateCheckDescriptions" xml:space="preserve">
+    <value>Avalie o aplicativo ou verifique se há atualizações</value>
+  </data>
+  <data name="UpdateSuccess" xml:space="preserve">
+    <value>Atualizado com sucesso !</value>
+  </data>
+  <data name="Username" xml:space="preserve">
+    <value>Nome do usuário</value>
+  </data>
+  <data name="UsernamePld" xml:space="preserve">
+    <value>Nome do usuário</value>
+  </data>
+  <data name="VAT" xml:space="preserve">
+    <value>Imposto</value>
+  </data>
+  <data name="ViewReportDetails" xml:space="preserve">
+    <value>Ver relatórios de venda em detalhes</value>
+  </data>
+  <data name="Warning" xml:space="preserve">
+    <value>Aviso</value>
+  </data>
+  <data name="WhatYouCanDo" xml:space="preserve">
+    <value>O que você pode fazer com Escant_App</value>
+  </data>
+  <data name="Yesterday" xml:space="preserve">
+    <value>Ontem</value>
+  </data>
+  <data name="YourSuccessKey" xml:space="preserve">
+    <value>Escant_App - Sua chave
+sucesso</value>
+  </data>
+</root>

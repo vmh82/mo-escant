@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentView xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Escant_App.UserControls.TopNavBar"
+             xmlns:fontawesome="clr-namespace:Escant_App"
+             BackgroundColor="#3AC3D6">
+  <ContentView.Content>
+        <Grid HorizontalOptions="FillAndExpand" RowDefinitions="Auto,Auto" RowSpacing="20" ColumnDefinitions="Auto,*,Auto" Padding="10">
+            <Image Grid.Row="0" Grid.Column="0" Source="threelines.png" Aspect="AspectFill" HeightRequest="20" WidthRequest="25"></Image>
+            <Label Grid.Row="0" Grid.Column="1" Margin="10,0,0,0" Text="Ecommerce" FontSize="20" TextColor="#202020"></Label>
+            <Label Grid.Row="0" Grid.Column="2" FontSize="25" Text="{x:Static fontawesome:Solid.Microphone}" FontFamily="{StaticResource FontAwesomeSolid}" TextColor="#202020"></Label>
+            <Frame CornerRadius="10" Grid.Row="1" Grid.ColumnSpan="3">
+                <SearchBar  Margin="-20" BackgroundColor="White" Placeholder="Search..."></SearchBar>
+            </Frame>
+        </Grid>
+    </ContentView.Content>
+</ContentView>

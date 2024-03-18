@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<ContentView xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:border="clr-namespace:Syncfusion.XForms.Border;assembly=Syncfusion.Core.XForms"
+             x:Class="Escant_App.UserControls.SfCircleView">
+    <ContentView.Content>
+        <border:SfBorder x:Name="Container" Grid.Row="0" Grid.Column="0" Grid.RowSpan="2" 
+                BorderColor="{Binding BorderColor}" HorizontalOptions="Center"
+                BackgroundColor="{Binding BackgroundColor}"
+                HeightRequest="{Binding HeightRequest}" WidthRequest="{Binding WidthRequest}"
+                VerticalOptions="Center" CornerRadius="{Binding CornerRadius}">
+            <Label x:Name="AbbrLabel" VerticalOptions="Center" HorizontalOptions="Center" FontSize="{Binding FontSize}" />
+        </border:SfBorder>
+    </ContentView.Content>
+</ContentView>

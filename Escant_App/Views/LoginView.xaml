@@ -1,0 +1,348 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="Escant_App.Views.LoginView"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"        
+    xmlns:xct="http://xamarin.com/schemas/2020/toolkit"
+    xmlns:ctrls="clr-namespace:Escant_App.UserControls;assembly=Escant_App"
+    xmlns:behaviors="clr-namespace:Escant_App.Behaviors;assembly=Escant_App"
+    xmlns:texts="clr-namespace:ManijodaServicios.Resources.Texts;assembly=ManijodaServicios"
+    xmlns:viewModelBase="clr-namespace:Escant_App.ViewModels.Base;assembly=Escant_App"    
+    xmlns:yummy="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView" 
+    Title="{texts:Translate LoginTitle}"
+    Padding="0,0,0,0"
+    viewModelBase:ViewModelLocator.AutoWireViewModel="true"
+    BackgroundColor="{DynamicResource MainWrapperBackgroundColor}">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Style x:Key="LogoStyle" TargetType="Image">
+                <Setter Property="Aspect" Value="AspectFit" />
+                <Setter Property="HeightRequest" Value="95" />
+                <Setter Property="Margin" Value="30, 16" />
+                <Setter Property="HorizontalOptions" Value="Center" />
+                <Setter Property="VerticalOptions" Value="Start" />
+            </Style>
+
+            <Style
+                x:Key="HeaderTextStyle"
+                BasedOn="{StaticResource PoppinsMediumLabelStyle}"
+                TargetType="Label">
+                <Setter Property="TextColor" Value="{StaticResource WhiteColor}" />
+                <Setter Property="HorizontalOptions" Value="FillAndExpand" />
+                <Setter Property="FontSize" Value="{StaticResource MediumSize}" />
+                <Setter Property="Margin">
+                    <Setter.Value>
+                        <OnPlatform
+                            x:TypeArguments="Thickness"
+                            Android="5,0,0,0"
+                            iOS="0,8,0,0" />
+                    </Setter.Value>
+                </Setter>
+            </Style>
+
+            <Style
+                x:Key="ForgotPwdLabelStyle"
+                BasedOn="{StaticResource PoppinsMediumLabelStyle}"
+                TargetType="{x:Type Label}">
+                <Setter Property="TextColor" Value="{StaticResource BlackTextColor}" />
+                <Setter Property="HorizontalOptions" Value="End" />
+                <Setter Property="FontSize" Value="{StaticResource MediumSize}" />
+                <Setter Property="Margin">
+                    <Setter.Value>
+                        <OnPlatform x:TypeArguments="Thickness">
+                            <On Platform="Android" Value="0, -3, 5, 0" />
+                        </OnPlatform>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+
+            <Style x:Key="SignUpPanelStyle" TargetType="{x:Type StackLayout}">
+                <Setter Property="Orientation" Value="Horizontal" />
+                <Setter Property="HorizontalOptions" Value="Center" />
+                <Setter Property="VerticalOptions" Value="End" />
+                <Setter Property="Margin" Value="0, 0, 0, 36" />
+            </Style>
+
+            <Style
+                x:Key="SignUpTextStyle"
+                BasedOn="{StaticResource NunitoRegularLabelStyle}"
+                TargetType="{x:Type Label}">
+                <Setter Property="FontSize" Value="{StaticResource MediumSize}" />
+                <Setter Property="TextColor" Value="{StaticResource BlackTextColor}" />
+            </Style>
+
+            <Style
+                x:Key="SignUpAccentTextStyle"
+                BasedOn="{StaticResource SignUpTextStyle}"
+                TargetType="{x:Type Label}">
+                <Setter Property="TextColor" Value="{StaticResource OrangeColor}" />
+                <Setter Property="FontFamily" Value="{StaticResource NunitoBold}" />
+            </Style>
+
+            <!--<animations:StoryBoard
+              x:Key="LoginAnimation"
+              Target="{x:Reference LoginPanel}">
+                <animations:FadeInAnimation
+                    Direction="Up"
+                    Duration="1500" />
+            </animations:StoryBoard>-->
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <!--<ContentPage.Triggers>
+        <EventTrigger
+            Event="Appearing">
+            <triggers:BeginAnimation
+                Animation="{StaticResource LoginAnimation}" />
+        </EventTrigger>
+    </ContentPage.Triggers>-->
+    <ContentPage.Content>
+        <ScrollView>
+            <Grid x:Name="LoginPanel">
+                <yummy:PancakeView
+                    BackgroundGradientAngle="30"
+                    BackgroundGradientEndColor="{DynamicResource GradientEndColor}"
+                    BackgroundGradientStartColor="{DynamicResource GradientStartColor}"
+                    BorderThickness="1"
+                    HorizontalOptions="FillAndExpand"
+                    Opacity="0.8"
+                    VerticalOptions="FillAndExpand" />
+                <StackLayout Spacing="0">
+                    <Grid HeightRequest="200">
+<!--                        <CarouselView x:Name="Carousel" IndicatorView="IndicatorView"
+                          HeightRequest="250"
+                                      BackgroundColor="{DynamicResource MainWrapperBackgroundColor}"
+                                      >
+                            <CarouselView.ItemTemplate>
+                                <DataTemplate>
+                                    <Grid>
+                                        <Image
+                                            Aspect="AspectFill"
+                                            Opacity="1"
+                                            Source="{Binding Url}" />
+                                        <Grid Margin="0,0,60,0" VerticalOptions="Center">
+                                            <BoxView
+                                                BackgroundColor="{DynamicResource Gray-900}"
+                                                HeightRequest="50"
+                                                Opacity="0.3" />
+                                            <Label
+                                                Margin="15,10"
+                                                FontFamily="{StaticResource PoppinsMedium}"
+                                                Text="{Binding Leyenda}"
+                                                TextColor="{DynamicResource Gray-White}"
+                                                VerticalTextAlignment="Center" />
+                                        </Grid>
+                                    </Grid>
+                                </DataTemplate>
+                            </CarouselView.ItemTemplate>
+                        </CarouselView>-->
+                        <IndicatorView x:Name="IndicatorView"
+                IndicatorColor="Gray"
+                SelectedIndicatorColor="DarkGray"
+                IndicatorSize="10"
+                                       Margin="0,0,0,40"
+                           VerticalOptions="Center"/>
+                    </Grid>
+
+                    <yummy:PancakeView
+                        Margin="0,-15,0,0"
+                        Padding="30,30,30,30"
+                        BackgroundColor="{DynamicResource MainWrapperBackgroundColor}"
+                        CornerRadius="20,20,0,0"
+                        Elevation="3"
+                        VerticalOptions="FillAndExpand">
+                        <StackLayout Spacing="0">
+                            <StackLayout Spacing="20" VerticalOptions="FillAndExpand">
+
+                                <Image HeightRequest="100" Source="bg_header" />
+
+                                <Label
+                                    FontFamily="{StaticResource PoppinsBold}"
+                                    FontSize="18"
+                                    HorizontalOptions="CenterAndExpand"
+                                    Text="Escant_App"
+                                    TextColor="{DynamicResource colPrim}"
+                                    VerticalOptions="StartAndExpand" />
+
+                                <StackLayout Padding="10,0" Spacing="5">
+                                    <Label
+                                        Margin="10,0,0,0"
+                                        FontSize="12"
+                                        Style="{StaticResource HeaderTextStyle}"
+                                        Text="{texts:Translate Username}"
+                                        TextColor="{Binding Path=LineColorToApply, Source={Reference UsernameEntry}}" />
+                                    <yummy:PancakeView
+                                        Padding="10,0,10,0"
+                                        BackgroundColor="#e3edf7"
+                                        BorderColor="#e3edf7"
+                                        BorderThickness="2"
+                                        CornerRadius="8"
+                                        Elevation="4"
+                                        HeightRequest="50">
+                                        <StackLayout
+                                            HorizontalOptions="FillAndExpand"
+                                            Orientation="Horizontal"
+                                            Spacing="10"
+                                            VerticalOptions="FillAndExpand">
+                                            <Label
+                                                Margin="0"
+                                                FontFamily="{StaticResource FontAwesome}"
+                                                FontSize="16"
+                                                HorizontalOptions="Start"
+                                                Text="&#xf2bd;"
+                                                TextColor="{DynamicResource Gray-700}"
+                                                VerticalOptions="Center" />
+
+                                            <ctrls:BorderlessEntry
+                                                x:Name="UsernameEntry"
+                                                AutomationId="username"
+                                                FontFamily="{StaticResource PoppinsRegular}"
+                                                FontSize="16"
+                                                HorizontalOptions="FillAndExpand"
+                                                Placeholder="{texts:Translate UsernamePld}"                                                
+                                                Text="{Binding UserName.Value, Mode=TwoWay}"
+                                                TextColor="{DynamicResource Gray-900}" >
+                                                <!--<Entry.Style>
+                                                    <OnPlatform x:TypeArguments="Style">
+                                                        <On Platform="iOS, Android" Value="{StaticResource EntryStyle}" />
+                                                        <On Platform="UWP, WinRT, WinPhone" Value="{StaticResource UwpEntryStyle}" />
+                                                    </OnPlatform>
+                                                </Entry.Style>-->
+                                                <Entry.Behaviors>
+                                                    <xct:EventToCommandBehavior
+							                            EventName="Unfocused"
+							                            Command="{Binding ValidateUserNameCommand}" />
+                                                </Entry.Behaviors>
+                                                <Entry.Triggers>
+                                                    <DataTrigger 
+							                            TargetType="Entry"
+							                            Binding="{Binding UserName.IsValid}"
+							                            Value="False">
+                                                        <Setter Property="behaviors:LineColorBehavior.LineColor" Value="{StaticResource ErrorColor}" />
+                                                    </DataTrigger>
+                                                </Entry.Triggers>
+                                            </ctrls:BorderlessEntry>
+                                        </StackLayout>
+                                    </yummy:PancakeView>
+                                    <Label 
+					                                Text="{Binding UserName.Mensaje}"
+					                                Style="{StaticResource ValidationErrorLabelStyle}"
+                                                    IsVisible="{Binding UserName.HasError}"/>
+                                </StackLayout>
+
+                                <StackLayout Padding="10,0" Spacing="5">
+                                    <Label
+                                        Margin="10,0,0,0"
+                                        FontSize="12"
+                                        Style="{StaticResource HeaderTextStyle}"
+                                        Text="{texts:Translate Password}"
+                                        TextColor="{Binding Path=LineColorToApply, Source={Reference PasswordEntry}}" />
+                                    <yummy:PancakeView
+                                        Padding="10,0,10,0"
+                                        BackgroundColor="#e3edf7"
+                                        BorderColor="#e3edf7"
+                                        BorderThickness="2"
+                                        CornerRadius="8"
+                                        Elevation="3"
+                                        HeightRequest="50">
+                                        <StackLayout
+                                            HorizontalOptions="FillAndExpand"
+                                            Orientation="Horizontal"
+                                            Spacing="10"
+                                            VerticalOptions="FillAndExpand">
+                                            <Label
+                                                Margin="0"
+                                                FontFamily="{StaticResource FontAwesome}"
+                                                FontSize="16"
+                                                HorizontalOptions="Start"
+                                                Text="&#xf023;"
+                                                TextColor="{DynamicResource Gray-700}"
+                                                VerticalOptions="Center" />
+                                            <ctrls:BorderlessEntry
+                                                x:Name="PasswordEntry"
+                                                AutomationId="password"
+                                                FontFamily="{StaticResource PoppinsRegular}"
+                                                FontSize="16"
+                                                HorizontalOptions="FillAndExpand"
+                                                IsPassword="True"
+                                                Placeholder="{texts:Translate PasswordPld}"
+                                                Text="{Binding Password.Value}"                                                          
+                                                TextColor="{DynamicResource Gray-900}">
+                                                <Entry.Behaviors>
+                                                    <xct:EventToCommandBehavior
+							                            EventName="Unfocused"
+							                            Command="{Binding ValidatePasswordCommand}" />
+                                                </Entry.Behaviors>
+                                                <Entry.Triggers>
+                                                    <DataTrigger 
+							                            TargetType="Entry"
+							                            Binding="{Binding Password.IsValid}"
+							                            Value="False">
+                                                        <Setter Property="behaviors:LineColorBehavior.LineColor" Value="{StaticResource ErrorColor}" />
+                                                    </DataTrigger>
+                                                </Entry.Triggers>
+                                            </ctrls:BorderlessEntry>
+                                        </StackLayout>
+                                    </yummy:PancakeView>
+                                    <Label 
+					                                Text="{Binding Password.Mensaje}"
+					                                Style="{StaticResource ValidationErrorLabelStyle}"
+                                                    IsVisible="{Binding Password.HasError}"/>
+                                </StackLayout>
+
+                                <Label
+                                    FontFamily="{StaticResource PoppinsRegular}"
+                                    FontSize="13"
+                                    HorizontalOptions="EndAndExpand"
+                                    Text="{texts:Translate ForgotPassword}"
+                                    TextColor="{DynamicResource Gray-800}" >
+                                    <Label.GestureRecognizers>
+                                        <TapGestureRecognizer x:Name="ForgotTap"
+                                              Command="{Binding ForgotCommand}"></TapGestureRecognizer>
+                                    </Label.GestureRecognizers>
+                                </Label>
+
+                                <yummy:PancakeView
+                                    Margin="10,0"
+                                    BackgroundGradientAngle="90"
+                                    BackgroundGradientEndColor="{DynamicResource GradientEndColor}"
+                                    BackgroundGradientStartColor="{DynamicResource GradientStartColor}"
+                                    BorderThickness="1"
+                                    CornerRadius="8"
+                                    Elevation="3"
+                                    HeightRequest="60"
+                                    HorizontalOptions="FillAndExpand">
+                                    <Button
+                                        AutomationId="signin"
+                                        BackgroundColor="Transparent"
+                                        Command="{Binding SignInCommand}"
+                                        CornerRadius="10"
+                                        FontFamily="{StaticResource PoppinsSemiBold}"
+                                        FontSize="18"
+                                        Text="{texts:Translate SignIn}"
+                                        TextColor="{StaticResource WhiteColor}" />
+                                </yummy:PancakeView>
+
+                                <Button 
+                                        x:Name="btnRegistrarse"                                         
+                                        BackgroundColor="Transparent" 
+                                        Text="{texts:Translate Register}"
+                                        TextColor="{StaticResource AccentColor}" 
+                                        Command="{Binding RegisterCommand}"
+                                        CornerRadius="10"
+                                        FontFamily="{StaticResource PoppinsSemiBold}"
+                                        FontSize="18" 
+                                 />
+                            </StackLayout>
+                        </StackLayout>
+                    </yummy:PancakeView>
+                </StackLayout>
+
+                <ctrls:LoadingIndicator
+                    Grid.Row="0"
+                    HorizontalOptions="Fill"
+                    IsRunning="{Binding IsBusy, Mode=TwoWay}"
+                    VerticalOptions="Fill" />
+            </Grid>
+        </ScrollView>
+    </ContentPage.Content>
+</ContentPage>

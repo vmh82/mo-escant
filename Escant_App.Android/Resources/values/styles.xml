@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<resources>
+
+  <style name="MainTheme" parent="MainTheme.Base">
+    <!--Permite corregir pantallazo negro después del splash screen -->
+    <item name="android:windowIsTranslucent">true</item>  
+  </style>
+  <style name="Theme.Splash" parent="Theme.AppCompat.Light.NoActionBar">
+    <item name="windowNoTitle">true</item>
+    <item name="android:windowFullscreen">true</item>
+    <item name="android:windowContentOverlay">@null</item>
+    <item name="android:windowActionBar">true</item>
+    <item name="android:windowBackground">@drawable/splash_screen</item>
+  </style>
+  <style name="AppCompatDialogStyle" parent="Theme.AppCompat.Light.Dialog">
+    <!--<item name="colorAccent">#FF4081</item>-->
+    <item name="colorAccent">#81BC41</item>
+  </style>
+</resources>

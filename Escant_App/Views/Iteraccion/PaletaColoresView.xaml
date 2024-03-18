@@ -1,0 +1,164 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<pages:PopupPage
+    x:Class="Escant_App.Views.Iteraccion.PaletaColoresView"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"    
+    xmlns:xct="http://xamarin.com/schemas/2020/toolkit"
+    xmlns:animations="clr-namespace:Rg.Plugins.Popup.Animations;assembly=Rg.Plugins.Popup"
+    xmlns:button="clr-namespace:Syncfusion.XForms.Buttons;assembly=Syncfusion.Buttons.XForms"
+    xmlns:pages="clr-namespace:Rg.Plugins.Popup.Pages;assembly=Rg.Plugins.Popup"
+    xmlns:texts="clr-namespace:ManijodaServicios.Resources.Texts;assembly=ManijodaServicios"
+    xmlns:viewModelBase="clr-namespace:Escant_App.ViewModels.Base;assembly=Escant_App" 
+    xmlns:sfradialmenu="clr-namespace:Syncfusion.SfRadialMenu.XForms;assembly=Syncfusion.SfRadialMenu.XForms"
+    viewModelBase:ViewModelLocator.AutoWireViewModel="true">
+    <!--0.Definición de Estilos para la pantalla-->
+    <pages:PopupPage.Resources>
+        <ResourceDictionary>
+            <Style x:Key="PopupItemHeaderStyle" TargetType="{x:Type Label}">
+                <Setter Property="FontFamily" Value="{StaticResource NunitoBold}" />
+                <Setter Property="FontSize" Value="{StaticResource LargeSize}" />
+                <Setter Property="TextColor" Value="{StaticResource BlackColor}" />
+                <Setter Property="HorizontalTextAlignment" Value="Start" />
+                <Setter Property="VerticalTextAlignment" Value="Center" />
+                <Setter Property="Margin" Value="0,0,0,0" />
+            </Style>
+
+            <Style x:Key="PopupLabelStyle" TargetType="{x:Type Label}">
+                <Setter Property="FontFamily" Value="{StaticResource NunitoRegular}" />
+                <Setter Property="FontSize" Value="{StaticResource LargeSize}" />
+                <Setter Property="TextColor" Value="Black" />
+                <Setter Property="HorizontalOptions" Value="Start" />
+                <Setter Property="VerticalOptions" Value="End" />
+                <Setter Property="Margin" Value="10,0,0,12" />
+            </Style>
+        </ResourceDictionary>
+    </pages:PopupPage.Resources>
+    <!--1.Definición de Estilos de animación de la pantalla-->
+    <pages:PopupPage.Animation>
+        <animations:ScaleAnimation
+            DurationIn="700"
+            EasingIn="SpringOut"
+            PositionIn="Bottom"
+            PositionOut="Center"
+            ScaleIn="1"
+            ScaleOut="0.7" />
+    </pages:PopupPage.Animation>
+    <!--#region Definición de la Pantalla de Paleta de Colores-->
+    <Frame
+        x:Name="FrameContainer"
+        Margin="15"
+        Padding="15"
+        BackgroundColor="White"
+        CornerRadius="10"
+        HorizontalOptions="Center"
+        VerticalOptions="Center">
+    <StackLayout HorizontalOptions="Center" VerticalOptions="Center">
+        <Frame
+                                        Grid.Column="2"
+                                        Padding="0"
+                                        BorderColor="{DynamicResource Gray-400}"
+                                        CornerRadius="5"
+                                        HasShadow="{OnPlatform Android='True',
+                                                               iOS='False'}"
+                                        IsClippedToBounds="True">
+            <Grid Padding="10,3" BackgroundColor="{StaticResource Gray-200}">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+                <!--#region 2.1Definición de Paleta de Colores-->
+
+                    <sfradialmenu:SfRadialMenu  
+                                                x:Name="radial_Menu"
+                                 CenterButtonBackFontFamily="{StaticResource customfontfamily}"
+                                 CenterButtonBackText=""
+                                 CenterButtonBorderColor="White"
+                                 CenterButtonFontFamily="{StaticResource customfontfamily}"
+                                 CenterButtonRadius="32"
+                                 CenterButtonText=""                                 
+                                 SelectionColor="#FF007ACC"     
+                    
+                    >
+                        <sfradialmenu:SfRadialMenu.Items>
+                            <sfradialmenu:SfRadialMenuItem BackgroundColor="#FF0000">
+                                <sfradialmenu:SfRadialMenuItem.Items>
+                                    <sfradialmenu:SfRadialMenuItem BackgroundColor="#FF0000" ItemTapped="SfRadialMenuItem_ItemTapped"  />
+                                    <sfradialmenu:SfRadialMenuItem BackgroundColor="#FF1E1E" ItemTapped="SfRadialMenuItem_ItemTapped"/>
+                                    <sfradialmenu:SfRadialMenuItem BackgroundColor="#FF3C3C" ItemTapped="SfRadialMenuItem_ItemTapped"/>
+                                    <sfradialmenu:SfRadialMenuItem BackgroundColor="#FF5A5A" ItemTapped="SfRadialMenuItem_ItemTapped"/>
+                                    <sfradialmenu:SfRadialMenuItem BackgroundColor="#FF7878" ItemTapped="SfRadialMenuItem_ItemTapped"/>
+                                    <sfradialmenu:SfRadialMenuItem BackgroundColor="#FF9696" ItemTapped="SfRadialMenuItem_ItemTapped"/>
+                                    <sfradialmenu:SfRadialMenuItem BackgroundColor="#FFB4B4" ItemTapped="SfRadialMenuItem_ItemTapped"/>
+                                    <sfradialmenu:SfRadialMenuItem BackgroundColor="#FFD2D2" ItemTapped="SfRadialMenuItem_ItemTapped"/>
+                                    <sfradialmenu:SfRadialMenuItem BackgroundColor="#FFF0F0" ItemTapped="SfRadialMenuItem_ItemTapped"/>
+                                </sfradialmenu:SfRadialMenuItem.Items>
+                            </sfradialmenu:SfRadialMenuItem>
+                            <sfradialmenu:SfRadialMenuItem BackgroundColor="#FFFF00">
+                                <sfradialmenu:SfRadialMenuItem.Items>
+                                    <sfradialmenu:SfRadialMenuItem BackgroundColor="#FFFF00" ItemTapped="SfRadialMenuItem_ItemTapped"/>
+                                    <sfradialmenu:SfRadialMenuItem BackgroundColor="#FFFF1E" ItemTapped="SfRadialMenuItem_ItemTapped"/>
+                                    <sfradialmenu:SfRadialMenuItem BackgroundColor="#FFFF3C" ItemTapped="SfRadialMenuItem_ItemTapped"/>
+                                    <sfradialmenu:SfRadialMenuItem BackgroundColor="#FFFF5A" ItemTapped="SfRadialMenuItem_ItemTapped"/>
+                                    <sfradialmenu:SfRadialMenuItem BackgroundColor="#FFFF78" ItemTapped="SfRadialMenuItem_ItemTapped"/>
+                                    <sfradialmenu:SfRadialMenuItem BackgroundColor="#FFFFB4" ItemTapped="SfRadialMenuItem_ItemTapped"/>
+                                    <sfradialmenu:SfRadialMenuItem BackgroundColor="#FFFFD2" ItemTapped="SfRadialMenuItem_ItemTapped"/>
+                                    <sfradialmenu:SfRadialMenuItem BackgroundColor="#FFFFF0" ItemTapped="SfRadialMenuItem_ItemTapped"/>
+                                </sfradialmenu:SfRadialMenuItem.Items>
+                            </sfradialmenu:SfRadialMenuItem>
+                            <sfradialmenu:SfRadialMenuItem BackgroundColor="#00FF00">
+                                <sfradialmenu:SfRadialMenuItem.Items>
+                                    <sfradialmenu:SfRadialMenuItem BackgroundColor="#00FF00" ItemTapped="SfRadialMenuItem_ItemTapped"/>
+                                    <sfradialmenu:SfRadialMenuItem BackgroundColor="#1EFF1E" ItemTapped="SfRadialMenuItem_ItemTapped"/>
+                                    <sfradialmenu:SfRadialMenuItem BackgroundColor="#3CFF3C" ItemTapped="SfRadialMenuItem_ItemTapped"/>
+                                    <sfradialmenu:SfRadialMenuItem BackgroundColor="#78FF78" ItemTapped="SfRadialMenuItem_ItemTapped"/>
+                                    <sfradialmenu:SfRadialMenuItem BackgroundColor="#96FF96" ItemTapped="SfRadialMenuItem_ItemTapped"/>
+                                    <sfradialmenu:SfRadialMenuItem BackgroundColor="#B4FFB4" ItemTapped="SfRadialMenuItem_ItemTapped"/>
+                                    <sfradialmenu:SfRadialMenuItem BackgroundColor="#D2FFD2" ItemTapped="SfRadialMenuItem_ItemTapped"/>
+                                    <sfradialmenu:SfRadialMenuItem BackgroundColor="#F0FFF0" ItemTapped="SfRadialMenuItem_ItemTapped"/>
+                                </sfradialmenu:SfRadialMenuItem.Items>
+                            </sfradialmenu:SfRadialMenuItem>
+                            <sfradialmenu:SfRadialMenuItem BackgroundColor="#00FFFF">
+                                <sfradialmenu:SfRadialMenuItem.Items>
+                                    <sfradialmenu:SfRadialMenuItem BackgroundColor="#00FFFF" ItemTapped="SfRadialMenuItem_ItemTapped"/>
+                                    <sfradialmenu:SfRadialMenuItem BackgroundColor="#1EFFFF" ItemTapped="SfRadialMenuItem_ItemTapped"/>
+                                    <sfradialmenu:SfRadialMenuItem BackgroundColor="#3CFFFF" ItemTapped="SfRadialMenuItem_ItemTapped"/>
+                                    <sfradialmenu:SfRadialMenuItem BackgroundColor="#78FFFF" ItemTapped="SfRadialMenuItem_ItemTapped"/>
+                                    <sfradialmenu:SfRadialMenuItem BackgroundColor="#96FFFF" ItemTapped="SfRadialMenuItem_ItemTapped"/>
+                                    <sfradialmenu:SfRadialMenuItem BackgroundColor="#B4FFFF" ItemTapped="SfRadialMenuItem_ItemTapped"/>
+                                    <sfradialmenu:SfRadialMenuItem BackgroundColor="#D2FFFF" ItemTapped="SfRadialMenuItem_ItemTapped"/>
+                                    <sfradialmenu:SfRadialMenuItem BackgroundColor="#F0FFFF" ItemTapped="SfRadialMenuItem_ItemTapped"/>
+                                </sfradialmenu:SfRadialMenuItem.Items>
+                            </sfradialmenu:SfRadialMenuItem>
+                            <sfradialmenu:SfRadialMenuItem BackgroundColor="#0000FF">
+                                <sfradialmenu:SfRadialMenuItem.Items>
+                                    <sfradialmenu:SfRadialMenuItem BackgroundColor="#0000FF" ItemTapped="SfRadialMenuItem_ItemTapped"/>
+                                    <sfradialmenu:SfRadialMenuItem BackgroundColor="#1E1EFF" ItemTapped="SfRadialMenuItem_ItemTapped"/>
+                                    <sfradialmenu:SfRadialMenuItem BackgroundColor="#3C3CFF" ItemTapped="SfRadialMenuItem_ItemTapped"/>
+                                    <sfradialmenu:SfRadialMenuItem BackgroundColor="#7878FF" ItemTapped="SfRadialMenuItem_ItemTapped"/>
+                                    <sfradialmenu:SfRadialMenuItem BackgroundColor="#9696FF" ItemTapped="SfRadialMenuItem_ItemTapped"/>
+                                    <sfradialmenu:SfRadialMenuItem BackgroundColor="#B4B4FF" ItemTapped="SfRadialMenuItem_ItemTapped"/>
+                                    <sfradialmenu:SfRadialMenuItem BackgroundColor="#D2D2FF" ItemTapped="SfRadialMenuItem_ItemTapped"/>
+                                    <sfradialmenu:SfRadialMenuItem BackgroundColor="#F0F0FF" ItemTapped="SfRadialMenuItem_ItemTapped"/>
+                                </sfradialmenu:SfRadialMenuItem.Items>
+                            </sfradialmenu:SfRadialMenuItem>
+                            <sfradialmenu:SfRadialMenuItem BackgroundColor="#FF00FF">
+
+                                <sfradialmenu:SfRadialMenuItem.Items>
+                                    <sfradialmenu:SfRadialMenuItem BackgroundColor="#FF00FF" ItemTapped="SfRadialMenuItem_ItemTapped"/>
+                                    <sfradialmenu:SfRadialMenuItem BackgroundColor="#FF1EFF" ItemTapped="SfRadialMenuItem_ItemTapped"/>
+                                    <sfradialmenu:SfRadialMenuItem BackgroundColor="#FF3CFF" ItemTapped="SfRadialMenuItem_ItemTapped"/>
+                                    <sfradialmenu:SfRadialMenuItem BackgroundColor="#FF78FF" ItemTapped="SfRadialMenuItem_ItemTapped"/>
+                                    <sfradialmenu:SfRadialMenuItem BackgroundColor="#FF96FF" ItemTapped="SfRadialMenuItem_ItemTapped"/>
+                                    <sfradialmenu:SfRadialMenuItem BackgroundColor="#FFB4FF" ItemTapped="SfRadialMenuItem_ItemTapped"/>
+                                    <sfradialmenu:SfRadialMenuItem BackgroundColor="#FFD2FF" ItemTapped="SfRadialMenuItem_ItemTapped"/>
+                                    <sfradialmenu:SfRadialMenuItem BackgroundColor="#FFF0FF" ItemTapped="SfRadialMenuItem_ItemTapped"/>
+                                </sfradialmenu:SfRadialMenuItem.Items>
+                            </sfradialmenu:SfRadialMenuItem>
+                        </sfradialmenu:SfRadialMenu.Items>
+                    </sfradialmenu:SfRadialMenu>
+                    <!--#endregion 2.1Definición de Paleta de Colores-->
+                </Grid>
+        </Frame>
+    </StackLayout>
+    </Frame>
+    <!--#endregion Definición de la Pantalla de Paleta de Colores-->
+</pages:PopupPage>
