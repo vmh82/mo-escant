@@ -80,5 +80,14 @@ namespace Escant_App.Views.Ventas
             CloseButtonEventHandler?.Invoke(this, eventArgs);
         }
 
+        private void TapGestureRecognizer_Tapped(object sender, EventArgs e)
+        {
+            Cliente clienteSeleccionado = Context.ClienteSeleccionado;
+            Task.Run(async () =>
+            {
+                await Context.ObtenerOrdenesReporte(clienteSeleccionado);
+            }).Wait();
+        }
+
     }
 }

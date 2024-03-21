@@ -413,11 +413,25 @@
                                     CellTextSize="{StaticResource GridFontSize}"/>
                                 </datagrid:SfDataGrid.Columns>
                             </datagrid:SfDataGrid>
-                            
+
+
+                            <Image
+                                x:Name="imgRetornar"
+                                Margin="3,3,3,3"
+                            Grid.Row="2"
+                            Grid.Column="0"
+                            VerticalOptions="Fill"
+                            Source="printer"                            
+                            WidthRequest="15" >
+                                <Image.GestureRecognizers>
+                                    <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped" />
+                                </Image.GestureRecognizers>
+                            </Image>
+
 
                             <!--#region Celda 2,1 Estado Cancelado Bótón Retornar-->
                             <Image
-                                x:Name="imgRetornar"
+                                x:Name="imgImprimir"
                                 Margin="4,4,4,4"
                             Grid.Row="2"
                             Grid.Column="1"
